@@ -3,6 +3,8 @@ import os
 import re
 import sys
 import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -112,7 +114,8 @@ def main():
 
     h = find_h_board(pins_gb)
     b = calculate_430(board_gb)
-
+    local_now = datetime.now(timezone.utc).astimezone(ZoneInfo("America/Vancouver"))
+    today = local_now.date().isoformat()
     old_h = state.get("h_board")
     if old_h is not None and h["value"] != old_h:
         telegram(
@@ -120,19 +123,42 @@ def main():
             f"{old_h} → {h['value']}\n"
             f"Board time: {h['modified'] or 'unknown'}"
         )
-
     old_430_modified = state.get("board_430_modified")
     old_430_total = state.get("board_430_total")
-    changed = (b["modified"] != old_430_modified) or (b["total"] != old_430_total)
 
-    if b["total"] > 200 and changed:
+    changed = (
+        b["modified"] != old_430_modified
+        or b["total"] != old_430_total
+    )
+
+    if old_430_modified is not None and changed:
+        headline = "📋 4:30 BOARD UPDATED"
+        if b["total"] > 200:
+            headline += " — 🔥 OVER 200 JOBS"
+
         telegram(
-            "📋 4:30 BOARD — OVER 200 JOBS\n"
-            f"Total: {b['total']}\n"
+            f"{headline}\n"
+            f"Total: {b['total']} jobs\n"
             f"Gangs: {b['gang_total']}\n"
-            f"Rated jobs: {b['rated_total']} (FSD {b['fsd_total']} + DP {b['dp_total']})\n"
+            f"Rated jobs: {b['rated_total']}\n"
+            f"FSD: {b['fsd_total']}\n"
+            f"DP: {b['dp_total']}\n"
             f"Board time: {b['modified'] or 'unknown'}"
         )
+
+    # Daily 1 PM status message.
+    last_daily_status = state.get("last_daily_status")
+    if local_now.hour == 13 and last_daily_status != today:
+        telegram(
+            "🕐 1 PM ILWU BOARD STATUS\n"
+            f"4:30 total: {b['total']} jobs\n"
+            f"Gangs: {b['gang_total']}\n"
+            f"Rated jobs: {b['rated_total']} "
+            f"(FSD {b['fsd_total']} + DP {b['dp_total']})\n"
+            f"H BOARD: {h['value']}\n"
+            f"Board time: {b['modified'] or 'unknown'}"
+        )
+        state["last_daily_status"] = today
 
     state.update({
         "h_board": h["value"],

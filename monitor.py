@@ -107,7 +107,6 @@ def calculate_430(gb):
 
 def main():
     state = load_state()
-    telegram("✅ ILWU monitor test — Telegram notifications are working.")
     pins_gb = extract_gbdata(fetch(PINS_URL))
     board_gb = extract_gbdata(fetch(BOARD_URL))
 

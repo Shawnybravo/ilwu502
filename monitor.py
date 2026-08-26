@@ -195,7 +195,13 @@ def main():
     save_state(state)
 
     print(f"H BOARD: {h['value']} ({h['modified']})")
-    print(f"4:30 total: {b['total']} = gangs {b['gang_total']} + rated {b['rated_total']}")
+    print(
+    f"4:30 total: {b['total']} = "
+    f"gang jobs {b['gang_total']} + "
+    f"ship jobs {b['ship_jobs_total']} + "
+    f"FSD {b['fsd_total']} + "
+    f"DP {b['dp_total']}"
+)
 
 if __name__ == "__main__":
     try:

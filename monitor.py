@@ -162,15 +162,15 @@ def main():
         if b["total"] > 200:
             headline += " — 🔥 OVER 200 JOBS"
 
-telegram(
-    f"{headline}\n"
-    f"Total: {b['total']} jobs\n"
-    f"Gang job breakdowns: {b['gang_total']}\n"
-    f"Ship jobs: {b['ship_jobs_total']}\n"
-    f"FSD: {b['fsd_total']}\n"
-    f"Deltaport: {b['dp_total']}\n"
-    f"Board time: {b['modified'] or 'unknown'}"
-)
+    telegram(
+        f"{headline}\n"
+        f"Total: {b['total']} jobs\n"
+        f"Gang job breakdowns: {b['gang_total']}\n"
+        f"Ship jobs: {b['ship_jobs_total']}\n"
+        f"FSD: {b['fsd_total']}\n"
+        f"Deltaport: {b['dp_total']}\n"
+        f"Board time: {b['modified'] or 'unknown'}"
+    )
 
     # Daily 1 PM status message.
     last_daily_status = state.get("last_daily_status")

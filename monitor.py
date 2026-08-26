@@ -92,16 +92,42 @@ def qty_sum(rows):
             total += int(raw)
     return total
 
+def gang_job_sum(text):
+    text = str(text or "").strip()
+
+    # Plain gang counts describe crews, not additional posted jobs.
+    # Examples: "1 GANG", "4 GANGS", "#1"
+    if re.fullmatch(r"#?\s*\d+\s+GANGS?", text, flags=re.I):
+        return 0
+
+    # Otherwise the GANGS field contains actual job quantities,
+    # e.g. "1HT 1WD 79DR 1MECH 1MRNCHK".
+    return numeric_sum(text)
+
+
 def calculate_430(gb):
     board = gb.get("work_board_430pm", {})
-    gang_total = sum(numeric_sum(ship.get("gangs", "")) for ship in (board.get("ships_in_port", []) or []))
+    ships = board.get("ships_in_port", []) or []
+
+    gang_jobs_total = sum(
+        gang_job_sum(ship.get("gangs", ""))
+        for ship in ships
+    )
+
+    ship_jobs_total = sum(
+        numeric_sum(ship.get("jobs", ""))
+        for ship in ships
+    )
+
     fsd_total = qty_sum(board.get("fsd_jobs", []))
     dp_total = qty_sum(board.get("dp_jobs", []))
-    rated_total = fsd_total + dp_total
+
+    total = gang_jobs_total + ship_jobs_total + fsd_total + dp_total
+
     return {
-        "total": gang_total + rated_total,
-        "gang_total": gang_total,
-        "rated_total": rated_total,
+        "total": total,
+        "gang_total": gang_jobs_total,
+        "ship_jobs_total": ship_jobs_total,
         "fsd_total": fsd_total,
         "dp_total": dp_total,
         "modified": board.get("modified_timestamp", ""),
@@ -136,15 +162,15 @@ def main():
         if b["total"] > 200:
             headline += " — 🔥 OVER 200 JOBS"
 
-        telegram(
-            f"{headline}\n"
-            f"Total: {b['total']} jobs\n"
-            f"Gangs: {b['gang_total']}\n"
-            f"Rated jobs: {b['rated_total']}\n"
-            f"FSD: {b['fsd_total']}\n"
-            f"DP: {b['dp_total']}\n"
-            f"Board time: {b['modified'] or 'unknown'}"
-        )
+telegram(
+    f"{headline}\n"
+    f"Total: {b['total']} jobs\n"
+    f"Gang job breakdowns: {b['gang_total']}\n"
+    f"Ship jobs: {b['ship_jobs_total']}\n"
+    f"FSD: {b['fsd_total']}\n"
+    f"Deltaport: {b['dp_total']}\n"
+    f"Board time: {b['modified'] or 'unknown'}"
+)
 
     # Daily 1 PM status message.
     last_daily_status = state.get("last_daily_status")

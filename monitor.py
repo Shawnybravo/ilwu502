@@ -41,6 +41,20 @@ def extract_gbdata(html):
         raise RuntimeError("Could not find embedded gbData in ILWU HTML.")
     return json.loads(m.group(1))
 
+def count_job_code(text, code):
+    text = str(text or "").upper()
+
+    if code == "DR":
+        pattern = r"(\d+)\s*DR\b"
+    elif code == "HT":
+        pattern = r"(\d+)\s*HT\b"
+    elif code == "LASHERS":
+        pattern = r"(\d+)\s*LASHERS?\b"
+    else:
+        return 0
+
+    return sum(int(x) for x in re.findall(pattern, text))
+
 def telegram(text):
     data = urllib.parse.urlencode({
         "chat_id": CHAT_ID,
@@ -104,7 +118,6 @@ def gang_job_sum(text):
     # e.g. "1HT 1WD 79DR 1MECH 1MRNCHK".
     return numeric_sum(text)
 
-
 def calculate_430(gb):
     board = gb.get("work_board_430pm", {})
     ships = board.get("ships_in_port", []) or []
@@ -119,17 +132,57 @@ def calculate_430(gb):
         for ship in ships
     )
 
+    # AUTO SHIPS: count DR only
+    auto_dr_total = 0
+
+    # CONTAINER SHIPS: count HT + lashers
+    container_ht_total = 0
+    container_lashers_total = 0
+
+    for ship in ships:
+        commodity = str(ship.get("commodities", "")).upper()
+        gangs = ship.get("gangs", "")
+        jobs = ship.get("jobs", "")
+
+        if "AUTO" in commodity:
+            auto_dr_total += count_job_code(gangs, "DR")
+            auto_dr_total += count_job_code(jobs, "DR")
+
+        if "CONTAINER" in commodity:
+            container_ht_total += count_job_code(gangs, "HT")
+            container_ht_total += count_job_code(jobs, "HT")
+
+            container_lashers_total += count_job_code(gangs, "LASHERS")
+            container_lashers_total += count_job_code(jobs, "LASHERS")
+
+    container_total = container_ht_total + container_lashers_total
+
+    # Rated jobs from the tables
     fsd_total = qty_sum(board.get("fsd_jobs", []))
     dp_total = qty_sum(board.get("dp_jobs", []))
+    rated_total = fsd_total + dp_total
 
-    total = gang_jobs_total + ship_jobs_total + fsd_total + dp_total
+    total = (
+        gang_jobs_total
+        + ship_jobs_total
+        + rated_total
+    )
 
     return {
         "total": total,
         "gang_total": gang_jobs_total,
         "ship_jobs_total": ship_jobs_total,
+
+        "auto_dr_total": auto_dr_total,
+
+        "container_ht_total": container_ht_total,
+        "container_lashers_total": container_lashers_total,
+        "container_total": container_total,
+
         "fsd_total": fsd_total,
         "dp_total": dp_total,
+        "rated_total": rated_total,
+
         "modified": board.get("modified_timestamp", ""),
     }
 
@@ -164,11 +217,17 @@ def main():
 
         telegram(
             f"{headline}\n"
-            f"Total: {b['total']} jobs\n"
+            f"Total: {b['total']} jobs\n\n"
+
+            f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
+            f"📦 Containers: {b['container_total']} "
+            f"({b['container_ht_total']} HT + "
+            f"{b['container_lashers_total']} lashers)\n"
+            f"🎟 Rated jobs: {b['rated_total']} "
+            f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n\n"
+
             f"Gang job breakdowns: {b['gang_total']}\n"
             f"Ship jobs: {b['ship_jobs_total']}\n"
-            f"FSD: {b['fsd_total']}\n"
-            f"Deltaport: {b['dp_total']}\n"
             f"Board time: {b['modified'] or 'unknown'}"
         )
 

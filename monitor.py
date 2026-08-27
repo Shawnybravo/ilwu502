@@ -259,39 +259,39 @@ def main():
 
     old_nw = state.get("bcmea_nw_forecast")
 
-if old_nw is not None and nw != old_nw:
-    lines = ["📈 BCMEA NW FORECAST UPDATED"]
+    if old_nw is not None and nw != old_nw:
+        lines = ["📈 BCMEA NW FORECAST UPDATED"]
 
-    busy_days = []
+        busy_days = []
 
-    for row in nw:
-        qty = row["quantity"]
+        for row in nw:
+            qty = row["quantity"]
 
-        if qty >= 30:
-            marker = "🚨"
-        elif qty >= 25:
-            marker = "🔥"
-        else:
-            marker = "•"
+            if qty >= 30:
+                marker = "🚨"
+            elif qty >= 25:
+                marker = "🔥"
+            else:
+                marker = "•"
 
-        lines.append(
-            f"{marker} {row['date']}: {qty} gangs"
-        )
-
-        if qty >= 25:
-            busy_days.append(row)
-
-    if busy_days:
-        lines.append("")
-        lines.append("Busy forecast:")
-
-        for row in busy_days:
-            label = "VERY BUSY" if row["quantity"] >= 30 else "BUSY"
             lines.append(
-                f"{row['date']}: {row['quantity']} gangs — {label}"
+                f"{marker} {row['date']}: {qty} gangs"
             )
 
-    telegram("\n".join(lines))
+            if qty >= 25:
+                busy_days.append(row)
+
+        if busy_days:
+            lines.append("")
+            lines.append("Busy forecast:")
+
+            for row in busy_days:
+                label = "VERY BUSY" if row["quantity"] >= 30 else "BUSY"
+                lines.append(
+                    f"{row['date']}: {row['quantity']} gangs — {label}"
+                )
+
+        telegram("\n".join(lines))
 
     # Daily 1 PM status message.
     last_daily_status = state.get("last_daily_status")

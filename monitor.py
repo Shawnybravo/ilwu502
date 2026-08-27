@@ -72,6 +72,59 @@ def telegram(text):
         if not body.get("ok"):
             raise RuntimeError(f"Telegram error: {body}")
 
+def get_telegram_updates(offset=None):
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates"
+
+    if offset is not None:
+        url += f"?offset={offset}"
+
+    req = urllib.request.Request(url)
+
+    with urllib.request.urlopen(req, timeout=30) as r:
+        body = json.loads(r.read().decode())
+
+    if not body.get("ok"):
+        raise RuntimeError(f"Telegram getUpdates error: {body}")
+
+    return body.get("result", [])
+
+def send_current_update(h, b, nw):
+    lines = [
+        "📊 CURRENT ILWU UPDATE",
+        "",
+        f"🚢 H BOARD: {h['value']}",
+        "",
+        f"📋 4:30 BOARD: {b['total']} jobs",
+        f"🚗 Auto drivers (DR): {b['auto_dr_total']}",
+        (
+            f"📦 Containers: {b['container_total']} "
+            f"({b['container_ht_total']} HT + "
+            f"{b['container_lashers_total']} lashers)"
+        ),
+        (
+            f"🎟 Rated jobs: {b['rated_total']} "
+            f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})"
+        ),
+        "",
+        "📈 BCMEA NW FORECAST",
+    ]
+
+    for row in nw:
+        qty = row["quantity"]
+
+        if qty >= 30:
+            marker = "🚨"
+        elif qty >= 25:
+            marker = "🔥"
+        else:
+            marker = "•"
+
+        lines.append(
+            f"{marker} {row['date']}: {qty} gangs"
+        )
+
+    telegram("\n".join(lines))
+
 def load_state():
     if not STATE_FILE.exists():
         return {}
@@ -219,6 +272,30 @@ def main():
     h = find_h_board(pins_gb)
     b = calculate_430(board_gb)
     nw = normalize_nw_forecast(fetch_json(BCMEA_NW_URL))
+
+    # Telegram commands
+    last_telegram_update_id = state.get("telegram_update_id", 0)
+
+    updates = get_telegram_updates(last_telegram_update_id + 1)
+
+    for update in updates:
+        update_id = update.get("update_id", 0)
+        message = update.get("message", {})
+        text = str(message.get("text", "")).strip().lower()
+        chat_id = str(message.get("chat", {}).get("id", ""))
+
+        if chat_id == str(CHAT_ID):
+            if text in ["update", "/update"]:
+                send_current_update(h, b, nw)
+
+        last_telegram_update_id = max(
+            last_telegram_update_id,
+            update_id
+        )
+
+    state["telegram_update_id"] = last_telegram_update_id
+
+
     local_now = datetime.now(timezone.utc).astimezone(ZoneInfo("America/Vancouver"))
     today = local_now.date().isoformat()
     old_h = state.get("h_board")

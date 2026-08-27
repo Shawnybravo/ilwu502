@@ -174,8 +174,8 @@ def gang_job_sum(text):
     # e.g. "1HT 1WD 79DR 1MECH 1MRNCHK".
     return numeric_sum(text)
 
-def calculate_430(gb):
-    board = gb.get("work_board_430pm", {})
+def calculate_board(gb, board_key):
+    board = gb.get(board_key, {})
     ships = board.get("ships_in_port", []) or []
 
     gang_jobs_total = sum(

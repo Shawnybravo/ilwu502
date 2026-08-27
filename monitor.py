@@ -374,12 +374,15 @@ def main():
     last_daily_status = state.get("last_daily_status")
     if local_now.hour == 13 and last_daily_status != today:
         telegram(
-            "🕐 1 PM ILWU BOARD STATUS\n"
-            f"4:30 total: {b['total']} jobs\n"
-            f"Gangs: {b['gang_total']}\n"
-            f"Rated jobs: {b['rated_total']} "
-            f"(FSD {b['fsd_total']} + DP {b['dp_total']})\n"
-            f"H BOARD: {h['value']}\n"
+            "🕐 1 PM ILWU BOARD STATUS\n\n"
+            f"🚢 H BOARD: {h['value']}\n\n"
+            f"📋 4:30 BOARD: {b['total']} jobs\n"
+            f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
+            f"📦 Containers: {b['container_total']} "
+            f"({b['container_ht_total']} HT + "
+            f"{b['container_lashers_total']} lashers)\n"
+            f"🎟 Rated jobs: {b['rated_total']} "
+            f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n\n"
             f"Board time: {b['modified'] or 'unknown'}"
         )
         state["last_daily_status"] = today

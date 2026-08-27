@@ -10,7 +10,9 @@ import urllib.request
 from pathlib import Path
 
 PINS_URL = "https://ilwu502.ca/greaseboard/work-pins/?gb_data_refresh"
+BOARD_8AM_URL = "https://ilwu502.ca/greaseboard/work-board-8am/?gb_data_refresh"
 BOARD_URL = "https://ilwu502.ca/greaseboard/work-board-430pm/?gb_data_refresh"
+BOARD_1AM_URL = "https://ilwu502.ca/greaseboard/work-board-1am/?gb_data_refresh"
 BCMEA_NW_URL = "https://corpreports.bcmea.com/corp_report_webapi/reports/forecast/NW"
 STATE_FILE = Path("state.json")
 

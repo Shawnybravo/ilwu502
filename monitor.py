@@ -278,7 +278,7 @@ def main():
     h = find_h_board(pins_gb)
     b = calculate_board(board_gb, "work_board_430pm")
     b8 = calculate_board(board_8am_gb, "work_board_8am")
-    b-1= = calculate_board(board_1am_gb, "work_board_1am")
+    b_1 = calculate_board(board_1am_gb, "work_board_1am")
     nw = normalize_nw_forecast(fetch_json(BCMEA_NW_URL))
 
     # Telegram commands

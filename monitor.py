@@ -90,7 +90,7 @@ def get_telegram_updates(offset=None):
 
     return body.get("result", [])
 
-def send_current_update(h, b, b8, b1, nw):
+def send_current_update(h, b, b8, b_1, nw):
     lines = [
         "📊 CURRENT ILWU UPDATE",
         "",
@@ -98,7 +98,7 @@ def send_current_update(h, b, b8, b1, nw):
         "",
         f"🌅 8 AM: {b8['total']} jobs",
         f"📋 4:30 PM: {b['total']} jobs",
-        f"🌙 1 AM: {b1['total']} jobs",
+        f"🌙 1 AM: {b_1['total']} jobs",
         "",
         "📋 4:30 BREAKDOWN",
         f"🚗 Auto drivers (DR): {b['auto_dr_total']}",
@@ -294,7 +294,7 @@ def main():
 
         if chat_id == str(CHAT_ID):
             if text in ["update", "/update"]:
-                send_current_update(h, b, b8, b1, nw)
+                send_current_update(h, b, b8, b_1, nw)
 
         last_telegram_update_id = max(
             last_telegram_update_id,
@@ -376,28 +376,28 @@ def main():
         old_1am_total = state.get("board_1am_total")
 
         changed_1am = (
-            b1["modified"] != old_1am_modified
-            or b1["total"] != old_1am_total
+            b_1["modified"] != old_1am_modified
+            or b_1["total"] != old_1am_total
         )
 
-        if old_1am_modified is not None and changed_1am and b1["total"] >= 150:
-            if b1["total"] >= 250:
+        if old_1am_modified is not None and changed_1am and b_1["total"] >= 150:
+            if b_1["total"] >= 250:
                 level = "🚨 HUGE"
-            elif b1["total"] >= 200:
+            elif b_1["total"] >= 200:
                 level = "🔥🔥 VERY BUSY"
             else:
                 level = "🔥 BUSY"
 
             telegram(
                 f"🌙 1 AM BOARD — {level}\n"
-                f"Total: {b1['total']} jobs\n"
-                f"🚗 Auto drivers: {b1['auto_dr_total']}\n"
-                f"📦 Containers: {b1['container_total']} "
-                f"({b1['container_ht_total']} HT + "
-                f"{b1['container_lashers_total']} lashers)\n"
-                f"🎟 Rated: {b1['rated_total']} "
-                f"(FSD {b1['fsd_total']} + DP {b1['dp_total']})\n"
-                f"Board time: {b1['modified'] or 'unknown'}"
+                f"Total: {b_1['total']} jobs\n"
+                f"🚗 Auto drivers: {b_1['auto_dr_total']}\n"
+                f"📦 Containers: {b_1['container_total']} "
+                f"({b_1['container_ht_total']} HT + "
+                f"{b_1['container_lashers_total']} lashers)\n"
+                f"🎟 Rated: {b_1['rated_total']} "
+                f"(FSD {b_1['fsd_total']} + DP {b_1['dp_total']})\n"
+                f"Board time: {b_1['modified'] or 'unknown'}"
             )
 
     old_nw = state.get("bcmea_nw_forecast")
@@ -461,8 +461,8 @@ def main():
         "bcmea_nw_forecast": nw,
         "board_8am_total": b8["total"],
         "board_8am_modified": b8["modified"],
-        "board_1am_total": b1["total"],
-        "board_1am_modified": b1["modified"],
+        "board_1am_total": b_1["total"],
+        "board_1am_modified": b_1["modified"],
     })
     save_state(state)
 

@@ -32,14 +32,23 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python monitor.py
 
-      - name: Save monitor state
+        - name: Save monitor state
         run: |
           if git diff --quiet -- state.json; then
             echo "No state change to commit."
             exit 0
           fi
+
+          cp state.json /tmp/monitor-state.json
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin main
+          git reset --hard origin/main
+
+          cp /tmp/monitor-state.json state.json
+
           git add state.json
           git commit -m "Update ILWU monitor state"
           git push

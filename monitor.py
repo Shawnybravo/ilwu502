@@ -90,13 +90,17 @@ def get_telegram_updates(offset=None):
 
     return body.get("result", [])
 
-def send_current_update(h, b, nw):
+def send_current_update(h, b, b8, b1, nw):
     lines = [
         "📊 CURRENT ILWU UPDATE",
         "",
         f"🚢 H BOARD: {h['value']}",
         "",
-        f"📋 4:30 BOARD: {b['total']} jobs",
+        f"🌅 8 AM: {b8['total']} jobs",
+        f"📋 4:30 PM: {b['total']} jobs",
+        f"🌙 1 AM: {b1['total']} jobs",
+        "",
+        "📋 4:30 BREAKDOWN",
         f"🚗 Auto drivers (DR): {b['auto_dr_total']}",
         (
             f"📦 Containers: {b['container_total']} "
@@ -115,15 +119,13 @@ def send_current_update(h, b, nw):
         qty = row["quantity"]
 
         if qty >= 30:
-            marker = "🚨"
+            marker = "🚨🔥"
         elif qty >= 25:
             marker = "🔥"
         else:
             marker = "•"
 
-        lines.append(
-            f"{marker} {row['date']}: {qty} gangs"
-        )
+        lines.append(f"{marker} {row['date']}: {qty} gangs")
 
     telegram("\n".join(lines))
 
@@ -270,9 +272,13 @@ def main():
     state = load_state()
     pins_gb = extract_gbdata(fetch(PINS_URL))
     board_gb = extract_gbdata(fetch(BOARD_URL))
+    board_8am_gb = extract_gbdata(fetch(BOARD_8AM_URL))
+    board_1am_gb = extract_gbdata(fetch(BOARD_1AM_URL))
 
     h = find_h_board(pins_gb)
-    b = calculate_430(board_gb)
+    b = calculate_board(board_gb, "work_board_430pm")
+    b8 = calculate_board(board_8am_gb, "work_board_8am")
+    b-1= = calculate_board(board_1am_gb, "work_board_1am")
     nw = normalize_nw_forecast(fetch_json(BCMEA_NW_URL))
 
     # Telegram commands
@@ -288,7 +294,7 @@ def main():
 
         if chat_id == str(CHAT_ID):
             if text in ["update", "/update"]:
-                send_current_update(h, b, nw)
+                send_current_update(h, b, b8, b1, nw)
 
         last_telegram_update_id = max(
             last_telegram_update_id,
@@ -335,6 +341,64 @@ def main():
             f"Ship jobs: {b['ship_jobs_total']}\n"
             f"Board time: {b['modified'] or 'unknown'}"
         )
+
+        # 8 AM busy-board alerts
+        old_8am_modified = state.get("board_8am_modified")
+        old_8am_total = state.get("board_8am_total")
+
+        changed_8am = (
+            b8["modified"] != old_8am_modified
+            or b8["total"] != old_8am_total
+        )
+
+        if old_8am_modified is not None and changed_8am and b8["total"] >= 200:
+            if b8["total"] >= 300:
+                level = "🚨 HUGE"
+            elif b8["total"] >= 250:
+                level = "🔥🔥 VERY BUSY"
+            else:
+                level = "🔥 BUSY"
+
+            telegram(
+                f"🌅 8 AM BOARD — {level}\n"
+                f"Total: {b8['total']} jobs\n"
+                f"🚗 Auto drivers: {b8['auto_dr_total']}\n"
+                f"📦 Containers: {b8['container_total']} "
+                f"({b8['container_ht_total']} HT + "
+                f"{b8['container_lashers_total']} lashers)\n"
+                f"🎟 Rated: {b8['rated_total']} "
+                f"(FSD {b8['fsd_total']} + DP {b8['dp_total']})\n"
+                f"Board time: {b8['modified'] or 'unknown'}"
+            )
+
+        # 1 AM / graveyard busy-board alerts
+        old_1am_modified = state.get("board_1am_modified")
+        old_1am_total = state.get("board_1am_total")
+
+        changed_1am = (
+            b1["modified"] != old_1am_modified
+            or b1["total"] != old_1am_total
+        )
+
+        if old_1am_modified is not None and changed_1am and b1["total"] >= 150:
+            if b1["total"] >= 250:
+                level = "🚨 HUGE"
+            elif b1["total"] >= 200:
+                level = "🔥🔥 VERY BUSY"
+            else:
+                level = "🔥 BUSY"
+
+            telegram(
+                f"🌙 1 AM BOARD — {level}\n"
+                f"Total: {b1['total']} jobs\n"
+                f"🚗 Auto drivers: {b1['auto_dr_total']}\n"
+                f"📦 Containers: {b1['container_total']} "
+                f"({b1['container_ht_total']} HT + "
+                f"{b1['container_lashers_total']} lashers)\n"
+                f"🎟 Rated: {b1['rated_total']} "
+                f"(FSD {b1['fsd_total']} + DP {b1['dp_total']})\n"
+                f"Board time: {b1['modified'] or 'unknown'}"
+            )
 
     old_nw = state.get("bcmea_nw_forecast")
 
@@ -395,6 +459,10 @@ def main():
         "board_430_total": b["total"],
         "board_430_modified": b["modified"],
         "bcmea_nw_forecast": nw,
+        "board_8am_total": b8["total"],
+        "board_8am_modified": b8["modified"],
+        "board_1am_total": b1["total"],
+        "board_1am_modified": b1["modified"],
     })
     save_state(state)
 

@@ -11,6 +11,7 @@ from pathlib import Path
 
 PINS_URL = "https://ilwu502.ca/greaseboard/work-pins/?gb_data_refresh"
 BOARD_URL = "https://ilwu502.ca/greaseboard/work-board-430pm/?gb_data_refresh"
+BCMEA_NW_URL = "https://corpreports.bcmea.com/corp_report_webapi/reports/forecast/NW"
 STATE_FILE = Path("state.json")
 
 BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
@@ -186,6 +187,30 @@ def calculate_430(gb):
         "modified": board.get("modified_timestamp", ""),
     }
 
+def fetch_json(url):
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": HEADERS["User-Agent"],
+            "Accept": "application/json",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+def normalize_nw_forecast(rows):
+    forecast = []
+
+    for row in rows or []:
+        forecast.append({
+            "day": str(row.get("day", "")).strip(),
+            "date": str(row.get("date", "")).strip(),
+            "quantity": int(row.get("quantity", 0) or 0),
+            "status": row.get("status"),
+        })
+
+    return forecast
+
 def main():
     state = load_state()
     pins_gb = extract_gbdata(fetch(PINS_URL))
@@ -193,6 +218,7 @@ def main():
 
     h = find_h_board(pins_gb)
     b = calculate_430(board_gb)
+    nw = normalize_nw_forecast(fetch_json(BCMEA_NW_URL))
     local_now = datetime.now(timezone.utc).astimezone(ZoneInfo("America/Vancouver"))
     today = local_now.date().isoformat()
     old_h = state.get("h_board")
@@ -231,6 +257,42 @@ def main():
             f"Board time: {b['modified'] or 'unknown'}"
         )
 
+    old_nw = state.get("bcmea_nw_forecast")
+
+if old_nw is not None and nw != old_nw:
+    lines = ["📈 BCMEA NW FORECAST UPDATED"]
+
+    busy_days = []
+
+    for row in nw:
+        qty = row["quantity"]
+
+        if qty >= 30:
+            marker = "🚨"
+        elif qty >= 25:
+            marker = "🔥"
+        else:
+            marker = "•"
+
+        lines.append(
+            f"{marker} {row['date']}: {qty} gangs"
+        )
+
+        if qty >= 25:
+            busy_days.append(row)
+
+    if busy_days:
+        lines.append("")
+        lines.append("Busy forecast:")
+
+        for row in busy_days:
+            label = "VERY BUSY" if row["quantity"] >= 30 else "BUSY"
+            lines.append(
+                f"{row['date']}: {row['quantity']} gangs — {label}"
+            )
+
+    telegram("\n".join(lines))
+
     # Daily 1 PM status message.
     last_daily_status = state.get("last_daily_status")
     if local_now.hour == 13 and last_daily_status != today:
@@ -250,6 +312,7 @@ def main():
         "h_modified": h["modified"],
         "board_430_total": b["total"],
         "board_430_modified": b["modified"],
+        "bcmea_nw_forecast": nw,
     })
     save_state(state)
 

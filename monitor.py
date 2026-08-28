@@ -504,6 +504,14 @@ def main():
         "board_8am_modified": b8["modified"],
         "board_1am_total": b_1["total"],
         "board_1am_modified": b_1["modified"],
+        
+        "board_430_auto_dr_total": b["auto_dr_total"],
+        "board_430_container_total": b["container_total"],
+        "board_430_container_ht_total": b["container_ht_total"],
+        "board_430_container_lashers_total": b["container_lashers_total"],
+        "board_430_rated_total": b["rated_total"],
+        "board_430_fsd_total": b["fsd_total"],
+        "board_430_dp_total": b["dp_total"],
     })
     save_state(state)
 

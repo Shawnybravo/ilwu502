@@ -118,6 +118,7 @@ def send_current_update(h, b, b8, b_1, nw):
         "📊 CURRENT ILWU UPDATE",
         "",
         f"🚢 H BOARD: {h['value']}",
+        f'🔗 <a href="{PINS_PAGE}">View work pins</a>'
         "",
         f"🌅 8 AM: {b8['total']} jobs",
         f"📋 4:30 PM: {b['total']} jobs",
@@ -149,6 +150,7 @@ def send_current_update(h, b, b8, b_1, nw):
             marker = "•"
 
         lines.append(f"{marker} {row['date']}: {qty} gangs")
+        lines.append(f'🔗 <a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>')
 
     telegram("\n".join(lines))
 

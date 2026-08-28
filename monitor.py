@@ -191,7 +191,7 @@ def calculate_board(gb, board_key):
     ships = board.get("ships_in_port", []) or []
 
     for ship in ships:
-    if "CONTAINER" in str(ship.get("commodities", "")).upper():
+      if "CONTAINER" in str(ship.get("commodities", "")).upper():
         print("CONTAINER SHIP:", ship)
 
     gang_jobs_total = sum(

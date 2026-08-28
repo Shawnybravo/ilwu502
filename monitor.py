@@ -73,7 +73,7 @@ def count_job_code(text, code):
     elif code == "HT":
         pattern = r"(\d+)\s*HT\b"
     elif code == "LASHERS":
-        pattern = r"(\d+)\s*LASHERS? | LASH\b"
+        pattern = r"(\d+)\s*(?:LASHERS?|LASH)\b"
     else:
         return 0
 
@@ -189,10 +189,6 @@ def gang_job_sum(text):
 def calculate_board(gb, board_key):
     board = gb.get(board_key, {})
     ships = board.get("ships_in_port", []) or []
-
-    for ship in ships:
-      if "CONTAINER" in str(ship.get("commodities", "")).upper():
-        print("CONTAINER SHIP:", ship)
 
     gang_jobs_total = sum(
         gang_job_sum(ship.get("gangs", ""))

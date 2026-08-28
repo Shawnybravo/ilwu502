@@ -150,7 +150,7 @@ def send_current_update(h, b, b8, b_1, nw):
             marker = "•"
 
         lines.append(f"{marker} {row['date']}: {qty} gangs")
-        lines.append(f'🔗 <a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>')
+    lines.append(f'🔗 <a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>')
 
     telegram("\n".join(lines))
 

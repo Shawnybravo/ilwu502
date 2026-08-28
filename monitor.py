@@ -456,7 +456,7 @@ def main():
             lines.append(
                 f"{marker} {row['date']}: {qty} gangs"
             )
-            lines.append{
+            lines.append(
                 f'🔗 <a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>'
             )
 

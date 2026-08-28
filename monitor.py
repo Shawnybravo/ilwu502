@@ -270,16 +270,25 @@ def normalize_nw_forecast(rows):
 
 def main():
     state = load_state()
+    print("Fetching H board...")
     pins_gb = extract_gbdata(fetch(PINS_URL))
+
+    print("Fetching 4:30 board...")
     board_gb = extract_gbdata(fetch(BOARD_URL))
+
+    print("Fetching 8 AM board...")
     board_8am_gb = extract_gbdata(fetch(BOARD_8AM_URL))
+
+    print("Fetching graveyard board...")
     board_1am_gb = extract_gbdata(fetch(BOARD_1AM_URL))
+
+    print("Fetching BCMEA NW forecast...")
+    nw = normalize_nw_forecast(fetch_json(BCMEA_NW_URL))
 
     h = find_h_board(pins_gb)
     b = calculate_board(board_gb, "work_board_430pm")
     b8 = calculate_board(board_8am_gb, "work_board_8am")
     b_1 = calculate_board(board_1am_gb, "work_board_1am")
-    nw = normalize_nw_forecast(fetch_json(BCMEA_NW_URL))
 
     # Telegram commands
     last_telegram_update_id = state.get("telegram_update_id", 0)

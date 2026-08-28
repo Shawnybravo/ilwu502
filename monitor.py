@@ -73,7 +73,7 @@ def count_job_code(text, code):
     elif code == "HT":
         pattern = r"(\d+)\s*HT\b"
     elif code == "LASHERS":
-        pattern = r"(\d+)\s*LASHERS?\b"
+        pattern = r"(\d+)\s*LASHERS? | LASH\b"
     else:
         return 0
 

@@ -26,11 +26,25 @@ HEADERS = {
 }
 
 def fetch(url):
-    sep = "&" if "?" in url else "?"
-    url = f"{url}{sep}_monitor_ts={time.time_ns()}"
-    req = urllib.request.Request(url, headers=HEADERS)
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return r.read().decode("utf-8", errors="replace")
+    last_error = None
+
+    for attempt in range(3):
+        try:
+            sep = "&" if "?" in url else "?"
+            request_url = f"{url}{sep}_monitor_ts={time.time_ns()}"
+
+            req = urllib.request.Request(request_url, headers=HEADERS)
+
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return r.read().decode("utf-8", errors="replace")
+
+        except Exception as e:
+            last_error = e
+
+            if attempt < 2:
+                time.sleep(5)
+
+    raise last_error
 
 def extract_gbdata(html):
     m = re.search(

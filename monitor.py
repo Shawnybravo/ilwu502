@@ -14,6 +14,13 @@ BOARD_8AM_URL = "https://ilwu502.ca/greaseboard/work-board-8am/?gb_data_refresh"
 BOARD_URL = "https://ilwu502.ca/greaseboard/work-board-430pm/?gb_data_refresh"
 BOARD_1AM_URL = "https://ilwu502.ca/greaseboard/work-board-1am/?gb_data_refresh"
 BCMEA_NW_URL = "https://corpreports.bcmea.com/corp_report_webapi/reports/forecast/NW"
+
+PINS_PAGE = "https://ilwu502.ca/greaseboard/work-pins/"
+BOARD_430_PAGE = "https://ilwu502.ca/greaseboard/work-board-430pm/"
+BOARD_8AM_PAGE = "https://ilwu502.ca/greaseboard/work-board-8am/"
+BOARD_1AM_PAGE = "https://ilwu502.ca/greaseboard/work-board-1am/"
+BCMEA_FORECAST_PAGE = "https://workinfo.bcmea.com/#/forecasts"
+
 STATE_FILE = Path("state.json")
 
 BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
@@ -76,8 +83,10 @@ def telegram(text):
     data = urllib.parse.urlencode({
         "chat_id": CHAT_ID,
         "text": text,
+        "parse_mode": "HTML",
         "disable_web_page_preview": "true",
     }).encode()
+    
     req = urllib.request.Request(
         f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
         data=data,
@@ -335,6 +344,7 @@ def main():
             "🚢 H BOARD UPDATED\n"
             f"{old_h} → {h['value']}\n"
             f"Board time: {h['modified'] or 'unknown'}"
+            f'🔗 <a href="{PINS_PAGE}">View work pins</a>'
         )
     old_430_modified = state.get("board_430_modified")
     old_430_total = state.get("board_430_total")
@@ -363,6 +373,7 @@ def main():
             f"Gang job breakdowns: {b['gang_total']}\n"
             f"Ship jobs: {b['ship_jobs_total']}\n"
             f"Board time: {b['modified'] or 'unknown'}"
+            f'🔗 <a href="{BOARD_430_PAGE}">View 4:30 board</a>'
         )
 
         # 8 AM busy-board alerts
@@ -383,7 +394,7 @@ def main():
                 level = "🔥 BUSY"
 
             telegram(
-                f"🌅 8 AM BOARD — {level}\n"
+                f"😴 8 AM BOARD — {level}\n"
                 f"Total: {b8['total']} jobs\n"
                 f"🚗 Auto drivers: {b8['auto_dr_total']}\n"
                 f"📦 Containers: {b8['container_total']} "
@@ -392,6 +403,7 @@ def main():
                 f"🎟 Rated: {b8['rated_total']} "
                 f"(FSD {b8['fsd_total']} + DP {b8['dp_total']})\n"
                 f"Board time: {b8['modified'] or 'unknown'}"
+                f'🔗 <a href="{BOARD_8AM_PAGE}">View 8 AM board</a>'
             )
 
         # 1 AM / graveyard busy-board alerts
@@ -412,7 +424,7 @@ def main():
                 level = "🔥 BUSY"
 
             telegram(
-                f"🌙 1 AM BOARD — {level}\n"
+                f"⚰️ 1 AM BOARD — {level}\n"
                 f"Total: {b_1['total']} jobs\n"
                 f"🚗 Auto drivers: {b_1['auto_dr_total']}\n"
                 f"📦 Containers: {b_1['container_total']} "
@@ -421,6 +433,7 @@ def main():
                 f"🎟 Rated: {b_1['rated_total']} "
                 f"(FSD {b_1['fsd_total']} + DP {b_1['dp_total']})\n"
                 f"Board time: {b_1['modified'] or 'unknown'}"
+                f'🔗 <a href="{BOARD_1AM_PAGE}">View graveyard board</a>'
             )
 
     old_nw = state.get("bcmea_nw_forecast")
@@ -442,6 +455,9 @@ def main():
 
             lines.append(
                 f"{marker} {row['date']}: {qty} gangs"
+            )
+            lines.append{
+                f'🔗 <a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>'
             )
 
             if qty >= 25:

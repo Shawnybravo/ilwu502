@@ -96,22 +96,7 @@ def telegram(text):
         body = json.loads(r.read().decode())
         if not body.get("ok"):
             raise RuntimeError(f"Telegram error: {body}")
-
-def get_telegram_updates(offset=None):
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates"
-
-    if offset is not None:
-        url += f"?offset={offset}"
-
-    req = urllib.request.Request(url)
-
-    with urllib.request.urlopen(req, timeout=30) as r:
-        body = json.loads(r.read().decode())
-
-    if not body.get("ok"):
-        raise RuntimeError(f"Telegram getUpdates error: {body}")
-
-    return body.get("result", [])
+            
 
 def send_current_update(h, b, b8, b_1, nw):
     lines = [
@@ -314,28 +299,6 @@ def main():
     b = calculate_board(board_gb, "work_board_430pm")
     b8 = calculate_board(board_8am_gb, "work_board_8am")
     b_1 = calculate_board(board_1am_gb, "work_board_1am")
-
-    # Telegram commands
-    last_telegram_update_id = state.get("telegram_update_id", 0)
-
-    updates = get_telegram_updates(last_telegram_update_id + 1)
-
-    for update in updates:
-        update_id = update.get("update_id", 0)
-        message = update.get("message", {})
-        text = str(message.get("text", "")).strip().lower()
-        chat_id = str(message.get("chat", {}).get("id", ""))
-
-        if chat_id == str(CHAT_ID):
-            if text in ["update", "/update"]:
-                send_current_update(h, b, b8, b_1, nw)
-
-        last_telegram_update_id = max(
-            last_telegram_update_id,
-            update_id
-        )
-
-    state["telegram_update_id"] = last_telegram_update_id
 
 
     local_now = datetime.now(timezone.utc).astimezone(ZoneInfo("America/Vancouver"))

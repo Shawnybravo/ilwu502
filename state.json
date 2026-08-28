@@ -1,12 +1,6 @@
 {
   "bcmea_nw_forecast": [
     {
-      "date": "Wed Aug 26",
-      "day": "Wed",
-      "quantity": 18,
-      "status": 2
-    },
-    {
       "date": "Thu Aug 27",
       "day": "Thu",
       "quantity": 18,
@@ -40,6 +34,12 @@
       "date": "Tue Sep 01",
       "day": "Tue",
       "quantity": 0,
+      "status": 1
+    },
+    {
+      "date": "Wed Sep 02",
+      "day": "Wed",
+      "quantity": 10,
       "status": 1
     }
   ],

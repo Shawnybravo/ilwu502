@@ -110,47 +110,6 @@ def telegram(text):
             raise RuntimeError(f"Telegram error: {body}")
             
 
-def send_current_update(h, b, b8, b_1, nw):
-    lines = [
-        "📊 CURRENT ILWU UPDATE",
-        "",
-        f"🚢 H BOARD: {h['value']}",
-        f'🔗 <a href="{PINS_PAGE}">View work pins</a>'
-        "",
-        f"🌅 8 AM: {b8['total']} jobs",
-        f"📋 4:30 PM: {b['total']} jobs",
-        f"🌙 1 AM: {b_1['total']} jobs",
-        "",
-        "📋 4:30 BREAKDOWN",
-        f"🚗 Auto drivers (DR): {b['auto_dr_total']}",
-        (
-            f"📦 Containers: {b['container_total']} "
-            f"({b['container_ht_total']} HT + "
-            f"{b['container_lashers_total']} lashers)"
-        ),
-        (
-            f"🎟 Rated jobs: {b['rated_total']} "
-            f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})"
-        ),
-        "",
-        "📈 BCMEA NW FORECAST",
-    ]
-
-    for row in nw:
-        qty = row["quantity"]
-
-        if qty >= 30:
-            marker = "🚨🔥"
-        elif qty >= 25:
-            marker = "🔥"
-        else:
-            marker = "•"
-
-        lines.append(f"{marker} {row['date']}: {qty} gangs")
-    lines.append(f'🔗 <a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>')
-
-    telegram("\n".join(lines))
-
 def load_state():
     if not STATE_FILE.exists():
         return {}
@@ -457,22 +416,6 @@ def pin_move_alert(event):
     lines.extend(["", f'<a href="{PINS_PAGE}">View work pins</a>'])
     return "\n".join(lines)
 
-
-
-
-
-def find_h_board(gb):
-    wp = gb.get("work_pins", {})
-    for key in ["for_8am", "for_430pm", "for_1am"]:
-        for item in wp.get(key, []) or []:
-            if str(item.get("job", "")).strip().upper() == "H BOARD":
-                return {
-                    "value": str(item.get("from", "")).strip(),
-                    "to": str(item.get("to", "")).strip(),
-                    "section": key,
-                    "modified": wp.get("modified_timestamp", ""),
-                }
-    raise RuntimeError("H BOARD was not found in work_pins.")
 
 def numeric_sum(text):
     return sum(int(x) for x in re.findall(r"\d+", str(text or "")))

@@ -111,5 +111,35 @@
     }
   ],
   "pin_moves": [],
-  "shift_outcomes": []
+  "shift_outcomes": [],
+  "worked_reports": [
+    {
+      "date": "2026-08-29",
+      "h_board": "86",
+      "h_moved": null,
+      "key": "me|2026-08-29|4:30",
+      "matched_shift_outcome_key": null,
+      "outcome_coverage_confident": null,
+      "person": "me",
+      "position": "H-16",
+      "reported_at": "2026-08-29T21:53:19.724000+00:00",
+      "reported_at_vancouver": "2026-08-29T14:53:19.724000-07:00",
+      "shift": "4:30",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "August 29, 2026 @ 11:53 AM",
+        "container_ht": 3,
+        "container_lashers": 48,
+        "containers": 51,
+        "deltaport": 125,
+        "fsd": 8,
+        "rated": 133,
+        "total": 195
+      },
+      "source": "self_report",
+      "t_board": "37",
+      "t_moved": null,
+      "worked": true
+    }
+  ]
 }

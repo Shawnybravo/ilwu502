@@ -310,7 +310,6 @@ def normalize_nw_forecast(rows):
         })
 
     return forecast
-
 def main():
     state = load_state()
 
@@ -465,8 +464,17 @@ def main():
                 f'<a href="{BOARD_8AM_PAGE}">View 8 AM board</a>'
             )
 
-        state["board_8am_total"] = b8["total"]
-        state["board_8am_modified"] = b8["modified"]
+        state.update({
+            "board_8am_total": b8["total"],
+            "board_8am_modified": b8["modified"],
+            "board_8am_auto_dr_total": b8["auto_dr_total"],
+            "board_8am_container_total": b8["container_total"],
+            "board_8am_container_ht_total": b8["container_ht_total"],
+            "board_8am_container_lashers_total": b8["container_lashers_total"],
+            "board_8am_rated_total": b8["rated_total"],
+            "board_8am_fsd_total": b8["fsd_total"],
+            "board_8am_dp_total": b8["dp_total"],
+        })
 
     # Graveyard is deliberately outside the 4:30 block.
     if b_1 is not None:
@@ -502,8 +510,17 @@ def main():
                 f'<a href="{BOARD_1AM_PAGE}">View graveyard board</a>'
             )
 
-        state["board_1am_total"] = b_1["total"]
-        state["board_1am_modified"] = b_1["modified"]
+        state.update({
+            "board_1am_total": b_1["total"],
+            "board_1am_modified": b_1["modified"],
+            "board_1am_auto_dr_total": b_1["auto_dr_total"],
+            "board_1am_container_total": b_1["container_total"],
+            "board_1am_container_ht_total": b_1["container_ht_total"],
+            "board_1am_container_lashers_total": b_1["container_lashers_total"],
+            "board_1am_rated_total": b_1["rated_total"],
+            "board_1am_fsd_total": b_1["fsd_total"],
+            "board_1am_dp_total": b_1["dp_total"],
+        })
 
     # BCMEA: compare and update only after a fresh successful response.
     if nw is not None:
@@ -590,6 +607,7 @@ def main():
         print(f"1 AM total: {b_1['total']}")
     if nw is not None:
         print(f"BCMEA forecast rows: {len(nw)}")
+
 
 
 if __name__ == "__main__":

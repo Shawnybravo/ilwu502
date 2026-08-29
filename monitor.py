@@ -313,77 +313,138 @@ def normalize_nw_forecast(rows):
 
 def main():
     state = load_state()
+
+    # Each source starts unavailable. A source is assigned a value only after
+    # its fetch AND parsing/calculation both succeed.
+    h = None
+    b = None
+    b8 = None
+    b_1 = None
+    nw = None
+
     print("Fetching H board...")
-    pins_gb = extract_gbdata(fetch(PINS_URL))
+    try:
+        pins_gb = extract_gbdata(fetch(PINS_URL))
+        h = find_h_board(pins_gb)
+    except Exception as e:
+        print(
+            f"WARNING: H board failed after retries: {e} "
+            "-- keeping previous H board state"
+        )
 
     print("Fetching 4:30 board...")
-    board_gb = extract_gbdata(fetch(BOARD_URL))
+    try:
+        board_gb = extract_gbdata(fetch(BOARD_URL))
+        b = calculate_board(board_gb, "work_board_430pm")
+    except Exception as e:
+        print(
+            f"WARNING: 4:30 board failed after retries: {e} "
+            "-- keeping all previous 4:30 state"
+        )
 
     print("Fetching 8 AM board...")
-    board_8am_gb = extract_gbdata(fetch(BOARD_8AM_URL))
+    try:
+        board_8am_gb = extract_gbdata(fetch(BOARD_8AM_URL))
+        b8 = calculate_board(board_8am_gb, "work_board_8am")
+    except Exception as e:
+        print(
+            f"WARNING: 8 AM board failed after retries: {e} "
+            "-- keeping previous 8 AM state"
+        )
 
     print("Fetching graveyard board...")
-    board_1am_gb = extract_gbdata(fetch(BOARD_1AM_URL))
+    try:
+        board_1am_gb = extract_gbdata(fetch(BOARD_1AM_URL))
+        b_1 = calculate_board(board_1am_gb, "work_board_1am")
+    except Exception as e:
+        print(
+            f"WARNING: graveyard board failed after retries: {e} "
+            "-- keeping previous graveyard state"
+        )
 
     print("Fetching BCMEA NW forecast...")
-    nw = normalize_nw_forecast(fetch_json(BCMEA_NW_URL))
-
-    h = find_h_board(pins_gb)
-    b = calculate_board(board_gb, "work_board_430pm")
-    b8 = calculate_board(board_8am_gb, "work_board_8am")
-    b_1 = calculate_board(board_1am_gb, "work_board_1am")
-
-
-    local_now = datetime.now(timezone.utc).astimezone(ZoneInfo("America/Vancouver"))
-    today = local_now.date().isoformat()
-    old_h = state.get("h_board")
-    if old_h is not None and h["value"] != old_h:
-        telegram(
-            "🚢 H BOARD UPDATED\n"
-            f"{old_h} → {h['value']}\n"
-            f"Board time: {h['modified'] or 'unknown'}"
-            f'🔗 <a href="{PINS_PAGE}">View work pins</a>'
+    try:
+        nw = normalize_nw_forecast(fetch_json(BCMEA_NW_URL))
+    except Exception as e:
+        print(
+            f"WARNING: BCMEA forecast failed after retries: {e} "
+            "-- keeping previous BCMEA state"
         )
-    old_430_modified = state.get("board_430_modified")
-    old_430_total = state.get("board_430_total")
 
-    changed = (
-        b["modified"] != old_430_modified
-        or b["total"] != old_430_total
+    local_now = datetime.now(timezone.utc).astimezone(
+        ZoneInfo("America/Vancouver")
     )
+    today = local_now.date().isoformat()
 
-    if old_430_modified is not None and changed:
-        headline = "📋 4:30 BOARD UPDATED"
-        if b["total"] > 200:
-            headline += " — 🔥 OVER 200 JOBS"
+    # H BOARD: compare, alert, and update state only when fresh data succeeded.
+    if h is not None:
+        old_h = state.get("h_board")
+        if old_h is not None and h["value"] != old_h:
+            telegram(
+                "🚢 H BOARD UPDATED\n"
+                f"{old_h} → {h['value']}\n"
+                f"Board time: {h['modified'] or 'unknown'}\n"
+                f'<a href="{PINS_PAGE}">View work pins</a>'
+            )
 
-        telegram(
-            f"{headline}\n"
-            f"Total: {b['total']} jobs\n\n"
+        state["h_board"] = h["value"]
+        state["h_modified"] = h["modified"]
 
-            f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
-            f"📦 Containers: {b['container_total']} "
-            f"({b['container_ht_total']} HT + "
-            f"{b['container_lashers_total']} lashers)\n"
-            f"🎟 Rated jobs: {b['rated_total']} "
-            f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n\n"
-
-            f"Gang job breakdowns: {b['gang_total']}\n"
-            f"Ship jobs: {b['ship_jobs_total']}\n"
-            f"Board time: {b['modified'] or 'unknown'}"
-            f'🔗 <a href="{BOARD_430_PAGE}">View 4:30 board</a>'
+    # 4:30: this entire compare/alert/update path uses fresh 4:30 data only.
+    if b is not None:
+        old_430_modified = state.get("board_430_modified")
+        old_430_total = state.get("board_430_total")
+        changed_430 = (
+            b["modified"] != old_430_modified
+            or b["total"] != old_430_total
         )
 
-        # 8 AM busy-board alerts
+        if old_430_modified is not None and changed_430:
+            headline = "📋 4:30 BOARD UPDATED"
+            if b["total"] > 200:
+                headline += " — 🔥 OVER 200 JOBS"
+
+            telegram(
+                f"{headline}\n"
+                f"Total: {b['total']} jobs\n\n"
+                f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
+                f"📦 Containers: {b['container_total']} "
+                f"({b['container_ht_total']} HT + "
+                f"{b['container_lashers_total']} lashers)\n"
+                f"🎟 Rated jobs: {b['rated_total']} "
+                f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n\n"
+                f"Gang job breakdowns: {b['gang_total']}\n"
+                f"Ship jobs: {b['ship_jobs_total']}\n"
+                f"Board time: {b['modified'] or 'unknown'}\n"
+                f'<a href="{BOARD_430_PAGE}">View 4:30 board</a>'
+            )
+
+        state.update({
+            "board_430_total": b["total"],
+            "board_430_modified": b["modified"],
+            "board_430_auto_dr_total": b["auto_dr_total"],
+            "board_430_container_total": b["container_total"],
+            "board_430_container_ht_total": b["container_ht_total"],
+            "board_430_container_lashers_total": b["container_lashers_total"],
+            "board_430_rated_total": b["rated_total"],
+            "board_430_fsd_total": b["fsd_total"],
+            "board_430_dp_total": b["dp_total"],
+        })
+
+    # 8 AM is deliberately outside the 4:30 block.
+    if b8 is not None:
         old_8am_modified = state.get("board_8am_modified")
         old_8am_total = state.get("board_8am_total")
-
         changed_8am = (
             b8["modified"] != old_8am_modified
             or b8["total"] != old_8am_total
         )
 
-        if old_8am_modified is not None and changed_8am and b8["total"] >= 200:
+        if (
+            old_8am_modified is not None
+            and changed_8am
+            and b8["total"] >= 200
+        ):
             if b8["total"] >= 300:
                 level = "🚨 HUGE"
             elif b8["total"] >= 250:
@@ -400,20 +461,27 @@ def main():
                 f"{b8['container_lashers_total']} lashers)\n"
                 f"🎟 Rated: {b8['rated_total']} "
                 f"(FSD {b8['fsd_total']} + DP {b8['dp_total']})\n"
-                f"Board time: {b8['modified'] or 'unknown'}"
-                f'🔗 <a href="{BOARD_8AM_PAGE}">View 8 AM board</a>'
+                f"Board time: {b8['modified'] or 'unknown'}\n"
+                f'<a href="{BOARD_8AM_PAGE}">View 8 AM board</a>'
             )
 
-        # 1 AM / graveyard busy-board alerts
+        state["board_8am_total"] = b8["total"]
+        state["board_8am_modified"] = b8["modified"]
+
+    # Graveyard is deliberately outside the 4:30 block.
+    if b_1 is not None:
         old_1am_modified = state.get("board_1am_modified")
         old_1am_total = state.get("board_1am_total")
-
         changed_1am = (
             b_1["modified"] != old_1am_modified
             or b_1["total"] != old_1am_total
         )
 
-        if old_1am_modified is not None and changed_1am and b_1["total"] >= 150:
+        if (
+            old_1am_modified is not None
+            and changed_1am
+            and b_1["total"] >= 150
+        ):
             if b_1["total"] >= 250:
                 level = "🚨 HUGE"
             elif b_1["total"] >= 200:
@@ -430,93 +498,99 @@ def main():
                 f"{b_1['container_lashers_total']} lashers)\n"
                 f"🎟 Rated: {b_1['rated_total']} "
                 f"(FSD {b_1['fsd_total']} + DP {b_1['dp_total']})\n"
-                f"Board time: {b_1['modified'] or 'unknown'}"
-                f'🔗 <a href="{BOARD_1AM_PAGE}">View graveyard board</a>'
+                f"Board time: {b_1['modified'] or 'unknown'}\n"
+                f'<a href="{BOARD_1AM_PAGE}">View graveyard board</a>'
             )
 
-    old_nw = state.get("bcmea_nw_forecast")
+        state["board_1am_total"] = b_1["total"]
+        state["board_1am_modified"] = b_1["modified"]
 
-    if old_nw is not None and nw != old_nw:
-        lines = ["📈 BCMEA NW FORECAST UPDATED"]
+    # BCMEA: compare and update only after a fresh successful response.
+    if nw is not None:
+        old_nw = state.get("bcmea_nw_forecast")
 
-        busy_days = []
+        if old_nw is not None and nw != old_nw:
+            lines = ["📈 BCMEA NW FORECAST UPDATED"]
+            busy_days = []
 
-        for row in nw:
-            qty = row["quantity"]
+            for row in nw:
+                qty = row["quantity"]
 
-            if qty >= 30:
-                marker = "🚨"
-            elif qty >= 25:
-                marker = "🔥"
-            else:
-                marker = "•"
+                if qty >= 30:
+                    marker = "🚨"
+                elif qty >= 25:
+                    marker = "🔥"
+                else:
+                    marker = "•"
+
+                lines.append(f"{marker} {row['date']}: {qty} gangs")
+
+                if qty >= 25:
+                    busy_days.append(row)
 
             lines.append(
-                f"{marker} {row['date']}: {qty} gangs"
+                f'<a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>'
             )
-            
-        lines.append(
-            f'🔗 <a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>'
-        )
 
-        if busy_days:
-            lines.append("")
-            lines.append("Busy forecast:")
+            if busy_days:
+                lines.append("")
+                lines.append("Busy forecast:")
 
-            for row in busy_days:
-                label = "VERY BUSY" if row["quantity"] >= 30 else "BUSY"
-                lines.append(
-                    f"{row['date']}: {row['quantity']} gangs — {label}"
-                )
+                for row in busy_days:
+                    label = "VERY BUSY" if row["quantity"] >= 30 else "BUSY"
+                    lines.append(
+                        f"{row['date']}: {row['quantity']} gangs — {label}"
+                    )
 
-        telegram("\n".join(lines))
+            telegram("\n".join(lines))
 
-    # Daily 1 PM status message.
+        state["bcmea_nw_forecast"] = nw
+
+    # Send the daily message only when both sources used by it are fresh.
+    # If either fails at 1 PM, do not mark today as sent; a later run can retry.
     last_daily_status = state.get("last_daily_status")
     if local_now.hour == 13 and last_daily_status != today:
-        telegram(
-            "🕐 1 PM ILWU BOARD STATUS\n\n"
-            f"🚢 H BOARD: {h['value']}\n\n"
-            f"📋 4:30 BOARD: {b['total']} jobs\n"
-            f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
-            f"📦 Containers: {b['container_total']} "
-            f"({b['container_ht_total']} HT + "
-            f"{b['container_lashers_total']} lashers)\n"
-            f"🎟 Rated jobs: {b['rated_total']} "
-            f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n\n"
-            f"Board time: {b['modified'] or 'unknown'}"
-        )
-        state["last_daily_status"] = today
+        if h is not None and b is not None:
+            telegram(
+                "🕐 1 PM ILWU BOARD STATUS\n\n"
+                f"🚢 H BOARD: {h['value']}\n\n"
+                f"📋 4:30 BOARD: {b['total']} jobs\n"
+                f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
+                f"📦 Containers: {b['container_total']} "
+                f"({b['container_ht_total']} HT + "
+                f"{b['container_lashers_total']} lashers)\n"
+                f"🎟 Rated jobs: {b['rated_total']} "
+                f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n\n"
+                f"Board time: {b['modified'] or 'unknown'}"
+            )
+            state["last_daily_status"] = today
+        else:
+            print(
+                "WARNING: Daily status deferred because H board or 4:30 "
+                "fresh data is unavailable"
+            )
 
-    state.update({
-        "h_board": h["value"],
-        "h_modified": h["modified"],
-        "board_430_total": b["total"],
-        "board_430_modified": b["modified"],
-        "bcmea_nw_forecast": nw,
-        "board_8am_total": b8["total"],
-        "board_8am_modified": b8["modified"],
-        "board_1am_total": b_1["total"],
-        "board_1am_modified": b_1["modified"],
-        
-        "board_430_auto_dr_total": b["auto_dr_total"],
-        "board_430_container_total": b["container_total"],
-        "board_430_container_ht_total": b["container_ht_total"],
-        "board_430_container_lashers_total": b["container_lashers_total"],
-        "board_430_rated_total": b["rated_total"],
-        "board_430_fsd_total": b["fsd_total"],
-        "board_430_dp_total": b["dp_total"],
-    })
+    # Successful sources have already updated their own keys. Failed sources
+    # never touched their keys, so their previous state remains unchanged.
     save_state(state)
 
-    print(f"H BOARD: {h['value']} ({h['modified']})")
-    print(
-    f"4:30 total: {b['total']} = "
-    f"gang jobs {b['gang_total']} + "
-    f"ship jobs {b['ship_jobs_total']} + "
-    f"FSD {b['fsd_total']} + "
-    f"DP {b['dp_total']}"
-)
+    if h is not None:
+        print(f"H BOARD: {h['value']} ({h['modified']})")
+    if b is not None:
+        print(
+            f"4:30 total: {b['total']} = "
+            f"gang jobs {b['gang_total']} + "
+            f"ship jobs {b['ship_jobs_total']} + "
+            f"FSD {b['fsd_total']} + "
+            f"DP {b['dp_total']}"
+        )
+    if b8 is not None:
+        print(f"8 AM total: {b8['total']}")
+    if b_1 is not None:
+        print(f"1 AM total: {b_1['total']}")
+    if nw is not None:
+        print(f"BCMEA forecast rows: {len(nw)}")
+
 
 if __name__ == "__main__":
     try:

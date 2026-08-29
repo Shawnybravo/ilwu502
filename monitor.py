@@ -478,6 +478,60 @@ def notable_category_lines(history, history_key, board, now_utc):
                 f"(previous {previous_high})"
             )
     return notable
+def anomaly_lines(history, history_key, board, local_now):
+    cutoff_timestamp = local_now.timestamp() - 30 * 24 * 60 * 60
+    latest_by_day = {}
+    for row in history.get(history_key, []):
+        captured = parse_saved_time(row.get("captured_at"))
+        if captured is None or captured.timestamp() < cutoff_timestamp:
+            continue
+        day_key = captured.date().isoformat()
+        previous = latest_by_day.get(day_key)
+        if previous is None or captured > previous[0]:
+            latest_by_day[day_key] = (captured, row)
+    daily_rows = [pair[1] for pair in latest_by_day.values()]
+    if len(daily_rows) < 14:
+        return []
+    categories = [
+        ("Total jobs", "total", board["total"]),
+        ("🚗 Auto drivers", "auto_dr", board["auto_dr_total"]),
+        ("📦 Containers", "containers", board["container_total"]),
+        ("   HT", "container_ht", board["container_ht_total"]),
+        ("   Lashers", "container_lashers", board["container_lashers_total"]),
+        ("🎟 Rated jobs", "rated", board["rated_total"]),
+        ("   FSD", "fsd", board["fsd_total"]),
+        ("   Deltaport", "deltaport", board["dp_total"]),
+    ]
+    unusual = []
+    for label, history_field, current_value in categories:
+        values = [
+            row.get(history_field)
+            for row in daily_rows
+            if isinstance(row.get(history_field), (int, float))
+        ]
+        if len(values) < 14:
+            continue
+        average = sum(values) / len(values)
+        # Very small averages create exaggerated percentages and noisy alerts.
+        if average < 5:
+            continue
+        difference = current_value - average
+        percentage = difference / average * 100
+        variance = sum((value - average) ** 2 for value in values) / len(values)
+        standard_deviation = variance ** 0.5
+        percentage_is_unusual = abs(percentage) >= 30
+        statistically_unusual = (
+            abs(difference) >= 2 * standard_deviation
+            if standard_deviation > 0
+            else difference != 0
+        )
+        if percentage_is_unusual and statistically_unusual:
+            marker = "⬆️" if difference > 0 else "⬇️"
+            unusual.append(
+                f"{label}: {current_value} — normally {average:.0f} "
+                f"({marker} {abs(percentage):.0f}%)"
+            )
+    return unusual
 def weekly_daily_rows(history, history_key, local_now):
     monday = local_now.date().fromordinal(
         local_now.date().toordinal() - local_now.weekday()
@@ -1024,6 +1078,19 @@ def main():
                     + "\n".join(notable_lines)
                     + "\n"
                 )
+            unusual_lines = anomaly_lines(
+                history,
+                "board_430",
+                b,
+                local_now,
+            )
+            unusual_text = ""
+            if unusual_lines:
+                unusual_text = (
+                    "\n⚠️ UNUSUAL VS 30-DAY NORMAL\n"
+                    + "\n".join(unusual_lines)
+                    + "\n"
+                )
             telegram(
                 f"{headline}\n"
                 f"Total: {b['total']} jobs"
@@ -1031,6 +1098,7 @@ def main():
                 "CHANGES\n"
                 f"{change_text}\n\n"
                 f"{notable_text}"
+                f"{unusual_text}"
                 f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
                 f"📦 Containers: {b['container_total']} "
                 f"({b['container_ht_total']} HT + "
@@ -1066,17 +1134,27 @@ def main():
             b8["modified"] != old_8am_modified
             or b8["total"] != old_8am_total
         )
+        unusual_lines_8am = anomaly_lines(
+            history,
+            "board_8am",
+            b8,
+            local_now,
+        )
         if (
             old_8am_modified is not None
             and changed_8am
             and b8["total"] >= 200
+            and (b8["total"] >= 200 or unusual_lines_8am)
         ):
             if b8["total"] >= 300:
                 level = "🚨 HUGE"
             elif b8["total"] >= 250:
                 level = "🔥🔥 VERY BUSY"
             else:
+            elif b8["total"] >= 200:
                 level = "🔥 BUSY"
+            else:
+                level = "⚠️ UNUSUAL"
             change_lines = build_change_lines([
                 ("🚗 Auto drivers", b8["auto_dr_total"], state.get("board_8am_auto_dr_total")),
                 ("📦 Containers", b8["container_total"], state.get("board_8am_container_total")),
@@ -1100,6 +1178,13 @@ def main():
                     + "\n".join(notable_lines)
                     + "\n"
                 )
+            unusual_text = ""
+            if unusual_lines_8am:
+                unusual_text = (
+                    "\n⚠️ UNUSUAL VS 30-DAY NORMAL\n"
+                    + "\n".join(unusual_lines_8am)
+                    + "\n"
+                )
             telegram(
                 f"😴 8 AM BOARD — {level}\n"
                 f"Total: {b8['total']} jobs"
@@ -1107,6 +1192,7 @@ def main():
                 "CHANGES\n"
                 f"{change_text}\n\n"
                 f"{notable_text}"
+                f"{unusual_text}"
                 f"🚗 Auto drivers: {b8['auto_dr_total']}\n"
                 f"📦 Containers: {b8['container_total']} "
                 f"({b8['container_ht_total']} HT + "
@@ -1140,17 +1226,27 @@ def main():
             b_1["modified"] != old_1am_modified
             or b_1["total"] != old_1am_total
         )
+        unusual_lines_1am = anomaly_lines(
+            history,
+            "board_1am",
+            b_1,
+            local_now,
+        )
         if (
             old_1am_modified is not None
             and changed_1am
             and b_1["total"] >= 150
+            and (b_1["total"] >= 150 or unusual_lines_1am)
         ):
             if b_1["total"] >= 250:
                 level = "🚨 HUGE"
             elif b_1["total"] >= 200:
                 level = "🔥🔥 VERY BUSY"
             else:
+            elif b_1["total"] >= 150:
                 level = "🔥 BUSY"
+            else:
+                level = "⚠️ UNUSUAL"
             change_lines = build_change_lines([
                 ("🚗 Auto drivers", b_1["auto_dr_total"], state.get("board_1am_auto_dr_total")),
                 ("📦 Containers", b_1["container_total"], state.get("board_1am_container_total")),
@@ -1174,6 +1270,13 @@ def main():
                     + "\n".join(notable_lines)
                     + "\n"
                 )
+            unusual_text = ""
+            if unusual_lines_1am:
+                unusual_text = (
+                    "\n⚠️ UNUSUAL VS 30-DAY NORMAL\n"
+                    + "\n".join(unusual_lines_1am)
+                    + "\n"
+                )
             telegram(
                 f"⚰️ 1 AM BOARD — {level}\n"
                 f"Total: {b_1['total']} jobs"
@@ -1181,6 +1284,7 @@ def main():
                 "CHANGES\n"
                 f"{change_text}\n\n"
                 f"{notable_text}"
+                f"{unusual_text}"
                 f"🚗 Auto drivers: {b_1['auto_dr_total']}\n"
                 f"📦 Containers: {b_1['container_total']} "
                 f"({b_1['container_ht_total']} HT + "

@@ -560,6 +560,145 @@ def notable_category_lines(history, history_key, board, now_utc):
     return notable
 
 
+def weekly_daily_rows(history, history_key, local_now):
+    monday = local_now.date().fromordinal(
+        local_now.date().toordinal() - local_now.weekday()
+    )
+    week_start = datetime(
+        monday.year,
+        monday.month,
+        monday.day,
+        tzinfo=ZoneInfo("America/Vancouver"),
+    )
+    cutoff_timestamp = week_start.timestamp()
+    latest_by_day = {}
+
+    for row in history.get(history_key, []):
+        captured = parse_saved_time(row.get("captured_at"))
+        if captured is None or captured.timestamp() < cutoff_timestamp:
+            continue
+
+        day_key = captured.date().isoformat()
+        previous = latest_by_day.get(day_key)
+        if previous is None or captured > previous[0]:
+            latest_by_day[day_key] = (captured, row)
+
+    return [
+        pair[1]
+        for pair in sorted(latest_by_day.values(), key=lambda pair: pair[0])
+    ]
+
+
+def weekly_shift_lines(title, rows, busy_threshold):
+    totals = [row["total"] for row in rows]
+    average = round(sum(totals) / len(totals))
+    busiest = max(rows, key=lambda row: row["total"])
+    busy_count = sum(total >= busy_threshold for total in totals)
+    busiest_time = parse_saved_time(busiest.get("captured_at"))
+    busiest_date = "unknown date"
+    if busiest_time is not None:
+        busiest_date = busiest_time.strftime("%a %b %d").replace(" 0", " ")
+
+    return [
+        title,
+        f"Average: {average} jobs",
+        f"Busiest: {busiest['total']} jobs — {busiest_date}",
+        f"Busy days: {busy_count} of {len(rows)}",
+    ]
+
+
+def weekly_pin_lines(history, local_now):
+    monday = local_now.date().fromordinal(
+        local_now.date().toordinal() - local_now.weekday()
+    )
+    week_start = datetime(
+        monday.year,
+        monday.month,
+        monday.day,
+        tzinfo=ZoneInfo("America/Vancouver"),
+    )
+    cutoff_timestamp = week_start.timestamp()
+    moves = []
+
+    for event in history.get("pin_moves", []):
+        detected = parse_saved_time(event.get("detected_at"))
+        if detected is not None and detected.timestamp() >= cutoff_timestamp:
+            moves.append(event)
+
+    lines = ["📌 WORK PIN MOVEMENT"]
+    for board_letter in ["H", "T"]:
+        board_moves = [
+            event for event in moves if event.get("board") == board_letter
+        ]
+        numeric_moves = [
+            event.get("movement")
+            for event in board_moves
+            if isinstance(event.get("movement"), (int, float))
+        ]
+        net = sum(numeric_moves)
+        net_text = f"{net:+g}" if numeric_moves else "unknown"
+        lines.append(
+            f"{board_letter}: {len(board_moves)} movements — net {net_text}"
+        )
+
+    return lines
+
+
+def weekly_category_high_lines(all_rows):
+    categories = [
+        ("Auto drivers", "auto_dr"),
+        ("Containers", "containers"),
+        ("HT", "container_ht"),
+        ("Lashers", "container_lashers"),
+        ("Rated jobs", "rated"),
+        ("FSD", "fsd"),
+        ("Deltaport", "deltaport"),
+    ]
+
+    lines = ["🏆 CATEGORY HIGHS"]
+    for label, key in categories:
+        values = [
+            row.get(key)
+            for row in all_rows
+            if isinstance(row.get(key), (int, float))
+        ]
+        if values:
+            lines.append(f"{label}: {max(values)}")
+
+    return lines
+
+
+def weekly_report_text(history, local_now):
+    rows_430 = weekly_daily_rows(history, "board_430", local_now)
+    rows_8am = weekly_daily_rows(history, "board_8am", local_now)
+    rows_1am = weekly_daily_rows(history, "board_1am", local_now)
+
+    # Wait until each shift has at least three different recorded days.
+    if min(len(rows_430), len(rows_8am), len(rows_1am)) < 3:
+        return None
+
+    monday = local_now.date().fromordinal(
+        local_now.date().toordinal() - local_now.weekday()
+    )
+    date_range = (
+        f"{monday.strftime('%b %d')}–{local_now.strftime('%b %d, %Y')}"
+    )
+
+    lines = ["📊 WEEKLY ILWU REPORT", date_range, ""]
+    lines.extend(weekly_shift_lines("📋 4:30", rows_430, 200))
+    lines.append("")
+    lines.extend(weekly_shift_lines("😴 8 AM", rows_8am, 200))
+    lines.append("")
+    lines.extend(weekly_shift_lines("⚰️ GRAVEYARD", rows_1am, 150))
+    lines.append("")
+    lines.extend(weekly_pin_lines(history, local_now))
+    lines.append("")
+    lines.extend(weekly_category_high_lines(rows_430 + rows_8am + rows_1am))
+
+    return "\n".join(lines)
+
+
+
 
 
 def numeric_sum(text):
@@ -1113,6 +1252,24 @@ def main():
                 "WARNING: Morning briefing deferred because one or more "
                 "required sources did not return fresh data"
             )
+    # Send one weekly report on the first run from 7:00 through 7:59 PM
+    # Vancouver time on Sunday.
+    weekly_key = local_now.strftime("%G-W%V")
+    last_weekly_report = state.get("last_weekly_report")
+    if (
+        local_now.weekday() == 6
+        and 19 * 60 <= minutes_now < 20 * 60
+        and last_weekly_report != weekly_key
+    ):
+        report_text = weekly_report_text(history, local_now)
+        if report_text is not None:
+            telegram(report_text)
+            state["last_weekly_report"] = weekly_key
+        else:
+            print(
+                "Weekly report deferred because fewer than three recorded "
+                "days are available for one or more shifts"
+            )
     # Successful sources have already updated their own keys. Failed sources
     # never touched their keys, so their previous state remains unchanged.
     save_state(state)
@@ -1136,7 +1293,6 @@ def main():
         print(f"1 AM total: {b_1['total']}")
     if nw is not None:
         print(f"BCMEA forecast rows: {len(nw)}")
-
 
 
 

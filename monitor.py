@@ -310,6 +310,8 @@ def normalize_nw_forecast(rows):
         })
 
     return forecast
+
+
 def main():
     state = load_state()
 
@@ -388,6 +390,7 @@ def main():
 
         state["h_board"] = h["value"]
         state["h_modified"] = h["modified"]
+        state["h_last_success"] = datetime.now(timezone.utc).isoformat()
 
     # 4:30: this entire compare/alert/update path uses fresh 4:30 data only.
     if b is not None:
@@ -428,6 +431,7 @@ def main():
             "board_430_rated_total": b["rated_total"],
             "board_430_fsd_total": b["fsd_total"],
             "board_430_dp_total": b["dp_total"],
+            "board_430_last_success": datetime.now(timezone.utc).isoformat(),
         })
 
     # 8 AM is deliberately outside the 4:30 block.
@@ -474,6 +478,7 @@ def main():
             "board_8am_rated_total": b8["rated_total"],
             "board_8am_fsd_total": b8["fsd_total"],
             "board_8am_dp_total": b8["dp_total"],
+            "board_8am_last_success": datetime.now(timezone.utc).isoformat(),
         })
 
     # Graveyard is deliberately outside the 4:30 block.
@@ -520,6 +525,7 @@ def main():
             "board_1am_rated_total": b_1["rated_total"],
             "board_1am_fsd_total": b_1["fsd_total"],
             "board_1am_dp_total": b_1["dp_total"],
+            "board_1am_last_success": datetime.now(timezone.utc).isoformat(),
         })
 
     # BCMEA: compare and update only after a fresh successful response.
@@ -562,6 +568,7 @@ def main():
             telegram("\n".join(lines))
 
         state["bcmea_nw_forecast"] = nw
+        state["bcmea_last_success"] = datetime.now(timezone.utc).isoformat()
 
     # Send the daily message only when both sources used by it are fresh.
     # If either fails at 1 PM, do not mark today as sent; a later run can retry.

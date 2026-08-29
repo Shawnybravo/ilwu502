@@ -131,6 +131,7 @@ def load_history():
             "board_1am": [],
             "pin_moves": [],
             "bcmea_forecasts": [],
+            "shift_outcomes": [],
         }
     history = json.loads(HISTORY_FILE.read_text(encoding="utf-8"))
     for key in [
@@ -139,6 +140,7 @@ def load_history():
         "board_1am",
         "pin_moves",
         "bcmea_forecasts",
+        "shift_outcomes",
     ]:
         history.setdefault(key, [])
     return history
@@ -532,6 +534,161 @@ def anomaly_lines(history, history_key, board, local_now):
                 f"({marker} {abs(percentage):.0f}%)"
             )
     return unusual
+def shift_identity(local_time):
+    minutes = local_time.hour * 60 + local_time.minute
+    today = local_time.date()
+    if 6 * 60 + 45 <= minutes < 15 * 60 + 15:
+        return "8 AM", today
+    if 15 * 60 + 15 <= minutes < 16 * 60 + 15:
+        return "4:30", today
+    if minutes >= 16 * 60 + 15:
+        outcome_date = today.fromordinal(today.toordinal() + 1)
+    else:
+        outcome_date = today
+    return "Graveyard", outcome_date
+def shift_window(shift_name, outcome_date):
+    zone = ZoneInfo("America/Vancouver")
+    if shift_name == "8 AM":
+        start = datetime(
+            outcome_date.year, outcome_date.month, outcome_date.day,
+            6, 45, tzinfo=zone,
+        )
+        end = datetime(
+            outcome_date.year, outcome_date.month, outcome_date.day,
+            15, 15, tzinfo=zone,
+        )
+    elif shift_name == "4:30":
+        start = datetime(
+            outcome_date.year, outcome_date.month, outcome_date.day,
+            15, 15, tzinfo=zone,
+        )
+        end = datetime(
+            outcome_date.year, outcome_date.month, outcome_date.day,
+            16, 15, tzinfo=zone,
+        )
+    else:
+        previous_day = outcome_date.fromordinal(outcome_date.toordinal() - 1)
+        start = datetime(
+            previous_day.year, previous_day.month, previous_day.day,
+            16, 15, tzinfo=zone,
+        )
+        end = datetime(
+            outcome_date.year, outcome_date.month, outcome_date.day,
+            6, 45, tzinfo=zone,
+        )
+    return start, end
+def start_shift_observation(
+    shift_name,
+    outcome_date,
+    observed_at,
+    h_value,
+    t_value,
+    previous_h_value=None,
+    previous_t_value=None,
+):
+    window_start, _ = shift_window(shift_name, outcome_date)
+    start_delay = max(0, (observed_at - window_start).total_seconds() / 60)
+    boundary_change_detected = (
+        previous_h_value is not None
+        and previous_t_value is not None
+        and (
+            previous_h_value != h_value
+            or previous_t_value != t_value
+        )
+    )
+    return {
+        "key": f"{outcome_date.isoformat()}|{shift_name}",
+        "date": outcome_date.isoformat(),
+        "shift": shift_name,
+        "started_observing_at": observed_at.isoformat(),
+        "start_delay_minutes": round(start_delay, 1),
+        "h_start": (
+            previous_h_value if boundary_change_detected else h_value
+        ),
+        "t_start": (
+            previous_t_value if boundary_change_detected else t_value
+        ),
+        "h_last": h_value,
+        "t_last": t_value,
+        "last_observed_at": observed_at.isoformat(),
+        "boundary_change_detected": boundary_change_detected,
+    }
+def finalize_shift_outcome(active, history, board):
+    outcome_date = datetime.strptime(active["date"], "%Y-%m-%d").date()
+    _, window_end = shift_window(active["shift"], outcome_date)
+    last_observed = parse_saved_time(active.get("last_observed_at"))
+    end_gap = (
+        abs((window_end - last_observed).total_seconds() / 60)
+        if last_observed is not None
+        else None
+    )
+    h_movement = numeric_pin_movement(active["h_start"], active["h_last"])
+    t_movement = numeric_pin_movement(active["t_start"], active["t_last"])
+    h_moved = active["h_start"] != active["h_last"]
+    t_moved = active["t_start"] != active["t_last"]
+    coverage_confident = (
+        active.get("start_delay_minutes", 9999) <= 30
+        and end_gap is not None
+        and end_gap <= 30
+        and not active.get("boundary_change_detected", False)
+    )
+    breakdown = make_shift_breakdown(board)
+    outcome = {
+        "key": active["key"],
+        "date": active["date"],
+        "shift": active["shift"],
+        "started_observing_at": active["started_observing_at"],
+        "last_observed_at": active["last_observed_at"],
+        "start_delay_minutes": active.get("start_delay_minutes"),
+        "end_gap_minutes": round(end_gap, 1) if end_gap is not None else None,
+        "coverage_confident": coverage_confident,
+        "boundary_change_detected": active.get(
+            "boundary_change_detected", False
+        ),
+        "h_start": active["h_start"],
+        "h_end": active["h_last"],
+        "h_moved": h_moved,
+        "h_movement": h_movement,
+        "t_start": active["t_start"],
+        "t_end": active["t_last"],
+        "t_moved": t_moved,
+        "t_movement": t_movement,
+        "any_movement": h_moved or t_moved,
+        "shift_breakdown": breakdown,
+    }
+    outcomes = history.setdefault("shift_outcomes", [])
+    if not any(existing.get("key") == outcome["key"] for existing in outcomes):
+        outcomes.append(outcome)
+        return True
+    return False
+def update_shift_outcomes(state, history, observed_at, h_value, t_value, b, b8, b_1):
+    shift_name, outcome_date = shift_identity(observed_at)
+    current_key = f"{outcome_date.isoformat()}|{shift_name}"
+    active = state.get("active_shift_observation")
+    changed = False
+    if not isinstance(active, dict):
+        state["active_shift_observation"] = start_shift_observation(
+            shift_name, outcome_date, observed_at, h_value, t_value
+        )
+        return False
+    if active.get("key") != current_key:
+        previous_board = shift_board_for_name(active.get("shift"), b, b8, b_1)
+        changed = finalize_shift_outcome(active, history, previous_board)
+        state["active_shift_observation"] = start_shift_observation(
+            shift_name,
+            outcome_date,
+            observed_at,
+            h_value,
+            t_value,
+            previous_h_value=state.get("h_board"),
+            previous_t_value=state.get("t_board"),
+        )
+        return changed
+    active["h_last"] = h_value
+    active["t_last"] = t_value
+    active["last_observed_at"] = observed_at.isoformat()
+    state["active_shift_observation"] = active
+    return False
 def weekly_daily_rows(history, history_key, local_now):
     monday = local_now.date().fromordinal(
         local_now.date().toordinal() - local_now.weekday()
@@ -1035,6 +1192,16 @@ def main():
                 )
                 history_changed = True
                 telegram(pin_move_alert(event))
+        history_changed = update_shift_outcomes(
+            state=state,
+            history=history,
+            observed_at=pins_detected_local,
+            h_value=h["value"],
+            t_value=t["value"],
+            b=b,
+            b8=b8,
+            b_1=b_1,
+        ) or history_changed
         state["h_board"] = h["value"]
         state["h_modified"] = h["modified"]
         state["h_last_success"] = pins_success_at.isoformat()
@@ -1150,6 +1317,7 @@ def main():
                 level = "🚨 HUGE"
             elif b8["total"] >= 250:
                 level = "🔥🔥 VERY BUSY"
+            else:
             elif b8["total"] >= 200:
                 level = "🔥 BUSY"
             else:
@@ -1241,6 +1409,7 @@ def main():
                 level = "🚨 HUGE"
             elif b_1["total"] >= 200:
                 level = "🔥🔥 VERY BUSY"
+            else:
             elif b_1["total"] >= 150:
                 level = "🔥 BUSY"
             else:

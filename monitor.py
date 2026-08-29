@@ -162,6 +162,52 @@ def load_state():
 def save_state(state):
     STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
+HISTORY_FILE = Path("history.json")
+
+def load_history():
+    if not HISTORY_FILE.exists():
+        return {"board_430": [], "board_8am": [], "board_1am": []}
+
+    history = json.loads(HISTORY_FILE.read_text(encoding="utf-8"))
+    for key in ["board_430", "board_8am", "board_1am"]:
+        history.setdefault(key, [])
+    return history
+
+
+def save_history(history):
+    HISTORY_FILE.write_text(
+        json.dumps(history, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+
+def record_board_history(history, history_key, board, captured_at):
+    entry = {
+        "captured_at": captured_at,
+        "board_time": board["modified"],
+        "total": board["total"],
+        "gang_jobs": board["gang_total"],
+        "ship_jobs": board["ship_jobs_total"],
+        "auto_dr": board["auto_dr_total"],
+        "containers": board["container_total"],
+        "container_ht": board["container_ht_total"],
+        "container_lashers": board["container_lashers_total"],
+        "rated": board["rated_total"],
+        "fsd": board["fsd_total"],
+        "deltaport": board["dp_total"],
+    }
+
+    rows = history.setdefault(history_key, [])
+    if rows:
+        previous = rows[-1]
+        comparison_keys = [key for key in entry if key != "captured_at"]
+        if all(previous.get(key) == entry.get(key) for key in comparison_keys):
+            return False
+
+    rows.append(entry)
+    return True
+
+
 def find_h_board(gb):
     wp = gb.get("work_pins", {})
     for key in ["for_8am", "for_430pm", "for_1am"]:
@@ -314,6 +360,8 @@ def normalize_nw_forecast(rows):
 
 def main():
     state = load_state()
+    history = load_history()
+    history_changed = False
 
     # Each source starts unavailable. A source is assigned a value only after
     # its fetch AND parsing/calculation both succeed.
@@ -394,6 +442,7 @@ def main():
 
     # 4:30: this entire compare/alert/update path uses fresh 4:30 data only.
     if b is not None:
+        board_430_success_at = datetime.now(timezone.utc).isoformat()
         old_430_modified = state.get("board_430_modified")
         old_430_total = state.get("board_430_total")
         changed_430 = (
@@ -431,11 +480,15 @@ def main():
             "board_430_rated_total": b["rated_total"],
             "board_430_fsd_total": b["fsd_total"],
             "board_430_dp_total": b["dp_total"],
-            "board_430_last_success": datetime.now(timezone.utc).isoformat(),
+            "board_430_last_success": board_430_success_at,
         })
+        history_changed = record_board_history(
+            history, "board_430", b, board_430_success_at
+        ) or history_changed
 
     # 8 AM is deliberately outside the 4:30 block.
     if b8 is not None:
+        board_8am_success_at = datetime.now(timezone.utc).isoformat()
         old_8am_modified = state.get("board_8am_modified")
         old_8am_total = state.get("board_8am_total")
         changed_8am = (
@@ -478,11 +531,15 @@ def main():
             "board_8am_rated_total": b8["rated_total"],
             "board_8am_fsd_total": b8["fsd_total"],
             "board_8am_dp_total": b8["dp_total"],
-            "board_8am_last_success": datetime.now(timezone.utc).isoformat(),
+            "board_8am_last_success": board_8am_success_at,
         })
+        history_changed = record_board_history(
+            history, "board_8am", b8, board_8am_success_at
+        ) or history_changed
 
     # Graveyard is deliberately outside the 4:30 block.
     if b_1 is not None:
+        board_1am_success_at = datetime.now(timezone.utc).isoformat()
         old_1am_modified = state.get("board_1am_modified")
         old_1am_total = state.get("board_1am_total")
         changed_1am = (
@@ -525,8 +582,11 @@ def main():
             "board_1am_rated_total": b_1["rated_total"],
             "board_1am_fsd_total": b_1["fsd_total"],
             "board_1am_dp_total": b_1["dp_total"],
-            "board_1am_last_success": datetime.now(timezone.utc).isoformat(),
+            "board_1am_last_success": board_1am_success_at,
         })
+        history_changed = record_board_history(
+            history, "board_1am", b_1, board_1am_success_at
+        ) or history_changed
 
     # BCMEA: compare and update only after a fresh successful response.
     if nw is not None:
@@ -597,6 +657,8 @@ def main():
     # Successful sources have already updated their own keys. Failed sources
     # never touched their keys, so their previous state remains unchanged.
     save_state(state)
+    if history_changed or not HISTORY_FILE.exists():
+        save_history(history)
 
     if h is not None:
         print(f"H BOARD: {h['value']} ({h['modified']})")
@@ -614,6 +676,7 @@ def main():
         print(f"1 AM total: {b_1['total']}")
     if nw is not None:
         print(f"BCMEA forecast rows: {len(nw)}")
+
 
 
 

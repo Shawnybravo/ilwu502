@@ -42,9 +42,9 @@ jobs:
 
       - name: Record worked shift
         env:
-          REPORT_ACTION: ${{ inputs.action }}
-          REPORTED_SHIFT: ${{ inputs.shift }}
-          REPORTED_AT: ${{ inputs.reported_at }}
+          REPORT_ACTION: ${{ github.event.inputs.action }}
+          REPORTED_SHIFT: ${{ github.event.inputs.shift }}
+          REPORTED_AT: ${{ github.event.inputs.reported_at }}
         run: python record_work.py
 
       - name: Commit worked-shift history

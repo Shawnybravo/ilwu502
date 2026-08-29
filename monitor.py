@@ -132,6 +132,7 @@ def load_history():
             "pin_moves": [],
             "bcmea_forecasts": [],
             "shift_outcomes": [],
+            "worked_reports": [],
         }
     history = json.loads(HISTORY_FILE.read_text(encoding="utf-8"))
     for key in [
@@ -141,6 +142,7 @@ def load_history():
         "pin_moves",
         "bcmea_forecasts",
         "shift_outcomes",
+        "worked_reports",
     ]:
         history.setdefault(key, [])
     return history

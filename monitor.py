@@ -516,6 +516,51 @@ def morning_briefing_text(h, t, board_430, board_8am, board_1am, forecast, histo
     return "\n".join(lines)
 
 
+def notable_category_lines(history, history_key, board, now_utc):
+    cutoff_timestamp = now_utc.timestamp() - 30 * 24 * 60 * 60
+    recent_rows = []
+
+    for row in history.get(history_key, []):
+        captured = parse_saved_time(row.get("captured_at"))
+        if captured is not None and captured.timestamp() >= cutoff_timestamp:
+            recent_rows.append(row)
+
+    # A record based on only one or two earlier boards is not meaningful.
+    if len(recent_rows) < 5:
+        return []
+
+    categories = [
+        ("🚗 Auto drivers", "auto_dr", board["auto_dr_total"]),
+        ("📦 Containers", "containers", board["container_total"]),
+        ("   HT", "container_ht", board["container_ht_total"]),
+        ("   Lashers", "container_lashers", board["container_lashers_total"]),
+        ("🎟 Rated jobs", "rated", board["rated_total"]),
+        ("   FSD", "fsd", board["fsd_total"]),
+        ("   Deltaport", "deltaport", board["dp_total"]),
+    ]
+
+    notable = []
+    for label, history_field, current_value in categories:
+        previous_values = [
+            row.get(history_field)
+            for row in recent_rows
+            if isinstance(row.get(history_field), (int, float))
+        ]
+
+        if not previous_values:
+            continue
+
+        previous_high = max(previous_values)
+        if current_value > previous_high:
+            notable.append(
+                f"{label}: {current_value} — new 30-day high "
+                f"(previous {previous_high})"
+            )
+
+    return notable
+
+
+
 
 def numeric_sum(text):
     return sum(int(x) for x in re.findall(r"\d+", str(text or "")))
@@ -659,7 +704,6 @@ def main():
     state = load_state()
     history = load_history()
     history_changed = False
-
     # Each source starts unavailable. A source is assigned a value only after
     # its fetch AND parsing/calculation both succeed.
     h = None
@@ -668,7 +712,6 @@ def main():
     b8 = None
     b_1 = None
     nw = None
-
     print("Fetching H and T work pins...")
     try:
         pins_gb = extract_gbdata(fetch(PINS_URL))
@@ -679,7 +722,6 @@ def main():
             f"WARNING: H/T work pins failed after retries: {e} "
             "-- keeping previous H and T pin state"
         )
-
     print("Fetching 4:30 board...")
     try:
         board_gb = extract_gbdata(fetch(BOARD_URL))
@@ -689,7 +731,6 @@ def main():
             f"WARNING: 4:30 board failed after retries: {e} "
             "-- keeping all previous 4:30 state"
         )
-
     print("Fetching 8 AM board...")
     try:
         board_8am_gb = extract_gbdata(fetch(BOARD_8AM_URL))
@@ -699,7 +740,6 @@ def main():
             f"WARNING: 8 AM board failed after retries: {e} "
             "-- keeping previous 8 AM state"
         )
-
     print("Fetching graveyard board...")
     try:
         board_1am_gb = extract_gbdata(fetch(BOARD_1AM_URL))
@@ -709,7 +749,6 @@ def main():
             f"WARNING: graveyard board failed after retries: {e} "
             "-- keeping previous graveyard state"
         )
-
     print("Fetching BCMEA NW forecast...")
     try:
         nw = normalize_nw_forecast(fetch_json(BCMEA_NW_URL))
@@ -718,12 +757,10 @@ def main():
             f"WARNING: BCMEA forecast failed after retries: {e} "
             "-- keeping previous BCMEA state"
         )
-
     local_now = datetime.now(timezone.utc).astimezone(
         ZoneInfo("America/Vancouver")
     )
     today = local_now.date().isoformat()
-
     # H/T PINS: log and alert only from a fresh successful Pins response.
     if h is not None and t is not None:
         pins_success_at = datetime.now(timezone.utc)
@@ -738,14 +775,12 @@ def main():
         )
         shift_board = shift_board_for_name(shift_name, b, b8, b_1)
         shift_breakdown = make_shift_breakdown(shift_board)
-
         for board_letter, current_pin, state_key in [
             ("H", h, "h_board"),
             ("T", t, "t_board"),
         ]:
             old_value = state.get(state_key)
             new_value = current_pin["value"]
-
             # The first successful run establishes the baseline without
             # creating a false movement event.
             if (
@@ -766,7 +801,6 @@ def main():
                 )
                 history_changed = True
                 telegram(pin_move_alert(event))
-
         state["h_board"] = h["value"]
         state["h_modified"] = h["modified"]
         state["h_last_success"] = pins_success_at.isoformat()
@@ -774,7 +808,6 @@ def main():
         state["t_modified"] = t["modified"]
         state["t_last_success"] = pins_success_at.isoformat()
         state["pins_last_success"] = pins_success_at.isoformat()
-
     # 4:30: this entire compare/alert/update path uses fresh 4:30 data only.
     if b is not None:
         board_430_success_at = datetime.now(timezone.utc).isoformat()
@@ -784,12 +817,10 @@ def main():
             b["modified"] != old_430_modified
             or b["total"] != old_430_total
         )
-
         if old_430_modified is not None and changed_430:
             headline = "📋 4:30 BOARD UPDATED"
             if b["total"] > 200:
                 headline += " — 🔥 OVER 200 JOBS"
-
             change_lines = build_change_lines([
                 ("🚗 Auto drivers", b["auto_dr_total"], state.get("board_430_auto_dr_total")),
                 ("📦 Containers", b["container_total"], state.get("board_430_container_total")),
@@ -800,13 +831,26 @@ def main():
                 ("   Deltaport", b["dp_total"], state.get("board_430_dp_total")),
             ])
             change_text = "\n".join(change_lines)
-
+            notable_lines = notable_category_lines(
+                history,
+                "board_430",
+                b,
+                datetime.now(timezone.utc),
+            )
+            notable_text = ""
+            if notable_lines:
+                notable_text = (
+                    "\nNOTABLE VOLUME\n"
+                    + "\n".join(notable_lines)
+                    + "\n"
+                )
             telegram(
                 f"{headline}\n"
                 f"Total: {b['total']} jobs"
                 f"{format_delta(b['total'], old_430_total)}\n\n"
                 "CHANGES\n"
                 f"{change_text}\n\n"
+                f"{notable_text}"
                 f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
                 f"📦 Containers: {b['container_total']} "
                 f"({b['container_ht_total']} HT + "
@@ -818,7 +862,6 @@ def main():
                 f"Board time: {b['modified'] or 'unknown'}\n"
                 f'<a href="{BOARD_430_PAGE}">View 4:30 board</a>'
             )
-
         state.update({
             "board_430_total": b["total"],
             "board_430_modified": b["modified"],
@@ -834,7 +877,6 @@ def main():
         history_changed = record_board_history(
             history, "board_430", b, board_430_success_at
         ) or history_changed
-
     # 8 AM is deliberately outside the 4:30 block.
     if b8 is not None:
         board_8am_success_at = datetime.now(timezone.utc).isoformat()
@@ -844,7 +886,6 @@ def main():
             b8["modified"] != old_8am_modified
             or b8["total"] != old_8am_total
         )
-
         if (
             old_8am_modified is not None
             and changed_8am
@@ -856,7 +897,6 @@ def main():
                 level = "🔥🔥 VERY BUSY"
             else:
                 level = "🔥 BUSY"
-
             change_lines = build_change_lines([
                 ("🚗 Auto drivers", b8["auto_dr_total"], state.get("board_8am_auto_dr_total")),
                 ("📦 Containers", b8["container_total"], state.get("board_8am_container_total")),
@@ -867,13 +907,26 @@ def main():
                 ("   Deltaport", b8["dp_total"], state.get("board_8am_dp_total")),
             ])
             change_text = "\n".join(change_lines)
-
+            notable_lines = notable_category_lines(
+                history,
+                "board_8am",
+                b8,
+                datetime.now(timezone.utc),
+            )
+            notable_text = ""
+            if notable_lines:
+                notable_text = (
+                    "\nNOTABLE VOLUME\n"
+                    + "\n".join(notable_lines)
+                    + "\n"
+                )
             telegram(
                 f"😴 8 AM BOARD — {level}\n"
                 f"Total: {b8['total']} jobs"
                 f"{format_delta(b8['total'], old_8am_total)}\n\n"
                 "CHANGES\n"
                 f"{change_text}\n\n"
+                f"{notable_text}"
                 f"🚗 Auto drivers: {b8['auto_dr_total']}\n"
                 f"📦 Containers: {b8['container_total']} "
                 f"({b8['container_ht_total']} HT + "
@@ -883,7 +936,6 @@ def main():
                 f"Board time: {b8['modified'] or 'unknown'}\n"
                 f'<a href="{BOARD_8AM_PAGE}">View 8 AM board</a>'
             )
-
         state.update({
             "board_8am_total": b8["total"],
             "board_8am_modified": b8["modified"],
@@ -899,7 +951,6 @@ def main():
         history_changed = record_board_history(
             history, "board_8am", b8, board_8am_success_at
         ) or history_changed
-
     # Graveyard is deliberately outside the 4:30 block.
     if b_1 is not None:
         board_1am_success_at = datetime.now(timezone.utc).isoformat()
@@ -909,7 +960,6 @@ def main():
             b_1["modified"] != old_1am_modified
             or b_1["total"] != old_1am_total
         )
-
         if (
             old_1am_modified is not None
             and changed_1am
@@ -921,7 +971,6 @@ def main():
                 level = "🔥🔥 VERY BUSY"
             else:
                 level = "🔥 BUSY"
-
             change_lines = build_change_lines([
                 ("🚗 Auto drivers", b_1["auto_dr_total"], state.get("board_1am_auto_dr_total")),
                 ("📦 Containers", b_1["container_total"], state.get("board_1am_container_total")),
@@ -932,13 +981,26 @@ def main():
                 ("   Deltaport", b_1["dp_total"], state.get("board_1am_dp_total")),
             ])
             change_text = "\n".join(change_lines)
-
+            notable_lines = notable_category_lines(
+                history,
+                "board_1am",
+                b_1,
+                datetime.now(timezone.utc),
+            )
+            notable_text = ""
+            if notable_lines:
+                notable_text = (
+                    "\nNOTABLE VOLUME\n"
+                    + "\n".join(notable_lines)
+                    + "\n"
+                )
             telegram(
                 f"⚰️ 1 AM BOARD — {level}\n"
                 f"Total: {b_1['total']} jobs"
                 f"{format_delta(b_1['total'], old_1am_total)}\n\n"
                 "CHANGES\n"
                 f"{change_text}\n\n"
+                f"{notable_text}"
                 f"🚗 Auto drivers: {b_1['auto_dr_total']}\n"
                 f"📦 Containers: {b_1['container_total']} "
                 f"({b_1['container_ht_total']} HT + "
@@ -948,7 +1010,6 @@ def main():
                 f"Board time: {b_1['modified'] or 'unknown'}\n"
                 f'<a href="{BOARD_1AM_PAGE}">View graveyard board</a>'
             )
-
         state.update({
             "board_1am_total": b_1["total"],
             "board_1am_modified": b_1["modified"],
@@ -964,47 +1025,36 @@ def main():
         history_changed = record_board_history(
             history, "board_1am", b_1, board_1am_success_at
         ) or history_changed
-
     # BCMEA: compare and update only after a fresh successful response.
     if nw is not None:
         bcmea_success_at = datetime.now(timezone.utc).isoformat()
         old_nw = state.get("bcmea_nw_forecast")
-
         if old_nw is not None and nw != old_nw:
             lines = ["📈 BCMEA NW FORECAST UPDATED"]
             busy_days = []
-
             for row in nw:
                 qty = row["quantity"]
-
                 if qty >= 30:
                     marker = "🚨"
                 elif qty >= 25:
                     marker = "🔥"
                 else:
                     marker = "•"
-
                 lines.append(f"{marker} {row['date']}: {qty} gangs")
-
                 if qty >= 25:
                     busy_days.append(row)
-
             lines.append(
                 f'<a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>'
             )
-
             if busy_days:
                 lines.append("")
                 lines.append("Busy forecast:")
-
                 for row in busy_days:
                     label = "VERY BUSY" if row["quantity"] >= 30 else "BUSY"
                     lines.append(
                         f"{row['date']}: {row['quantity']} gangs — {label}"
                     )
-
             telegram("\n".join(lines))
-
         state["bcmea_nw_forecast"] = nw
         state["bcmea_last_success"] = bcmea_success_at
         history_changed = record_bcmea_forecast_history(
@@ -1012,7 +1062,6 @@ def main():
             nw,
             bcmea_success_at,
         ) or history_changed
-
     # Send the daily message only when both sources used by it are fresh.
     # If either fails at 1 PM, do not mark today as sent; a later run can retry.
     last_daily_status = state.get("last_daily_status")
@@ -1036,7 +1085,6 @@ def main():
                 "WARNING: Daily status deferred because H board or 4:30 "
                 "fresh data is unavailable"
             )
-
     # Send one morning briefing on the first fully successful run from
     # 6:30 AM through 7:59 AM Vancouver time.
     minutes_now = local_now.hour * 60 + local_now.minute
@@ -1046,7 +1094,6 @@ def main():
         and last_morning_briefing != today
     ):
         required_sources = [h, t, b, b8, b_1, nw]
-
         if all(source is not None for source in required_sources):
             telegram(
                 morning_briefing_text(
@@ -1066,13 +1113,11 @@ def main():
                 "WARNING: Morning briefing deferred because one or more "
                 "required sources did not return fresh data"
             )
-
     # Successful sources have already updated their own keys. Failed sources
     # never touched their keys, so their previous state remains unchanged.
     save_state(state)
     if history_changed or not HISTORY_FILE.exists():
         save_history(history)
-
     if h is not None:
         print(f"H BOARD: {h['value']} ({h['modified']})")
     if t is not None:

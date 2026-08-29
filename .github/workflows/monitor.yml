@@ -32,14 +32,15 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python monitor.py
 
-      - name: Save monitor state
+      - name: Save monitor state and history
         run: |
-          if git diff --quiet -- state.json; then
-            echo "No state change to commit."
+          if [ -z "$(git status --porcelain -- state.json history.json)" ]; then
+            echo "No state or history change to commit."
             exit 0
           fi
 
           cp state.json /tmp/monitor-state.json
+          cp history.json /tmp/monitor-history.json
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -48,7 +49,8 @@ jobs:
           git reset --hard origin/main
 
           cp /tmp/monitor-state.json state.json
+          cp /tmp/monitor-history.json history.json
 
-          git add state.json
-          git commit -m "Update ILWU monitor state"
+          git add state.json history.json
+          git commit -m "Update ILWU monitor state and history"
           git push

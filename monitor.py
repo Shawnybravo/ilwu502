@@ -491,9 +491,23 @@ def main():
             if b["total"] > 200:
                 headline += " — 🔥 OVER 200 JOBS"
 
+            change_lines = build_change_lines([
+                ("🚗 Auto drivers", b["auto_dr_total"], state.get("board_430_auto_dr_total")),
+                ("📦 Containers", b["container_total"], state.get("board_430_container_total")),
+                ("   HT", b["container_ht_total"], state.get("board_430_container_ht_total")),
+                ("   Lashers", b["container_lashers_total"], state.get("board_430_container_lashers_total")),
+                ("🎟 Rated jobs", b["rated_total"], state.get("board_430_rated_total")),
+                ("   FSD", b["fsd_total"], state.get("board_430_fsd_total")),
+                ("   Deltaport", b["dp_total"], state.get("board_430_dp_total")),
+            ])
+            change_text = "\n".join(change_lines)
+
             telegram(
                 f"{headline}\n"
-                f"Total: {b['total']} jobs\n\n"
+                f"Total: {b['total']} jobs"
+                f"{format_delta(b['total'], old_430_total)}\n\n"
+                "CHANGES\n"
+                f"{change_text}\n\n"
                 f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
                 f"📦 Containers: {b['container_total']} "
                 f"({b['container_ht_total']} HT + "
@@ -544,9 +558,23 @@ def main():
             else:
                 level = "🔥 BUSY"
 
+            change_lines = build_change_lines([
+                ("🚗 Auto drivers", b8["auto_dr_total"], state.get("board_8am_auto_dr_total")),
+                ("📦 Containers", b8["container_total"], state.get("board_8am_container_total")),
+                ("   HT", b8["container_ht_total"], state.get("board_8am_container_ht_total")),
+                ("   Lashers", b8["container_lashers_total"], state.get("board_8am_container_lashers_total")),
+                ("🎟 Rated jobs", b8["rated_total"], state.get("board_8am_rated_total")),
+                ("   FSD", b8["fsd_total"], state.get("board_8am_fsd_total")),
+                ("   Deltaport", b8["dp_total"], state.get("board_8am_dp_total")),
+            ])
+            change_text = "\n".join(change_lines)
+
             telegram(
                 f"😴 8 AM BOARD — {level}\n"
-                f"Total: {b8['total']} jobs\n"
+                f"Total: {b8['total']} jobs"
+                f"{format_delta(b8['total'], old_8am_total)}\n\n"
+                "CHANGES\n"
+                f"{change_text}\n\n"
                 f"🚗 Auto drivers: {b8['auto_dr_total']}\n"
                 f"📦 Containers: {b8['container_total']} "
                 f"({b8['container_ht_total']} HT + "
@@ -595,9 +623,23 @@ def main():
             else:
                 level = "🔥 BUSY"
 
+            change_lines = build_change_lines([
+                ("🚗 Auto drivers", b_1["auto_dr_total"], state.get("board_1am_auto_dr_total")),
+                ("📦 Containers", b_1["container_total"], state.get("board_1am_container_total")),
+                ("   HT", b_1["container_ht_total"], state.get("board_1am_container_ht_total")),
+                ("   Lashers", b_1["container_lashers_total"], state.get("board_1am_container_lashers_total")),
+                ("🎟 Rated jobs", b_1["rated_total"], state.get("board_1am_rated_total")),
+                ("   FSD", b_1["fsd_total"], state.get("board_1am_fsd_total")),
+                ("   Deltaport", b_1["dp_total"], state.get("board_1am_dp_total")),
+            ])
+            change_text = "\n".join(change_lines)
+
             telegram(
                 f"⚰️ 1 AM BOARD — {level}\n"
-                f"Total: {b_1['total']} jobs\n"
+                f"Total: {b_1['total']} jobs"
+                f"{format_delta(b_1['total'], old_1am_total)}\n\n"
+                "CHANGES\n"
+                f"{change_text}\n\n"
                 f"🚗 Auto drivers: {b_1['auto_dr_total']}\n"
                 f"📦 Containers: {b_1['container_total']} "
                 f"({b_1['container_ht_total']} HT + "
@@ -712,6 +754,7 @@ def main():
         print(f"1 AM total: {b_1['total']}")
     if nw is not None:
         print(f"BCMEA forecast rows: {len(nw)}")
+
 
 
 

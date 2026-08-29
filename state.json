@@ -15,31 +15,31 @@
     {
       "date": "Sun Aug 30",
       "day": "Sun",
-      "quantity": 21,
+      "quantity": 24,
       "status": 2
     },
     {
       "date": "Mon Aug 31",
       "day": "Mon",
-      "quantity": 9,
+      "quantity": 10,
       "status": 1
     },
     {
       "date": "Tue Sep 01",
       "day": "Tue",
-      "quantity": 6,
+      "quantity": 8,
       "status": 1
     },
     {
       "date": "Wed Sep 02",
       "day": "Wed",
-      "quantity": 16,
+      "quantity": 19,
       "status": 2
     },
     {
       "date": "Thu Sep 03",
       "day": "Thu",
-      "quantity": 13,
+      "quantity": 17,
       "status": 2
     }
   ],

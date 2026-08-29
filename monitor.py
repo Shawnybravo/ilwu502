@@ -417,6 +417,106 @@ def pin_move_alert(event):
     return "\n".join(lines)
 
 
+def morning_volume_marker(total, shift_name):
+    if shift_name == "8 AM":
+        if total >= 300:
+            return "🚨"
+        if total >= 250:
+            return "🔥🔥"
+        if total >= 200:
+            return "🔥"
+        return ""
+
+    if shift_name == "Graveyard":
+        if total >= 250:
+            return "🚨"
+        if total >= 200:
+            return "🔥🔥"
+        if total >= 150:
+            return "🔥"
+        return ""
+
+    if total > 200:
+        return "🔥"
+    return ""
+
+
+def recent_pin_move_lines(history, local_now, hours=15):
+    cutoff_timestamp = local_now.timestamp() - hours * 60 * 60
+    recent = []
+
+    for event in history.get("pin_moves", []):
+        detected = parse_saved_time(event.get("detected_at"))
+        if detected is None or detected.timestamp() < cutoff_timestamp:
+            continue
+
+        movement = event.get("movement")
+        if movement is None:
+            movement_text = ""
+        elif movement > 0:
+            movement_text = f" (⬆️ +{movement})"
+        elif movement < 0:
+            movement_text = f" (⬇️ -{abs(movement)})"
+        else:
+            movement_text = ""
+
+        recent.append(
+            f"{event.get('board', '?')}: "
+            f"{event.get('old_pin', '?')} → {event.get('new_pin', '?')}"
+            f"{movement_text} — likely {event.get('attributed_shift', 'unknown')}"
+        )
+
+    return recent
+
+
+def morning_briefing_text(h, t, board_430, board_8am, board_1am, forecast, history, local_now):
+    pin_lines = recent_pin_move_lines(history, local_now)
+    marker_8 = morning_volume_marker(board_8am["total"], "8 AM")
+    marker_430 = morning_volume_marker(board_430["total"], "4:30")
+    marker_1 = morning_volume_marker(board_1am["total"], "Graveyard")
+
+    lines = [
+        "☀️ ILWU MORNING BRIEFING",
+        "",
+        "📌 WORK PINS",
+        f"H Board: {h['value']}",
+        f"T Board: {t['value']}",
+    ]
+
+    if pin_lines:
+        lines.append("Recent movement:")
+        lines.extend(pin_lines)
+    else:
+        lines.append("Recent movement: none detected")
+
+    lines.extend([
+        "",
+        "📊 CURRENT BOARDS",
+        f"😴 8 AM: {board_8am['total']} jobs {marker_8}".rstrip(),
+        f"📋 4:30: {board_430['total']} jobs {marker_430}".rstrip(),
+        f"⚰️ Graveyard: {board_1am['total']} jobs {marker_1}".rstrip(),
+        "",
+        "📈 BCMEA NW FORECAST",
+    ])
+
+    for row in forecast[:3]:
+        quantity = row["quantity"]
+        if quantity >= 30:
+            marker = "🚨🔥"
+        elif quantity >= 25:
+            marker = "🔥"
+        else:
+            marker = "•"
+        lines.append(f"{marker} {row['date']}: {quantity} gangs")
+
+    lines.extend([
+        "",
+        "🟢 All briefing sources returned fresh data",
+    ])
+    return "\n".join(lines)
+
+
+
 def numeric_sum(text):
     return sum(int(x) for x in re.findall(r"\d+", str(text or "")))
 
@@ -937,6 +1037,36 @@ def main():
                 "fresh data is unavailable"
             )
 
+    # Send one morning briefing on the first fully successful run from
+    # 6:30 AM through 7:59 AM Vancouver time.
+    minutes_now = local_now.hour * 60 + local_now.minute
+    last_morning_briefing = state.get("last_morning_briefing")
+    if (
+        6 * 60 + 30 <= minutes_now < 8 * 60
+        and last_morning_briefing != today
+    ):
+        required_sources = [h, t, b, b8, b_1, nw]
+
+        if all(source is not None for source in required_sources):
+            telegram(
+                morning_briefing_text(
+                    h=h,
+                    t=t,
+                    board_430=b,
+                    board_8am=b8,
+                    board_1am=b_1,
+                    forecast=nw,
+                    history=history,
+                    local_now=local_now,
+                )
+            )
+            state["last_morning_briefing"] = today
+        else:
+            print(
+                "WARNING: Morning briefing deferred because one or more "
+                "required sources did not return fresh data"
+            )
+
     # Successful sources have already updated their own keys. Failed sources
     # never touched their keys, so their previous state remains unchanged.
     save_state(state)
@@ -961,6 +1091,7 @@ def main():
         print(f"1 AM total: {b_1['total']}")
     if nw is not None:
         print(f"BCMEA forecast rows: {len(nw)}")
+
 
 
 

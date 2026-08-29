@@ -1,4 +1,53 @@
 {
+  "bcmea_forecasts": [
+    {
+      "captured_at": "2026-08-29T20:17:49.727984+00:00",
+      "forecast": [
+        {
+          "date": "Fri Aug 28",
+          "day": "Fri",
+          "quantity": 23,
+          "status": 2
+        },
+        {
+          "date": "Sat Aug 29",
+          "day": "Sat",
+          "quantity": 26,
+          "status": 2
+        },
+        {
+          "date": "Sun Aug 30",
+          "day": "Sun",
+          "quantity": 22,
+          "status": 2
+        },
+        {
+          "date": "Mon Aug 31",
+          "day": "Mon",
+          "quantity": 8,
+          "status": 1
+        },
+        {
+          "date": "Tue Sep 01",
+          "day": "Tue",
+          "quantity": 8,
+          "status": 1
+        },
+        {
+          "date": "Wed Sep 02",
+          "day": "Wed",
+          "quantity": 19,
+          "status": 2
+        },
+        {
+          "date": "Thu Sep 03",
+          "day": "Thu",
+          "quantity": 17,
+          "status": 2
+        }
+      ]
+    }
+  ],
   "board_1am": [
     {
       "auto_dr": 0,
@@ -46,5 +95,6 @@
       "ship_jobs": 3,
       "total": 3
     }
-  ]
+  ],
+  "pin_moves": []
 }

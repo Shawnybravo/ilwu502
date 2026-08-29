@@ -1150,7 +1150,6 @@ def main():
                 level = "🚨 HUGE"
             elif b8["total"] >= 250:
                 level = "🔥🔥 VERY BUSY"
-            else:
             elif b8["total"] >= 200:
                 level = "🔥 BUSY"
             else:

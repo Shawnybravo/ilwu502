@@ -123,8 +123,6 @@ def save_state(state):
 
 
 HISTORY_FILE = Path("history.json")
-
-
 def load_history():
     if not HISTORY_FILE.exists():
         return {
@@ -134,7 +132,6 @@ def load_history():
             "pin_moves": [],
             "bcmea_forecasts": [],
         }
-
     history = json.loads(HISTORY_FILE.read_text(encoding="utf-8"))
     for key in [
         "board_430",
@@ -145,15 +142,11 @@ def load_history():
     ]:
         history.setdefault(key, [])
     return history
-
-
 def save_history(history):
     HISTORY_FILE.write_text(
         json.dumps(history, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
-
-
 def record_board_history(history, history_key, board, captured_at):
     entry = {
         "captured_at": captured_at,
@@ -169,53 +162,40 @@ def record_board_history(history, history_key, board, captured_at):
         "fsd": board["fsd_total"],
         "deltaport": board["dp_total"],
     }
-
     rows = history.setdefault(history_key, [])
     if rows:
         previous = rows[-1]
         comparison_keys = [key for key in entry if key != "captured_at"]
         if all(previous.get(key) == entry.get(key) for key in comparison_keys):
             return False
-
     rows.append(entry)
     return True
-
-
 def record_bcmea_forecast_history(history, forecast, captured_at):
     snapshots = history.setdefault("bcmea_forecasts", [])
-
     # Save only genuine forecast revisions. Repeated successful polls of the
     # same forecast update its freshness in state.json but do not create
     # duplicate historical snapshots.
     if snapshots and snapshots[-1].get("forecast") == forecast:
         return False
-
     snapshots.append({
         "captured_at": captured_at,
         "forecast": forecast,
     })
     return True
-
-
 def format_delta(new_value, old_value):
     if old_value is None:
         return ""
-
     difference = new_value - old_value
     if difference > 0:
         return f" ⬆️ +{difference}"
     if difference < 0:
         return f" ⬇️ -{abs(difference)}"
     return " ➡️ no change"
-
-
 def build_change_lines(changes):
     lines = []
-
     for label, new_value, old_value in changes:
         if old_value is None or new_value == old_value:
             continue
-
         difference = new_value - old_value
         marker = "⬆️" if difference > 0 else "⬇️"
         sign = "+" if difference > 0 else "-"
@@ -223,17 +203,12 @@ def build_change_lines(changes):
             f"{label}: {old_value} → {new_value} "
             f"({marker} {sign}{abs(difference)})"
         )
-
     if not lines:
         return ["No job-count changes detected."]
-
     return lines
-
-
 def find_pin_board(gb, board_letter):
     wanted_job = f"{board_letter.upper()} BOARD"
     work_pins = gb.get("work_pins", {})
-
     for section in ["for_8am", "for_430pm", "for_1am"]:
         for item in work_pins.get(section, []) or []:
             if str(item.get("job", "")).strip().upper() == wanted_job:
@@ -243,24 +218,17 @@ def find_pin_board(gb, board_letter):
                     "section": section,
                     "modified": work_pins.get("modified_timestamp", ""),
                 }
-
     raise RuntimeError(f"{wanted_job} was not found in work_pins.")
-
-
 def attributed_shift(detected_at):
     minutes = detected_at.hour * 60 + detected_at.minute
-
     if 6 * 60 + 45 <= minutes <= 15 * 60 + 14:
         return "8 AM"
     if 15 * 60 + 15 <= minutes <= 16 * 60 + 14:
         return "4:30"
     return "Graveyard"
-
-
 def parse_saved_time(value):
     if not value:
         return None
-
     try:
         parsed = datetime.fromisoformat(value)
         if parsed.tzinfo is None:
@@ -268,15 +236,11 @@ def parse_saved_time(value):
         return parsed.astimezone(ZoneInfo("America/Vancouver"))
     except (TypeError, ValueError):
         return None
-
-
 def interval_crossed_shift_boundary(previous_check, current_check):
     if previous_check is None or previous_check >= current_check:
         return None
-
     day = previous_check.date()
     final_day = current_check.date()
-
     while day <= final_day:
         for hour, minute in [(6, 45), (15, 15), (16, 15)]:
             boundary = datetime(
@@ -290,32 +254,22 @@ def interval_crossed_shift_boundary(previous_check, current_check):
             if previous_check < boundary <= current_check:
                 return True
         day = day.fromordinal(day.toordinal() + 1)
-
     return False
-
-
 def numeric_pin_movement(old_value, new_value):
     old_match = re.search(r"(\d+)\s*$", str(old_value))
     new_match = re.search(r"(\d+)\s*$", str(new_value))
-
     if not old_match or not new_match:
         return None
-
     return int(new_match.group(1)) - int(old_match.group(1))
-
-
 def shift_board_for_name(shift_name, board_430, board_8am, board_1am):
     if shift_name == "8 AM":
         return board_8am
     if shift_name == "4:30":
         return board_430
     return board_1am
-
-
 def make_shift_breakdown(board):
     if board is None:
         return None
-
     return {
         "total": board["total"],
         "gang_jobs": board["gang_total"],
@@ -329,8 +283,6 @@ def make_shift_breakdown(board):
         "deltaport": board["dp_total"],
         "board_time": board["modified"],
     }
-
-
 def record_pin_move(
     history,
     board_letter,
@@ -360,8 +312,6 @@ def record_pin_move(
     }
     history.setdefault("pin_moves", []).append(event)
     return event
-
-
 def pin_move_alert(event):
     movement = event["movement"]
     if movement is None:
@@ -372,7 +322,6 @@ def pin_move_alert(event):
         movement_text = f" (⬇️ -{abs(movement)})"
     else:
         movement_text = ""
-
     crossed = event["crossed_shift_boundary"]
     if crossed is True:
         confidence = "⚠️ Uncertain — check interval crossed a shift boundary"
@@ -380,7 +329,6 @@ def pin_move_alert(event):
         confidence = "🟢 Detection window stayed within one shift period"
     else:
         confidence = "⚪ Confidence unknown — no previous check time was available"
-
     lines = [
         f"📌 {event['board']} BOARD MOVED",
         f"{event['old_pin']} → {event['new_pin']}{movement_text}",
@@ -389,7 +337,6 @@ def pin_move_alert(event):
         f"Likely shift: {event['attributed_shift']}",
         confidence,
     ]
-
     breakdown = event["shift_breakdown"]
     if breakdown is None:
         lines.extend([
@@ -412,11 +359,8 @@ def pin_move_alert(event):
             ),
             f"Board time: {breakdown['board_time'] or 'unknown'}",
         ])
-
     lines.extend(["", f'<a href="{PINS_PAGE}">View work pins</a>'])
     return "\n".join(lines)
-
-
 def morning_volume_marker(total, shift_name):
     if shift_name == "8 AM":
         if total >= 300:
@@ -426,7 +370,6 @@ def morning_volume_marker(total, shift_name):
         if total >= 200:
             return "🔥"
         return ""
-
     if shift_name == "Graveyard":
         if total >= 250:
             return "🚨"
@@ -435,21 +378,16 @@ def morning_volume_marker(total, shift_name):
         if total >= 150:
             return "🔥"
         return ""
-
     if total > 200:
         return "🔥"
     return ""
-
-
 def recent_pin_move_lines(history, local_now, hours=15):
     cutoff_timestamp = local_now.timestamp() - hours * 60 * 60
     recent = []
-
     for event in history.get("pin_moves", []):
         detected = parse_saved_time(event.get("detected_at"))
         if detected is None or detected.timestamp() < cutoff_timestamp:
             continue
-
         movement = event.get("movement")
         if movement is None:
             movement_text = ""
@@ -459,22 +397,17 @@ def recent_pin_move_lines(history, local_now, hours=15):
             movement_text = f" (⬇️ -{abs(movement)})"
         else:
             movement_text = ""
-
         recent.append(
             f"{event.get('board', '?')}: "
             f"{event.get('old_pin', '?')} → {event.get('new_pin', '?')}"
             f"{movement_text} — likely {event.get('attributed_shift', 'unknown')}"
         )
-
     return recent
-
-
 def morning_briefing_text(h, t, board_430, board_8am, board_1am, forecast, history, local_now):
     pin_lines = recent_pin_move_lines(history, local_now)
     marker_8 = morning_volume_marker(board_8am["total"], "8 AM")
     marker_430 = morning_volume_marker(board_430["total"], "4:30")
     marker_1 = morning_volume_marker(board_1am["total"], "Graveyard")
-
     lines = [
         "☀️ ILWU MORNING BRIEFING",
         "",
@@ -482,13 +415,11 @@ def morning_briefing_text(h, t, board_430, board_8am, board_1am, forecast, histo
         f"H Board: {h['value']}",
         f"T Board: {t['value']}",
     ]
-
     if pin_lines:
         lines.append("Recent movement:")
         lines.extend(pin_lines)
     else:
         lines.append("Recent movement: none detected")
-
     lines.extend([
         "",
         "📊 CURRENT BOARDS",
@@ -498,7 +429,6 @@ def morning_briefing_text(h, t, board_430, board_8am, board_1am, forecast, histo
         "",
         "📈 BCMEA NW FORECAST",
     ])
-
     for row in forecast[:3]:
         quantity = row["quantity"]
         if quantity >= 30:
@@ -508,27 +438,21 @@ def morning_briefing_text(h, t, board_430, board_8am, board_1am, forecast, histo
         else:
             marker = "•"
         lines.append(f"{marker} {row['date']}: {quantity} gangs")
-
     lines.extend([
         "",
         "🟢 All briefing sources returned fresh data",
     ])
     return "\n".join(lines)
-
-
 def notable_category_lines(history, history_key, board, now_utc):
     cutoff_timestamp = now_utc.timestamp() - 30 * 24 * 60 * 60
     recent_rows = []
-
     for row in history.get(history_key, []):
         captured = parse_saved_time(row.get("captured_at"))
         if captured is not None and captured.timestamp() >= cutoff_timestamp:
             recent_rows.append(row)
-
     # A record based on only one or two earlier boards is not meaningful.
     if len(recent_rows) < 5:
         return []
-
     categories = [
         ("🚗 Auto drivers", "auto_dr", board["auto_dr_total"]),
         ("📦 Containers", "containers", board["container_total"]),
@@ -538,7 +462,6 @@ def notable_category_lines(history, history_key, board, now_utc):
         ("   FSD", "fsd", board["fsd_total"]),
         ("   Deltaport", "deltaport", board["dp_total"]),
     ]
-
     notable = []
     for label, history_field, current_value in categories:
         previous_values = [
@@ -546,20 +469,15 @@ def notable_category_lines(history, history_key, board, now_utc):
             for row in recent_rows
             if isinstance(row.get(history_field), (int, float))
         ]
-
         if not previous_values:
             continue
-
         previous_high = max(previous_values)
         if current_value > previous_high:
             notable.append(
                 f"{label}: {current_value} — new 30-day high "
                 f"(previous {previous_high})"
             )
-
     return notable
-
-
 def weekly_daily_rows(history, history_key, local_now):
     monday = local_now.date().fromordinal(
         local_now.date().toordinal() - local_now.weekday()
@@ -572,23 +490,18 @@ def weekly_daily_rows(history, history_key, local_now):
     )
     cutoff_timestamp = week_start.timestamp()
     latest_by_day = {}
-
     for row in history.get(history_key, []):
         captured = parse_saved_time(row.get("captured_at"))
         if captured is None or captured.timestamp() < cutoff_timestamp:
             continue
-
         day_key = captured.date().isoformat()
         previous = latest_by_day.get(day_key)
         if previous is None or captured > previous[0]:
             latest_by_day[day_key] = (captured, row)
-
     return [
         pair[1]
         for pair in sorted(latest_by_day.values(), key=lambda pair: pair[0])
     ]
-
-
 def weekly_shift_lines(title, rows, busy_threshold):
     totals = [row["total"] for row in rows]
     average = round(sum(totals) / len(totals))
@@ -598,15 +511,12 @@ def weekly_shift_lines(title, rows, busy_threshold):
     busiest_date = "unknown date"
     if busiest_time is not None:
         busiest_date = busiest_time.strftime("%a %b %d").replace(" 0", " ")
-
     return [
         title,
         f"Average: {average} jobs",
         f"Busiest: {busiest['total']} jobs — {busiest_date}",
         f"Busy days: {busy_count} of {len(rows)}",
     ]
-
-
 def weekly_pin_lines(history, local_now):
     monday = local_now.date().fromordinal(
         local_now.date().toordinal() - local_now.weekday()
@@ -619,12 +529,10 @@ def weekly_pin_lines(history, local_now):
     )
     cutoff_timestamp = week_start.timestamp()
     moves = []
-
     for event in history.get("pin_moves", []):
         detected = parse_saved_time(event.get("detected_at"))
         if detected is not None and detected.timestamp() >= cutoff_timestamp:
             moves.append(event)
-
     lines = ["📌 WORK PIN MOVEMENT"]
     for board_letter in ["H", "T"]:
         board_moves = [
@@ -640,10 +548,63 @@ def weekly_pin_lines(history, local_now):
         lines.append(
             f"{board_letter}: {len(board_moves)} movements — net {net_text}"
         )
-
+        if numeric_moves:
+            average_size = sum(abs(value) for value in numeric_moves) / len(numeric_moves)
+            lines.append(f"   Average size: {average_size:.1f} positions")
+    shift_counts = {
+        "8 AM": 0,
+        "4:30": 0,
+        "Graveyard": 0,
+    }
+    confident = 0
+    uncertain = 0
+    for event in moves:
+        shift = event.get("attributed_shift")
+        if shift in shift_counts:
+            shift_counts[shift] += 1
+        if event.get("crossed_shift_boundary") is False:
+            confident += 1
+        else:
+            uncertain += 1
+    lines.extend([
+        "Attributed shifts: "
+        f"8 AM {shift_counts['8 AM']} · "
+        f"4:30 {shift_counts['4:30']} · "
+        f"Graveyard {shift_counts['Graveyard']}",
+        f"Confidence: {confident} higher · {uncertain} uncertain",
+    ])
+    # H and T can move during the same check. Count the attached shift
+    # breakdown only once when calculating associated-volume averages.
+    unique_breakdowns = {}
+    for event in moves:
+        breakdown = event.get("shift_breakdown")
+        if not isinstance(breakdown, dict):
+            continue
+        key = (event.get("detected_at"), event.get("attributed_shift"))
+        unique_breakdowns[key] = breakdown
+    breakdowns = list(unique_breakdowns.values())
+    if breakdowns:
+        average_total = round(
+            sum(row.get("total", 0) for row in breakdowns) / len(breakdowns)
+        )
+        average_auto = round(
+            sum(row.get("auto_dr", 0) for row in breakdowns) / len(breakdowns)
+        )
+        average_containers = round(
+            sum(row.get("containers", 0) for row in breakdowns) / len(breakdowns)
+        )
+        average_rated = round(
+            sum(row.get("rated", 0) for row in breakdowns) / len(breakdowns)
+        )
+        lines.extend([
+            f"Average associated volume: {average_total} jobs",
+            (
+                f"Associated mix: 🚗 {average_auto} auto · "
+                f"📦 {average_containers} containers · "
+                f"🎟 {average_rated} rated"
+            ),
+        ])
     return lines
-
-
 def weekly_category_high_lines(all_rows):
     categories = [
         ("Auto drivers", "auto_dr"),
@@ -654,7 +615,6 @@ def weekly_category_high_lines(all_rows):
         ("FSD", "fsd"),
         ("Deltaport", "deltaport"),
     ]
-
     lines = ["🏆 CATEGORY HIGHS"]
     for label, key in categories:
         values = [
@@ -664,10 +624,7 @@ def weekly_category_high_lines(all_rows):
         ]
         if values:
             lines.append(f"{label}: {max(values)}")
-
     return lines
-
-
 def board_history_date(row):
     board_time = str(row.get("board_time", "")).strip()
     try:
@@ -678,12 +635,9 @@ def board_history_date(row):
     except ValueError:
         captured = parse_saved_time(row.get("captured_at"))
         return captured.date() if captured is not None else None
-
-
 def forecast_row_date(date_text, snapshot_time):
     text = str(date_text or "").strip()
     candidates = []
-
     for year in [snapshot_time.year - 1, snapshot_time.year, snapshot_time.year + 1]:
         try:
             candidate = datetime.strptime(
@@ -693,16 +647,12 @@ def forecast_row_date(date_text, snapshot_time):
             candidates.append(candidate)
         except ValueError:
             continue
-
     if not candidates:
         return None
-
     return min(
         candidates,
         key=lambda candidate: abs((candidate - snapshot_time.date()).days),
     )
-
-
 def forecast_known_before_430(history, target_date):
     cutoff = datetime(
         target_date.year,
@@ -713,53 +663,41 @@ def forecast_known_before_430(history, target_date):
         tzinfo=ZoneInfo("America/Vancouver"),
     )
     best = None
-
     for snapshot in history.get("bcmea_forecasts", []):
         captured = parse_saved_time(snapshot.get("captured_at"))
         if captured is None or captured > cutoff:
             continue
-
         for row in snapshot.get("forecast", []):
             row_date = forecast_row_date(row.get("date"), captured)
             if row_date != target_date:
                 continue
-
             if best is None or captured > best[0]:
                 best = (captured, row)
-
     return best[1] if best is not None else None
-
-
 def weekly_forecast_actual_lines(history, rows_430):
     comparisons = []
-
     for row in rows_430:
         actual_date = board_history_date(row)
         if actual_date is None:
             continue
-
         forecast = forecast_known_before_430(history, actual_date)
         if forecast is None:
             continue
-
         comparisons.append({
             "date": actual_date,
             "forecast_gangs": int(forecast.get("quantity", 0) or 0),
             "actual_jobs": row["total"],
         })
-
     lines = ["📈 BCMEA VS FINAL 4:30"]
     if not comparisons:
         lines.append("No comparable days recorded yet.")
         return lines
-
     for comparison in comparisons:
         date_label = comparison["date"].strftime("%a %b %d").replace(" 0", " ")
         lines.append(
             f"{date_label}: {comparison['forecast_gangs']} gangs "
             f"→ {comparison['actual_jobs']} jobs"
         )
-
     busy_forecasts = [
         comparison
         for comparison in comparisons
@@ -774,26 +712,20 @@ def weekly_forecast_actual_lines(history, rows_430):
             f"25+ gang forecasts reached 200+ jobs: "
             f"{busy_results} of {len(busy_forecasts)}"
         )
-
     return lines
-
-
 def weekly_report_text(history, local_now):
     rows_430 = weekly_daily_rows(history, "board_430", local_now)
     rows_8am = weekly_daily_rows(history, "board_8am", local_now)
     rows_1am = weekly_daily_rows(history, "board_1am", local_now)
-
     # Wait until each shift has at least three different recorded days.
     if min(len(rows_430), len(rows_8am), len(rows_1am)) < 3:
         return None
-
     monday = local_now.date().fromordinal(
         local_now.date().toordinal() - local_now.weekday()
     )
     date_range = (
         f"{monday.strftime('%b %d')}–{local_now.strftime('%b %d, %Y')}"
     )
-
     lines = ["📊 WEEKLY ILWU REPORT", date_range, ""]
     lines.extend(weekly_shift_lines("📋 4:30", rows_430, 200))
     lines.append("")
@@ -806,9 +738,7 @@ def weekly_report_text(history, local_now):
     lines.extend(weekly_category_high_lines(rows_430 + rows_8am + rows_1am))
     lines.append("")
     lines.extend(weekly_forecast_actual_lines(history, rows_430))
-
     return "\n".join(lines)
-
 
 
 

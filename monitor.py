@@ -40,15 +40,27 @@ def fetch(url):
             sep = "&" if "?" in url else "?"
             request_url = f"{url}{sep}_monitor_ts={time.time_ns()}"
 
-            req = urllib.request.Request(request_url, headers=HEADERS)
+            print(f"Fetching {url} - attempt {attempt + 1}/3")
+
+            req = urllib.request.Request(
+                request_url,
+                headers=HEADERS,
+            )
 
             with urllib.request.urlopen(req, timeout=30) as r:
-                return r.read().decode("utf-8", errors="replace")
+                return r.read().decode(
+                    "utf-8",
+                    errors="replace",
+                )
 
         except Exception as e:
             last_error = e
+            print(
+                f"Fetch failed for {url}: {e}"
+            )
 
             if attempt < 2:
+                print("Waiting 5 seconds before retry...")
                 time.sleep(5)
 
     raise last_error
@@ -253,17 +265,38 @@ def calculate_board(gb, board_key):
 
         "modified": board.get("modified_timestamp", ""),
     }
-
+    
 def fetch_json(url):
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": HEADERS["User-Agent"],
-            "Accept": "application/json",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode("utf-8"))
+    last_error = None
+
+    for attempt in range(3):
+        try:
+            print(f"Fetching {url} - attempt {attempt + 1}/3")
+
+            req = urllib.request.Request(
+                url,
+                headers={
+                    "User-Agent": HEADERS["User-Agent"],
+                    "Accept": "application/json",
+                },
+            )
+
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return json.loads(
+                    r.read().decode("utf-8")
+                )
+
+        except Exception as e:
+            last_error = e
+            print(
+                f"Fetch failed for {url}: {e}"
+            )
+
+            if attempt < 2:
+                print("Waiting 5 seconds before retry...")
+                time.sleep(5)
+
+    raise last_error
 
 def normalize_nw_forecast(rows):
     forecast = []

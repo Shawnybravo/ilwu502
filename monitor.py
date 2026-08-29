@@ -459,9 +459,6 @@ def main():
             f'🔗 <a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>'
         )
 
-            if qty >= 25:
-                busy_days.append(row)
-
         if busy_days:
             lines.append("")
             lines.append("Busy forecast:")

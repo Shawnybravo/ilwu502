@@ -162,7 +162,9 @@ def load_state():
 def save_state(state):
     STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
+
 HISTORY_FILE = Path("history.json")
+
 
 def load_history():
     if not HISTORY_FILE.exists():
@@ -206,6 +208,40 @@ def record_board_history(history, history_key, board, captured_at):
 
     rows.append(entry)
     return True
+
+
+def format_delta(new_value, old_value):
+    if old_value is None:
+        return ""
+
+    difference = new_value - old_value
+    if difference > 0:
+        return f" ⬆️ +{difference}"
+    if difference < 0:
+        return f" ⬇️ -{abs(difference)}"
+    return " ➡️ no change"
+
+
+def build_change_lines(changes):
+    lines = []
+
+    for label, new_value, old_value in changes:
+        if old_value is None or new_value == old_value:
+            continue
+
+        difference = new_value - old_value
+        marker = "⬆️" if difference > 0 else "⬇️"
+        sign = "+" if difference > 0 else "-"
+        lines.append(
+            f"{label}: {old_value} → {new_value} "
+            f"({marker} {sign}{abs(difference)})"
+        )
+
+    if not lines:
+        return ["No job-count changes detected."]
+
+    return lines
+
 
 
 def find_h_board(gb):

@@ -36,9 +36,12 @@ def normalized_shift(value):
         "graveyard": "Graveyard",
         "Graveyard": "Graveyard",
     }
-    shift = choices.get(str(value).strip())
+    received = str(value).strip()
+    shift = choices.get(received)
     if shift is None:
-        raise ValueError("Shift must be 430, 8, or g.")
+        raise ValueError(
+            f"Shift must be 430, 8, or g; received {received!r}."
+        )
     return shift
 
 

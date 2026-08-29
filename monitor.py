@@ -668,6 +668,116 @@ def weekly_category_high_lines(all_rows):
     return lines
 
 
+def board_history_date(row):
+    board_time = str(row.get("board_time", "")).strip()
+    try:
+        return datetime.strptime(
+            board_time,
+            "%B %d, %Y @ %I:%M %p",
+        ).date()
+    except ValueError:
+        captured = parse_saved_time(row.get("captured_at"))
+        return captured.date() if captured is not None else None
+
+
+def forecast_row_date(date_text, snapshot_time):
+    text = str(date_text or "").strip()
+    candidates = []
+
+    for year in [snapshot_time.year - 1, snapshot_time.year, snapshot_time.year + 1]:
+        try:
+            candidate = datetime.strptime(
+                f"{text} {year}",
+                "%a %b %d %Y",
+            ).date()
+            candidates.append(candidate)
+        except ValueError:
+            continue
+
+    if not candidates:
+        return None
+
+    return min(
+        candidates,
+        key=lambda candidate: abs((candidate - snapshot_time.date()).days),
+    )
+
+
+def forecast_known_before_430(history, target_date):
+    cutoff = datetime(
+        target_date.year,
+        target_date.month,
+        target_date.day,
+        15,
+        15,
+        tzinfo=ZoneInfo("America/Vancouver"),
+    )
+    best = None
+
+    for snapshot in history.get("bcmea_forecasts", []):
+        captured = parse_saved_time(snapshot.get("captured_at"))
+        if captured is None or captured > cutoff:
+            continue
+
+        for row in snapshot.get("forecast", []):
+            row_date = forecast_row_date(row.get("date"), captured)
+            if row_date != target_date:
+                continue
+
+            if best is None or captured > best[0]:
+                best = (captured, row)
+
+    return best[1] if best is not None else None
+
+
+def weekly_forecast_actual_lines(history, rows_430):
+    comparisons = []
+
+    for row in rows_430:
+        actual_date = board_history_date(row)
+        if actual_date is None:
+            continue
+
+        forecast = forecast_known_before_430(history, actual_date)
+        if forecast is None:
+            continue
+
+        comparisons.append({
+            "date": actual_date,
+            "forecast_gangs": int(forecast.get("quantity", 0) or 0),
+            "actual_jobs": row["total"],
+        })
+
+    lines = ["📈 BCMEA VS FINAL 4:30"]
+    if not comparisons:
+        lines.append("No comparable days recorded yet.")
+        return lines
+
+    for comparison in comparisons:
+        date_label = comparison["date"].strftime("%a %b %d").replace(" 0", " ")
+        lines.append(
+            f"{date_label}: {comparison['forecast_gangs']} gangs "
+            f"→ {comparison['actual_jobs']} jobs"
+        )
+
+    busy_forecasts = [
+        comparison
+        for comparison in comparisons
+        if comparison["forecast_gangs"] >= 25
+    ]
+    if busy_forecasts:
+        busy_results = sum(
+            comparison["actual_jobs"] >= 200
+            for comparison in busy_forecasts
+        )
+        lines.append(
+            f"25+ gang forecasts reached 200+ jobs: "
+            f"{busy_results} of {len(busy_forecasts)}"
+        )
+
+    return lines
+
+
 def weekly_report_text(history, local_now):
     rows_430 = weekly_daily_rows(history, "board_430", local_now)
     rows_8am = weekly_daily_rows(history, "board_8am", local_now)
@@ -694,9 +804,10 @@ def weekly_report_text(history, local_now):
     lines.extend(weekly_pin_lines(history, local_now))
     lines.append("")
     lines.extend(weekly_category_high_lines(rows_430 + rows_8am + rows_1am))
+    lines.append("")
+    lines.extend(weekly_forecast_actual_lines(history, rows_430))
 
     return "\n".join(lines)
-
 
 
 

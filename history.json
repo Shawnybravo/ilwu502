@@ -167,6 +167,40 @@
     }
   ],
   "pin_moves": [],
-  "shift_outcomes": [],
+  "shift_outcomes": [
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": false,
+      "date": "2026-08-29",
+      "end_gap_minutes": 4.7,
+      "h_end": "86",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "86",
+      "key": "2026-08-29|8 AM",
+      "last_observed_at": "2026-08-29T15:10:16.676568-07:00",
+      "shift": "8 AM",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "August 29, 2026 @ 3:07 PM",
+        "container_ht": 2,
+        "container_lashers": 25,
+        "containers": 27,
+        "deltaport": 19,
+        "fsd": 0,
+        "gang_jobs": 4,
+        "rated": 19,
+        "ship_jobs": 50,
+        "total": 73
+      },
+      "start_delay_minutes": 446.4,
+      "started_observing_at": "2026-08-29T14:11:21.684129-07:00",
+      "t_end": "37",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "37"
+    }
+  ],
   "worked_reports": []
 }

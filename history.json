@@ -1,0 +1,50 @@
+{
+  "board_1am": [
+    {
+      "auto_dr": 0,
+      "board_time": "August 29, 2026 @ 11:56 AM",
+      "captured_at": "2026-08-29T19:33:56.780506+00:00",
+      "container_ht": 3,
+      "container_lashers": 48,
+      "containers": 51,
+      "deltaport": 11,
+      "fsd": 0,
+      "gang_jobs": 11,
+      "rated": 11,
+      "ship_jobs": 51,
+      "total": 73
+    }
+  ],
+  "board_430": [
+    {
+      "auto_dr": 0,
+      "board_time": "August 29, 2026 @ 11:53 AM",
+      "captured_at": "2026-08-29T19:33:56.780487+00:00",
+      "container_ht": 3,
+      "container_lashers": 48,
+      "containers": 51,
+      "deltaport": 125,
+      "fsd": 8,
+      "gang_jobs": 11,
+      "rated": 133,
+      "ship_jobs": 51,
+      "total": 195
+    }
+  ],
+  "board_8am": [
+    {
+      "auto_dr": 0,
+      "board_time": "August 29, 2026 @ 7:23 AM",
+      "captured_at": "2026-08-29T19:33:56.780499+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_jobs": 3,
+      "total": 3
+    }
+  ]
+}

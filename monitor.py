@@ -168,10 +168,15 @@ HISTORY_FILE = Path("history.json")
 
 def load_history():
     if not HISTORY_FILE.exists():
-        return {"board_430": [], "board_8am": [], "board_1am": []}
+        return {
+            "board_430": [],
+            "board_8am": [],
+            "board_1am": [],
+            "pin_moves": [],
+        }
 
     history = json.loads(HISTORY_FILE.read_text(encoding="utf-8"))
-    for key in ["board_430", "board_8am", "board_1am"]:
+    for key in ["board_430", "board_8am", "board_1am", "pin_moves"]:
         history.setdefault(key, [])
     return history
 
@@ -241,6 +246,194 @@ def build_change_lines(changes):
         return ["No job-count changes detected."]
 
     return lines
+
+
+def find_pin_board(gb, board_letter):
+    wanted_job = f"{board_letter.upper()} BOARD"
+    work_pins = gb.get("work_pins", {})
+
+    for section in ["for_8am", "for_430pm", "for_1am"]:
+        for item in work_pins.get(section, []) or []:
+            if str(item.get("job", "")).strip().upper() == wanted_job:
+                return {
+                    "value": str(item.get("from", "")).strip(),
+                    "to": str(item.get("to", "")).strip(),
+                    "section": section,
+                    "modified": work_pins.get("modified_timestamp", ""),
+                }
+
+    raise RuntimeError(f"{wanted_job} was not found in work_pins.")
+
+
+def attributed_shift(detected_at):
+    minutes = detected_at.hour * 60 + detected_at.minute
+
+    if 6 * 60 + 45 <= minutes <= 15 * 60 + 14:
+        return "8 AM"
+    if 15 * 60 + 15 <= minutes <= 16 * 60 + 14:
+        return "4:30"
+    return "Graveyard"
+
+
+def parse_saved_time(value):
+    if not value:
+        return None
+
+    try:
+        parsed = datetime.fromisoformat(value)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(ZoneInfo("America/Vancouver"))
+    except (TypeError, ValueError):
+        return None
+
+
+def interval_crossed_shift_boundary(previous_check, current_check):
+    if previous_check is None or previous_check >= current_check:
+        return None
+
+    day = previous_check.date()
+    final_day = current_check.date()
+
+    while day <= final_day:
+        for hour, minute in [(6, 45), (15, 15), (16, 15)]:
+            boundary = datetime(
+                day.year,
+                day.month,
+                day.day,
+                hour,
+                minute,
+                tzinfo=current_check.tzinfo,
+            )
+            if previous_check < boundary <= current_check:
+                return True
+        day = day.fromordinal(day.toordinal() + 1)
+
+    return False
+
+
+def numeric_pin_movement(old_value, new_value):
+    old_match = re.search(r"(\d+)\s*$", str(old_value))
+    new_match = re.search(r"(\d+)\s*$", str(new_value))
+
+    if not old_match or not new_match:
+        return None
+
+    return int(new_match.group(1)) - int(old_match.group(1))
+
+
+def shift_board_for_name(shift_name, board_430, board_8am, board_1am):
+    if shift_name == "8 AM":
+        return board_8am
+    if shift_name == "4:30":
+        return board_430
+    return board_1am
+
+
+def make_shift_breakdown(board):
+    if board is None:
+        return None
+
+    return {
+        "total": board["total"],
+        "gang_jobs": board["gang_total"],
+        "ship_jobs": board["ship_jobs_total"],
+        "auto_dr": board["auto_dr_total"],
+        "containers": board["container_total"],
+        "container_ht": board["container_ht_total"],
+        "container_lashers": board["container_lashers_total"],
+        "rated": board["rated_total"],
+        "fsd": board["fsd_total"],
+        "deltaport": board["dp_total"],
+        "board_time": board["modified"],
+    }
+
+
+def record_pin_move(
+    history,
+    board_letter,
+    old_value,
+    new_value,
+    detected_at,
+    previous_check,
+    shift_name,
+    crossed_boundary,
+    shift_breakdown,
+):
+    movement = numeric_pin_movement(old_value, new_value)
+    event = {
+        "detected_at": detected_at.isoformat(),
+        "previous_check_at": (
+            previous_check.isoformat() if previous_check is not None else None
+        ),
+        "board": board_letter,
+        "member_position": "H-16",
+        "old_pin": old_value,
+        "new_pin": new_value,
+        "movement": movement,
+        "attributed_shift": shift_name,
+        "crossed_shift_boundary": crossed_boundary,
+        "attribution_is_inferred": True,
+        "shift_breakdown": shift_breakdown,
+    }
+    history.setdefault("pin_moves", []).append(event)
+    return event
+
+
+def pin_move_alert(event):
+    movement = event["movement"]
+    if movement is None:
+        movement_text = ""
+    elif movement > 0:
+        movement_text = f" (⬆️ +{movement})"
+    elif movement < 0:
+        movement_text = f" (⬇️ -{abs(movement)})"
+    else:
+        movement_text = ""
+
+    crossed = event["crossed_shift_boundary"]
+    if crossed is True:
+        confidence = "⚠️ Uncertain — check interval crossed a shift boundary"
+    elif crossed is False:
+        confidence = "🟢 Detection window stayed within one shift period"
+    else:
+        confidence = "⚪ Confidence unknown — no previous check time was available"
+
+    lines = [
+        f"📌 {event['board']} BOARD MOVED",
+        f"{event['old_pin']} → {event['new_pin']}{movement_text}",
+        "",
+        "Your position: H-16",
+        f"Likely shift: {event['attributed_shift']}",
+        confidence,
+    ]
+
+    breakdown = event["shift_breakdown"]
+    if breakdown is None:
+        lines.extend([
+            "",
+            "Shift breakdown unavailable because that source did not return fresh data.",
+        ])
+    else:
+        lines.extend([
+            "",
+            f"Shift volume: {breakdown['total']} jobs",
+            f"🚗 Auto drivers: {breakdown['auto_dr']}",
+            (
+                f"📦 Containers: {breakdown['containers']} "
+                f"({breakdown['container_ht']} HT + "
+                f"{breakdown['container_lashers']} lashers)"
+            ),
+            (
+                f"🎟 Rated: {breakdown['rated']} "
+                f"(FSD {breakdown['fsd']} + DP {breakdown['deltaport']})"
+            ),
+            f"Board time: {breakdown['board_time'] or 'unknown'}",
+        ])
+
+    lines.extend(["", f'<a href="{PINS_PAGE}">View work pins</a>'])
+    return "\n".join(lines)
+
 
 
 
@@ -402,19 +595,21 @@ def main():
     # Each source starts unavailable. A source is assigned a value only after
     # its fetch AND parsing/calculation both succeed.
     h = None
+    t = None
     b = None
     b8 = None
     b_1 = None
     nw = None
 
-    print("Fetching H board...")
+    print("Fetching H and T work pins...")
     try:
         pins_gb = extract_gbdata(fetch(PINS_URL))
-        h = find_h_board(pins_gb)
+        h = find_pin_board(pins_gb, "H")
+        t = find_pin_board(pins_gb, "T")
     except Exception as e:
         print(
-            f"WARNING: H board failed after retries: {e} "
-            "-- keeping previous H board state"
+            f"WARNING: H/T work pins failed after retries: {e} "
+            "-- keeping previous H and T pin state"
         )
 
     print("Fetching 4:30 board...")
@@ -461,20 +656,56 @@ def main():
     )
     today = local_now.date().isoformat()
 
-    # H BOARD: compare, alert, and update state only when fresh data succeeded.
-    if h is not None:
-        old_h = state.get("h_board")
-        if old_h is not None and h["value"] != old_h:
-            telegram(
-                "🚢 H BOARD UPDATED\n"
-                f"{old_h} → {h['value']}\n"
-                f"Board time: {h['modified'] or 'unknown'}\n"
-                f'<a href="{PINS_PAGE}">View work pins</a>'
-            )
+    # H/T PINS: log and alert only from a fresh successful Pins response.
+    if h is not None and t is not None:
+        pins_success_at = datetime.now(timezone.utc)
+        pins_detected_local = pins_success_at.astimezone(
+            ZoneInfo("America/Vancouver")
+        )
+        previous_pins_check = parse_saved_time(state.get("pins_last_success"))
+        shift_name = attributed_shift(pins_detected_local)
+        crossed_boundary = interval_crossed_shift_boundary(
+            previous_pins_check,
+            pins_detected_local,
+        )
+        shift_board = shift_board_for_name(shift_name, b, b8, b_1)
+        shift_breakdown = make_shift_breakdown(shift_board)
+
+        for board_letter, current_pin, state_key in [
+            ("H", h, "h_board"),
+            ("T", t, "t_board"),
+        ]:
+            old_value = state.get(state_key)
+            new_value = current_pin["value"]
+
+            # The first successful run establishes the baseline without
+            # creating a false movement event.
+            if (
+                previous_pins_check is not None
+                and old_value is not None
+                and new_value != old_value
+            ):
+                event = record_pin_move(
+                    history=history,
+                    board_letter=board_letter,
+                    old_value=old_value,
+                    new_value=new_value,
+                    detected_at=pins_detected_local,
+                    previous_check=previous_pins_check,
+                    shift_name=shift_name,
+                    crossed_boundary=crossed_boundary,
+                    shift_breakdown=shift_breakdown,
+                )
+                history_changed = True
+                telegram(pin_move_alert(event))
 
         state["h_board"] = h["value"]
         state["h_modified"] = h["modified"]
-        state["h_last_success"] = datetime.now(timezone.utc).isoformat()
+        state["h_last_success"] = pins_success_at.isoformat()
+        state["t_board"] = t["value"]
+        state["t_modified"] = t["modified"]
+        state["t_last_success"] = pins_success_at.isoformat()
+        state["pins_last_success"] = pins_success_at.isoformat()
 
     # 4:30: this entire compare/alert/update path uses fresh 4:30 data only.
     if b is not None:
@@ -740,6 +971,8 @@ def main():
 
     if h is not None:
         print(f"H BOARD: {h['value']} ({h['modified']})")
+    if t is not None:
+        print(f"T BOARD: {t['value']} ({t['modified']})")
     if b is not None:
         print(
             f"4:30 total: {b['total']} = "
@@ -754,6 +987,7 @@ def main():
         print(f"1 AM total: {b_1['total']}")
     if nw is not None:
         print(f"BCMEA forecast rows: {len(nw)}")
+
 
 
 

@@ -1,0 +1,62 @@
+name: Record Worked Shift
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Add or undo a worked-shift report
+        required: true
+        type: choice
+        options:
+          - add
+          - undo
+      shift:
+        description: Shift code (430, 8, or g); ignored for undo
+        required: false
+        type: string
+      reported_at:
+        description: ISO timestamp supplied by the Telegram Worker
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ilwu-data-writer
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Record worked shift
+        env:
+          REPORT_ACTION: ${{ inputs.action }}
+          REPORTED_SHIFT: ${{ inputs.shift }}
+          REPORTED_AT: ${{ inputs.reported_at }}
+        run: python record_work.py
+
+      - name: Commit worked-shift history
+        run: |
+          if git diff --quiet -- history.json; then
+            echo "No worked-shift history change to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add history.json
+          git commit -m "Record worked shift"
+          git push

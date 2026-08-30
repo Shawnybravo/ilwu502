@@ -365,6 +365,20 @@
       "rated": 0,
       "ship_jobs": 0,
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "August 30, 2026 @ 9:01 AM",
+      "captured_at": "2026-08-30T16:05:17.314402+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_jobs": 0,
+      "total": 0
     }
   ],
   "pin_moves": [],

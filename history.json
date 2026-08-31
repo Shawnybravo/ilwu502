@@ -569,6 +569,20 @@
       "rated": 19,
       "ship_jobs": 0,
       "total": 19
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "August 31, 2026 @ 11:42 AM",
+      "captured_at": "2026-08-31T18:45:22.425382+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 19,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 19,
+      "ship_jobs": 0,
+      "total": 19
     }
   ],
   "board_430": [

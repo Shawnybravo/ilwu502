@@ -281,6 +281,53 @@
           "status": 2
         }
       ]
+    },
+    {
+      "captured_at": "2026-08-31T13:15:21.790994+00:00",
+      "forecast": [
+        {
+          "date": "Sun Aug 30",
+          "day": "Sun",
+          "quantity": 23,
+          "status": 2
+        },
+        {
+          "date": "Mon Aug 31",
+          "day": "Mon",
+          "quantity": 6,
+          "status": 1
+        },
+        {
+          "date": "Tue Sep 01",
+          "day": "Tue",
+          "quantity": 14,
+          "status": 2
+        },
+        {
+          "date": "Wed Sep 02",
+          "day": "Wed",
+          "quantity": 28,
+          "status": 2
+        },
+        {
+          "date": "Thu Sep 03",
+          "day": "Thu",
+          "quantity": 21,
+          "status": 2
+        },
+        {
+          "date": "Fri Sep 04",
+          "day": "Fri",
+          "quantity": 20,
+          "status": 2
+        },
+        {
+          "date": "Sat Sep 05",
+          "day": "Sat",
+          "quantity": 13,
+          "status": 2
+        }
+      ]
     }
   ],
   "board_1am": [

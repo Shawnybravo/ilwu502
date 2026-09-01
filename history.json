@@ -978,6 +978,20 @@
       "rated": 31,
       "ship_jobs": 8,
       "total": 84
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 1, 2026 @ 4:07 AM",
+      "captured_at": "2026-09-01T11:10:18.380341+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 45,
+      "rated": 0,
+      "ship_jobs": 8,
+      "total": 53
     }
   ],
   "board_8am": [

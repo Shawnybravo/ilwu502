@@ -2,6 +2,19 @@ name: ILWU Telegram Monitor
 
 on:
   workflow_dispatch:
+    inputs:
+      force_update:
+        description: Send a fresh Telegram update
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+  repository_dispatch:
+    types:
+      - telegram_refresh
 
 permissions:
   contents: write
@@ -30,6 +43,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          FORCE_UPDATE: ${{ github.event_name == 'repository_dispatch' || inputs.force_update == 'true' }}
         run: python monitor.py
 
       - name: Save monitor state and history

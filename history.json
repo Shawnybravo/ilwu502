@@ -940,6 +940,24 @@
       "rated": 1,
       "ship_jobs": 0,
       "total": 1
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 1, 2026 @ 11:13 AM",
+      "captured_at": "2026-09-01T18:45:13.064427+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 1,
+      "gang_jobs": 0,
+      "rated": 1,
+      "ship_count": 4,
+      "ship_jobs": 0,
+      "ship_types": {
+        "CONTAINERS": 4
+      },
+      "total": 1
     }
   ],
   "board_430": [
@@ -1348,6 +1366,26 @@
       "rated": 0,
       "ship_jobs": 6,
       "total": 42
+    },
+    {
+      "auto_dr": 33,
+      "board_time": "September 1, 2026 @ 10:56 AM",
+      "captured_at": "2026-09-01T18:45:13.064303+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 36,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 6,
+      "ship_types": {
+        "AUTOS 987 ZOOM ZOOMS": 1,
+        "CONTAINERS": 3,
+        "UNKNOWN": 1
+      },
+      "total": 42
     }
   ],
   "board_8am": [
@@ -1741,6 +1779,24 @@
       "gang_jobs": 0,
       "rated": 0,
       "ship_jobs": 0,
+      "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 1, 2026 @ 7:55 AM",
+      "captured_at": "2026-09-01T18:45:13.064325+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 0,
+      "ship_types": {
+        "CONTAINERS": 4
+      },
       "total": 0
     }
   ],

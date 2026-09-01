@@ -1344,6 +1344,20 @@
       "rated": 129,
       "ship_jobs": 54,
       "total": 186
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 1, 2026 @ 6:00 AM",
+      "captured_at": "2026-09-01T13:05:17.221358+00:00",
+      "container_ht": 3,
+      "container_lashers": 48,
+      "containers": 51,
+      "deltaport": 117,
+      "fsd": 12,
+      "gang_jobs": 3,
+      "rated": 129,
+      "ship_jobs": 54,
+      "total": 186
     }
   ],
   "pin_moves": [],

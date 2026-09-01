@@ -1560,6 +1560,26 @@
         "OTHER / UNSPECIFIED": 1
       },
       "total": 262
+    },
+    {
+      "auto_dr": 33,
+      "board_time": "September 1, 2026 @ 1:48 PM",
+      "captured_at": "2026-09-01T20:50:19.972683+00:00",
+      "container_ht": 4,
+      "container_lashers": 54,
+      "containers": 58,
+      "deltaport": 158,
+      "fsd": 4,
+      "gang_jobs": 36,
+      "rated": 162,
+      "ship_count": 5,
+      "ship_jobs": 64,
+      "ship_types": {
+        "AUTO": 1,
+        "CONTAINER": 3,
+        "OTHER / UNSPECIFIED": 1
+      },
+      "total": 262
     }
   ],
   "board_8am": [

@@ -1510,30 +1510,86 @@ def main():
         bcmea_success_at = datetime.now(timezone.utc).isoformat()
         old_nw = state.get("bcmea_nw_forecast")
         if old_nw is not None and nw != old_nw:
-            lines = ["📈 BCMEA NW FORECAST UPDATED"]
+            lines = ["📈 BCMEA NW FORECAST UPDATED", "", "CHANGES"]
+            old_by_date = {row["date"]: row for row in old_nw}
+            new_by_date = {row["date"]: row for row in nw}
+
+            for row in nw:
+                date = row["date"]
+                old_row = old_by_date.get(date)
+
+                if old_row is None:
+                    lines.append(
+                        f"🆕 {date}: added at {row['quantity']} gangs"
+                    )
+                    continue
+
+                old_qty = old_row["quantity"]
+                new_qty = row["quantity"]
+
+                if new_qty > old_qty:
+                    lines.append(
+                        f"⬆️ {date}: {old_qty} → {new_qty} gangs "
+                        f"(+{new_qty - old_qty})"
+                    )
+                elif new_qty < old_qty:
+                    lines.append(
+                        f"⬇️ {date}: {old_qty} → {new_qty} gangs "
+                        f"({new_qty - old_qty})"
+                    )
+                elif row.get("status") != old_row.get("status"):
+                    lines.append(
+                        f"🔄 {date}: status "
+                        f"{old_row.get('status')} → {row.get('status')}"
+                    )
+
+            for row in old_nw:
+                if row["date"] not in new_by_date:
+                    lines.append(
+                        f"➖ {row['date']}: removed "
+                        f"(was {row['quantity']} gangs)"
+                    )
+
+            lines.extend(["", "CURRENT FORECAST"])
             busy_days = []
+
             for row in nw:
                 qty = row["quantity"]
+
                 if qty >= 30:
                     marker = "🚨"
                 elif qty >= 25:
                     marker = "🔥"
                 else:
                     marker = "•"
-                lines.append(f"{marker} {row['date']}: {qty} gangs")
+
+                lines.append(
+                    f"{marker} {row['date']}: {qty} gangs"
+                )
+
                 if qty >= 25:
                     busy_days.append(row)
-            lines.append(
-                f'<a href="{BCMEA_FORECAST_PAGE}">View BCMEA forecast</a>'
-            )
+
             if busy_days:
-                lines.append("")
-                lines.append("Busy forecast:")
+                lines.extend(["", "Busy forecast:"])
+
                 for row in busy_days:
-                    label = "VERY BUSY" if row["quantity"] >= 30 else "BUSY"
-                    lines.append(
-                        f"{row['date']}: {row['quantity']} gangs — {label}"
+                    label = (
+                        "VERY BUSY"
+                        if row["quantity"] >= 30
+                        else "BUSY"
                     )
+                    lines.append(
+                        f"{row['date']}: {row['quantity']} "
+                        f"gangs — {label}"
+                    )
+
+            lines.extend([
+                "",
+                f'<a href="{BCMEA_FORECAST_PAGE}">'
+                "View BCMEA forecast</a>",
+            ])
+
             telegram("\n".join(lines))
         state["bcmea_nw_forecast"] = nw
         state["bcmea_last_success"] = bcmea_success_at

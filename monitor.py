@@ -1114,7 +1114,76 @@ def normalize_nw_forecast(rows):
 
     return forecast
 
+def send_fresh_update(h, t, b8, b, b_1, nw, local_now):
+    checked_time = local_now.strftime("%b %-d at %-I:%M %p")
+    lines = [
+        "🔄 FRESH ILWU UPDATE",
+        f"Checked {checked_time}",
+        "",
+        "📌 WORK PINS",
+    ]
 
+    if h is not None and t is not None:
+        lines.extend([
+            f"H Board: {h['value']}",
+            f"T Board: {t['value']}",
+        ])
+    else:
+        lines.append("⚠️ Work Pins unavailable")
+
+    boards = [
+        ("😴 8 AM", b8),
+        ("📋 4:30", b),
+        ("⚰️ Graveyard", b_1),
+    ]
+
+    for label, board in boards:
+        lines.extend(["", label])
+
+        if board is None:
+            lines.append("⚠️ Source unavailable")
+            continue
+
+        lines.extend([
+            f"Total: {board['total']} jobs",
+            (
+                f"🚗 Drivers: {board['auto_dr_total']} · "
+                f"📦 Containers: {board['container_total']} · "
+                f"🎟 Rated: {board['rated_total']}"
+            ),
+            f"Board time: {board['modified'] or 'unknown'}",
+        ])
+
+        if board["total"] == 0:
+            lines.extend(ship_summary_lines(board))
+
+    lines.extend(["", "📈 BCMEA NW FORECAST"])
+
+    if nw is None:
+        lines.append("⚠️ Source unavailable")
+    elif not nw:
+        lines.append("No forecast rows returned")
+    else:
+        for row in nw:
+            quantity = row["quantity"]
+
+            if quantity >= 30:
+                marker = "🚨"
+            elif quantity >= 25:
+                marker = "🔥"
+            else:
+                marker = "•"
+
+            lines.append(
+                f"{marker} {row['date']}: {quantity} gangs"
+            )
+
+    lines.extend([
+        "",
+        "This update used only responses fetched during this run.",
+    ])
+
+    telegram("\n".join(lines))
 
 def main():
     state = load_state()
@@ -1598,6 +1667,18 @@ def main():
             nw,
             bcmea_success_at,
         ) or history_changed
+
+    if os.getenv("FORCE_UPDATE", "").lower() == "true":
+        send_fresh_update(
+            h=h,
+            t=t,
+            b8=b8,
+            b=b,
+            b_1=b_1,
+            nw=nw,
+            local_now=local_now,
+    )
+        
     # Send the daily message only when both sources used by it are fresh.
     # If either fails at 1 PM, do not mark today as sent; a later run can retry.
     last_daily_status = state.get("last_daily_status")

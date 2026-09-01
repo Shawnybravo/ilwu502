@@ -1386,6 +1386,26 @@
         "UNKNOWN": 1
       },
       "total": 42
+    },
+    {
+      "auto_dr": 33,
+      "board_time": "September 1, 2026 @ 12:00 PM",
+      "captured_at": "2026-09-01T19:00:24.044246+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 36,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 6,
+      "ship_types": {
+        "AUTOS 987 ZOOM ZOOMS": 1,
+        "CONTAINERS": 3,
+        "UNKNOWN": 1
+      },
+      "total": 42
     }
   ],
   "board_8am": [

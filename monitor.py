@@ -1000,19 +1000,46 @@ def gang_job_sum(text):
     # e.g. "1HT 1WD 79DR 1MECH 1MRNCHK".
     return numeric_sum(text)
 
+def classify_ship_type(commodities):
+    text = re.sub(
+        r"\s+",
+        " ",
+        str(commodities or "").strip().upper(),
+    )
+
+    if "CONTAINER" in text:
+        return "CONTAINER"
+
+    if "AUTO" in text:
+        return "AUTO"
+
+    if "GRAIN" in text:
+        return "GRAIN"
+
+    if "COAL" in text:
+        return "COAL"
+
+    if "BULK" in text:
+        return "BULK"
+
+    if "LUMBER" in text or "FOREST" in text:
+        return "FOREST PRODUCTS"
+
+    if not text:
+        return "OTHER / UNSPECIFIED"
+
+    return text
+
 def calculate_board(gb, board_key):
     board = gb.get(board_key, {})
     ships = board.get("ships_in_port", []) or []
 
     ship_types = {}
+
     for ship in ships:
-        ship_type = re.sub(
-            r"\s+",
-            " ",
-            str(ship.get("commodities", "") or "").strip().upper(),
+        ship_type = classify_ship_type(
+            ship.get("commodities", "")
         )
-        if not ship_type:
-            ship_type = "UNKNOWN"
         ship_types[ship_type] = ship_types.get(ship_type, 0) + 1
 
     gang_jobs_total = sum(
@@ -1154,8 +1181,7 @@ def send_fresh_update(h, t, b8, b, b_1, nw, local_now):
             f"Board time: {board['modified'] or 'unknown'}",
         ])
 
-        if board["total"] == 0:
-            lines.extend(ship_summary_lines(board))
+        lines.extend(ship_summary_lines(board))
 
     lines.extend(["", "📈 BCMEA NW FORECAST"])
 

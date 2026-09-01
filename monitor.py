@@ -81,7 +81,7 @@ def count_job_code(text, code):
     text = str(text or "").upper()
 
     if code == "DR":
-        pattern = r"(\d+)\s*DR|DRV|DRVS|DRIVERS?\b"
+        pattern = r"(\d+)\s*(?:DR|DRV|DRVS|DRIVERS?)\b"
     elif code == "HT":
         pattern = r"(\d+)\s*HT\b"
     elif code == "LASHERS":
@@ -89,7 +89,8 @@ def count_job_code(text, code):
     else:
         return 0
 
-    return sum(int(x) for x in re.findall(pattern, text))
+    return sum(int(value) for value in re.findall(pattern, text))
+
 
 def telegram(text):
     data = urllib.parse.urlencode({
@@ -158,6 +159,8 @@ def record_board_history(history, history_key, board, captured_at):
         "total": board["total"],
         "gang_jobs": board["gang_total"],
         "ship_jobs": board["ship_jobs_total"],
+        "ship_count": board["ship_count"],
+        "ship_types": board["ship_types"],
         "auto_dr": board["auto_dr_total"],
         "containers": board["container_total"],
         "container_ht": board["container_ht_total"],
@@ -278,6 +281,8 @@ def make_shift_breakdown(board):
         "total": board["total"],
         "gang_jobs": board["gang_total"],
         "ship_jobs": board["ship_jobs_total"],
+        "ship_count": board["ship_count"],
+        "ship_types": board["ship_types"],
         "auto_dr": board["auto_dr_total"],
         "containers": board["container_total"],
         "container_ht": board["container_ht_total"],
@@ -433,6 +438,15 @@ def morning_briefing_text(h, t, board_430, board_8am, board_1am, forecast, histo
         "",
         "📈 BCMEA NW FORECAST",
     ])
+    for label, board in [
+        ("8 AM", board_8am),
+        ("4:30", board_430),
+        ("Graveyard", board_1am),
+    ]:
+        if board["total"] == 0:
+            lines.extend(["", f"🚢 {label} SHIPS"])
+            lines.extend(ship_summary_lines(board))
+    lines.extend(["", "📈 BCMEA NW FORECAST"])
     for row in forecast[:3]:
         quantity = row["quantity"]
         if quantity >= 30:
@@ -447,6 +461,14 @@ def morning_briefing_text(h, t, board_430, board_8am, board_1am, forecast, histo
         "🟢 All briefing sources returned fresh data",
     ])
     return "\n".join(lines)
+def ship_summary_lines(board):
+    lines = [f"Ships in port: {board['ship_count']}"]
+    for ship_type, count in sorted(board["ship_types"].items()):
+        label = ship_type.title() if ship_type != "UNKNOWN" else "Unknown type"
+        lines.append(f"• {label}: {count}")
+    if board["ship_count"] == 0:
+        lines.append("• No ships listed")
+    return lines
 def notable_category_lines(history, history_key, board, now_utc):
     cutoff_timestamp = now_utc.timestamp() - 30 * 24 * 60 * 60
     recent_rows = []
@@ -982,6 +1004,17 @@ def calculate_board(gb, board_key):
     board = gb.get(board_key, {})
     ships = board.get("ships_in_port", []) or []
 
+    ship_types = {}
+    for ship in ships:
+        ship_type = re.sub(
+            r"\s+",
+            " ",
+            str(ship.get("commodities", "") or "").strip().upper(),
+        )
+        if not ship_type:
+            ship_type = "UNKNOWN"
+        ship_types[ship_type] = ship_types.get(ship_type, 0) + 1
+
     gang_jobs_total = sum(
         gang_job_sum(ship.get("gangs", ""))
         for ship in ships
@@ -992,10 +1025,7 @@ def calculate_board(gb, board_key):
         for ship in ships
     )
 
-    # AUTO SHIPS: count DR only
     auto_dr_total = 0
-
-    # CONTAINER SHIPS: count HT + lashers
     container_ht_total = 0
     container_lashers_total = 0
 
@@ -1016,35 +1046,28 @@ def calculate_board(gb, board_key):
             container_lashers_total += count_job_code(jobs, "LASHERS")
 
     container_total = container_ht_total + container_lashers_total
-
-    # Rated jobs from the tables
     fsd_total = qty_sum(board.get("fsd_jobs", []))
     dp_total = qty_sum(board.get("dp_jobs", []))
     rated_total = fsd_total + dp_total
 
-    total = (
-        gang_jobs_total
-        + ship_jobs_total
-        + rated_total
-    )
+    total = gang_jobs_total + ship_jobs_total + rated_total
 
     return {
         "total": total,
         "gang_total": gang_jobs_total,
         "ship_jobs_total": ship_jobs_total,
-
+        "ship_count": len(ships),
+        "ship_types": ship_types,
         "auto_dr_total": auto_dr_total,
-
         "container_ht_total": container_ht_total,
         "container_lashers_total": container_lashers_total,
         "container_total": container_total,
-
         "fsd_total": fsd_total,
         "dp_total": dp_total,
         "rated_total": rated_total,
-
         "modified": board.get("modified_timestamp", ""),
     }
+
     
 def fetch_json(url):
     last_error = None
@@ -1289,6 +1312,8 @@ def main():
             "board_430_rated_total": b["rated_total"],
             "board_430_fsd_total": b["fsd_total"],
             "board_430_dp_total": b["dp_total"],
+            "board_430_ship_count": b["ship_count"],
+            "board_430_ship_types": b["ship_types"],
             "board_430_last_success": board_430_success_at,
         })
         history_changed = record_board_history(
@@ -1319,6 +1344,7 @@ def main():
                 level = "🚨 HUGE"
             elif b8["total"] >= 250:
                 level = "🔥🔥 VERY BUSY"
+            else:
             elif b8["total"] >= 200:
                 level = "🔥 BUSY"
             else:
@@ -1380,6 +1406,8 @@ def main():
             "board_8am_rated_total": b8["rated_total"],
             "board_8am_fsd_total": b8["fsd_total"],
             "board_8am_dp_total": b8["dp_total"],
+            "board_8am_ship_count": b8["ship_count"],
+            "board_8am_ship_types": b8["ship_types"],
             "board_8am_last_success": board_8am_success_at,
         })
         history_changed = record_board_history(
@@ -1410,6 +1438,7 @@ def main():
                 level = "🚨 HUGE"
             elif b_1["total"] >= 200:
                 level = "🔥🔥 VERY BUSY"
+            else:
             elif b_1["total"] >= 150:
                 level = "🔥 BUSY"
             else:
@@ -1471,6 +1500,8 @@ def main():
             "board_1am_rated_total": b_1["rated_total"],
             "board_1am_fsd_total": b_1["fsd_total"],
             "board_1am_dp_total": b_1["dp_total"],
+            "board_1am_ship_count": b_1["ship_count"],
+            "board_1am_ship_types": b_1["ship_types"],
             "board_1am_last_success": board_1am_success_at,
         })
         history_changed = record_board_history(

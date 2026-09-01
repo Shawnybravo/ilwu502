@@ -724,6 +724,20 @@
       "rated": 19,
       "ship_jobs": 0,
       "total": 19
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 1, 2026 @ 4:13 AM",
+      "captured_at": "2026-09-01T11:15:18.202666+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_jobs": 0,
+      "total": 0
     }
   ],
   "board_430": [
@@ -992,6 +1006,20 @@
       "rated": 0,
       "ship_jobs": 8,
       "total": 53
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 1, 2026 @ 4:10 AM",
+      "captured_at": "2026-09-01T11:15:17.659976+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_jobs": 0,
+      "total": 0
     }
   ],
   "board_8am": [

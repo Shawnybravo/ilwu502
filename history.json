@@ -2332,6 +2332,25 @@
         "CONTAINER": 4
       },
       "total": 342
+    },
+    {
+      "auto_dr": 55,
+      "board_time": "September 3, 2026 @ 10:20 AM",
+      "captured_at": "2026-09-03T17:20:23.799666+00:00",
+      "container_ht": 7,
+      "container_lashers": 72,
+      "containers": 79,
+      "deltaport": 107,
+      "fsd": 47,
+      "gang_jobs": 79,
+      "rated": 154,
+      "ship_count": 5,
+      "ship_jobs": 91,
+      "ship_types": {
+        "AUTO": 1,
+        "CONTAINER": 4
+      },
+      "total": 324
     }
   ],
   "board_8am": [

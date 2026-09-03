@@ -3390,6 +3390,25 @@
         "CONTAINER": 3
       },
       "total": 111
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 3, 2026 @ 3:30 PM",
+      "captured_at": "2026-09-03T22:30:23.049897+00:00",
+      "container_ht": 2,
+      "container_lashers": 57,
+      "containers": 59,
+      "deltaport": 105,
+      "fsd": 9,
+      "gang_jobs": 7,
+      "rated": 114,
+      "ship_count": 4,
+      "ship_jobs": 62,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 3
+      },
+      "total": 183
     }
   ],
   "pin_moves": [

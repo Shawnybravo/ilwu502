@@ -3653,6 +3653,43 @@
       "t_moved": false,
       "t_movement": 0,
       "t_start": "37"
+    },
+    {
+      "any_movement": true,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-09-03",
+      "end_gap_minutes": 4.7,
+      "h_end": "79",
+      "h_moved": true,
+      "h_movement": -7,
+      "h_start": "86",
+      "key": "2026-09-03|Graveyard",
+      "last_observed_at": "2026-09-03T06:40:19.304871-07:00",
+      "shift": "Graveyard",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 2, 2026 @ 12:35 PM",
+        "container_ht": 3,
+        "container_lashers": 66,
+        "containers": 69,
+        "deltaport": 22,
+        "fsd": 3,
+        "gang_jobs": 7,
+        "rated": 25,
+        "ship_count": 4,
+        "ship_jobs": 69,
+        "ship_types": {
+          "CONTAINER": 4
+        },
+        "total": 101
+      },
+      "start_delay_minutes": 0.3,
+      "started_observing_at": "2026-09-02T16:15:20.291000-07:00",
+      "t_end": "55",
+      "t_moved": true,
+      "t_movement": 18,
+      "t_start": "37"
     }
   ],
   "worked_reports": [

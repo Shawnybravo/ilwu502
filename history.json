@@ -3608,5 +3608,41 @@
       "t_start": "37"
     }
   ],
-  "worked_reports": []
+  "worked_reports": [
+    {
+      "date": "2026-09-02",
+      "h_board": "79",
+      "h_moved": false,
+      "key": "me|2026-09-02|4:30",
+      "matched_shift_outcome_key": "2026-09-02|4:30",
+      "outcome_coverage_confident": true,
+      "person": "me",
+      "position": "H-16",
+      "reported_at": "2026-09-03T01:44:26.474000+00:00",
+      "reported_at_vancouver": "2026-09-02T18:44:26.474000-07:00",
+      "shift": "4:30",
+      "shift_breakdown": {
+        "auto_dr": 92,
+        "board_time": "September 2, 2026 @ 3:57 PM",
+        "container_ht": 7,
+        "container_lashers": 72,
+        "containers": 79,
+        "deltaport": 107,
+        "fsd": 47,
+        "gang_jobs": 98,
+        "rated": 154,
+        "ship_count": 5,
+        "ship_jobs": 90,
+        "ship_types": {
+          "AUTO": 1,
+          "CONTAINER": 4
+        },
+        "total": 342
+      },
+      "source": "self_report",
+      "t_board": "55",
+      "t_moved": false,
+      "worked": true
+    }
+  ]
 }

@@ -2206,6 +2206,26 @@
         "CONTAINER": 2
       },
       "total": 19
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 5, 2026 @ 9:54 AM",
+      "captured_at": "2026-09-05T16:55:19.430807+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 19,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 3,
+      "ship_types": {
+        "AND THEIR FAMILIES": 1,
+        "CONTAINER": 2,
+        "OTHER / UNSPECIFIED": 1
+      },
+      "total": 22
     }
   ],
   "board_430": [
@@ -3498,6 +3518,27 @@
         "OTHER / UNSPECIFIED": 1
       },
       "total": 22
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 5, 2026 @ 9:53 AM",
+      "captured_at": "2026-09-05T16:55:18.670992+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 19,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "ALL 3 SHIFTS": 1,
+        "AND THEIR FAMILIES": 1,
+        "CONTAINER": 1
+      },
+      "total": 19
     }
   ],
   "board_8am": [
@@ -4563,6 +4604,27 @@
         "OTHER / UNSPECIFIED": 1
       },
       "total": 22
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 5, 2026 @ 9:54 AM",
+      "captured_at": "2026-09-05T16:55:19.430459+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 19,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "ALL 3 SHIFTS": 1,
+        "AND THEIR FAMILIES": 1,
+        "CONTAINER": 1
+      },
+      "total": 19
     }
   ],
   "pin_moves": [

@@ -5729,6 +5729,47 @@
       "t_moved": false,
       "t_movement": 0,
       "t_start": "56"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-09-05",
+      "end_gap_minutes": 4.7,
+      "h_end": "79",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "79",
+      "key": "2026-09-05|8 AM",
+      "last_observed_at": "2026-09-05T15:10:17.814809-07:00",
+      "shift": "8 AM",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 5, 2026 @ 3:09 PM",
+        "container_ht": 1,
+        "container_lashers": 30,
+        "containers": 31,
+        "deltaport": 181,
+        "fsd": 15,
+        "gang_jobs": 19,
+        "rated": 196,
+        "ship_count": 5,
+        "ship_jobs": 50,
+        "ship_types": {
+          "13 MAFI , 3 LTD": 1,
+          "AGRI": 1,
+          "ALL 3 SHIFTS": 1,
+          "AND THEIR FAMILIES": 1,
+          "CONTAINER": 1
+        },
+        "total": 265
+      },
+      "start_delay_minutes": 0.3,
+      "started_observing_at": "2026-09-05T06:45:17.017998-07:00",
+      "t_end": "56",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "56"
     }
   ],
   "worked_reports": [

@@ -5175,6 +5175,28 @@
         "CONTAINER": 1
       },
       "total": 269
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 6, 2026 @ 6:07 AM",
+      "captured_at": "2026-09-06T13:10:17.650146+00:00",
+      "container_ht": 1,
+      "container_lashers": 30,
+      "containers": 31,
+      "deltaport": 181,
+      "fsd": 17,
+      "gang_jobs": 19,
+      "rated": 198,
+      "ship_count": 5,
+      "ship_jobs": 52,
+      "ship_types": {
+        "13 MAFI , 47 BB": 1,
+        "AGRI": 1,
+        "ALL 3 SHIFTS": 1,
+        "AND THEIR FAMILIES": 1,
+        "CONTAINER": 1
+      },
+      "total": 269
     }
   ],
   "pin_moves": [

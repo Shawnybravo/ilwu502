@@ -2518,6 +2518,27 @@
         "OTHER / UNSPECIFIED": 2
       },
       "total": 21283
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 6, 2026 @ 5:47 AM",
+      "captured_at": "2026-09-06T12:50:18.904484+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 19,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 3,
+      "ship_types": {
+        "AGRI": 1,
+        "AND THEIR FAMILIES": 1,
+        "CONTAINER": 1,
+        "OTHER / UNSPECIFIED": 1
+      },
+      "total": 22
     }
   ],
   "board_430": [

@@ -2832,6 +2832,28 @@
         "OTHER / UNSPECIFIED": 2
       },
       "total": 117
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 6, 2026 @ 5:15 PM",
+      "captured_at": "2026-09-07T00:20:19.563331+00:00",
+      "container_ht": 3,
+      "container_lashers": 36,
+      "containers": 39,
+      "deltaport": 2,
+      "fsd": 35,
+      "gang_jobs": 10544,
+      "rated": 37,
+      "ship_count": 8,
+      "ship_jobs": 10586,
+      "ship_types": {
+        "AGRI": 1,
+        "AND THEIR FAMILIES": 1,
+        "CONTAINER": 3,
+        "ED IS RELIEF NIGHT BA 236-818-9471": 1,
+        "OTHER / UNSPECIFIED": 2
+      },
+      "total": 21167
     }
   ],
   "board_430": [

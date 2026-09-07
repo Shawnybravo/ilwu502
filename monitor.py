@@ -978,7 +978,16 @@ def weekly_report_text(history, local_now):
 
 
 def numeric_sum(text):
-    return sum(int(x) for x in re.findall(r"\d+", str(text or "")))
+    text = str(text or "")
+
+    # Count only one-to-three-digit quantities followed by a job label.
+    # This counts "55 DRIVERS", "1HT" and "14 LASHERS",
+    # but ignores phone numbers and four-digit dispatch times.
+    quantities = re.findall(
+        r"(?<![\d-])(\d{1,3})(?!\d)\s*(?=[A-Za-z])",
+        text,
+    )
+    return sum(int(quantity) for quantity in quantities)
 
 def qty_sum(rows):
     total = 0
@@ -991,13 +1000,17 @@ def qty_sum(rows):
 def gang_job_sum(text):
     text = str(text or "").strip()
 
-    # Plain gang counts describe crews, not additional posted jobs.
-    # Examples: "1 GANG", "4 GANGS", "#1"
-    if re.fullmatch(r"#?\s*\d+\s+GANGS?", text, flags=re.I):
+    # A plain gang count describes crews, not additional jobs.
+    # Ignore trailing descriptions such as "4 GANGS (3STEP)" too.
+    if re.match(
+        r"^\s*#?\s*\d+\s+GANGS?\b",
+        text,
+        flags=re.I,
+    ):
         return 0
 
-    # Otherwise the GANGS field contains actual job quantities,
-    # e.g. "1HT 1WD 79DR 1MECH 1MRNCHK".
+    # Count quantities attached to actual job labels.
+    # Example: "1HT 1WD 55 DRIVERS 2 MECH".
     return numeric_sum(text)
 
 def classify_ship_type(commodities):

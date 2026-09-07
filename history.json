@@ -7004,6 +7004,47 @@
       "t_moved": false,
       "t_movement": 0,
       "t_start": "56"
+    },
+    {
+      "any_movement": true,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-09-07",
+      "end_gap_minutes": 4.7,
+      "h_end": "50",
+      "h_moved": true,
+      "h_movement": -29,
+      "h_start": "79",
+      "key": "2026-09-07|Graveyard",
+      "last_observed_at": "2026-09-07T06:40:20.932243-07:00",
+      "shift": "Graveyard",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 6, 2026 @ 5:21 PM",
+        "container_ht": 3,
+        "container_lashers": 36,
+        "containers": 39,
+        "deltaport": 2,
+        "fsd": 35,
+        "gang_jobs": 10544,
+        "rated": 37,
+        "ship_count": 8,
+        "ship_jobs": 10586,
+        "ship_types": {
+          "AGRI": 1,
+          "AND THEIR FAMILIES": 1,
+          "CONTAINER": 3,
+          "ED IS RELIEF NIGHT BA 236-818-9471": 1,
+          "OTHER / UNSPECIFIED": 2
+        },
+        "total": 21167
+      },
+      "start_delay_minutes": 0.3,
+      "started_observing_at": "2026-09-06T16:15:17.507445-07:00",
+      "t_end": "37",
+      "t_moved": true,
+      "t_movement": -19,
+      "t_start": "56"
     }
   ],
   "worked_reports": [

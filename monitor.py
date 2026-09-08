@@ -81,7 +81,7 @@ def count_job_code(text, code):
     text = str(text or "").upper()
 
     if code == "DR":
-        pattern = r"(\d+)\s*(?:DR|DRV|DRVS|DRIVERS?)\b"
+        pattern = r"(\d+)\s*(?:DR|DRV|DRVS|DRVR|DRIVERS?)\b"
     elif code == "HT":
         pattern = r"(\d+)\s*HT\b"
     elif code == "LASHERS":

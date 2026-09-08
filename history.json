@@ -4961,6 +4961,28 @@
         "OTHER / UNSPECIFIED": 1
       },
       "total": 221
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 8, 2026 @ 12:14 PM",
+      "captured_at": "2026-09-08T19:15:17.237125+00:00",
+      "container_ht": 2,
+      "container_lashers": 42,
+      "containers": 44,
+      "deltaport": 101,
+      "fsd": 72,
+      "gang_jobs": 80,
+      "rated": 173,
+      "ship_count": 7,
+      "ship_jobs": 81,
+      "ship_types": {
+        "1332 SUBS+828 MITZ+162 YODAS=2322 TOTAL": 1,
+        "AGRI": 1,
+        "CONTAINER": 3,
+        "OTHER / UNSPECIFIED": 1,
+        "STEEL": 1
+      },
+      "total": 334
     }
   ],
   "board_8am": [

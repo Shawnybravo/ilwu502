@@ -1071,6 +1071,9 @@ def classify_ship_type(commodities, berth=""):
     if "LUMBER" in text or "FOREST" in text:
         return "FOREST PRODUCTS"
 
+    if "STEEL" in text:
+        return "STEEL"
+
     if not text:
         return "OTHER / UNSPECIFIED"
 

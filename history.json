@@ -6080,6 +6080,26 @@
         "CONTAINER": 4
       },
       "total": 190
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 7, 2026 @ 5:34 PM",
+      "captured_at": "2026-09-08T00:35:15.365991+00:00",
+      "container_ht": 3,
+      "container_lashers": 60,
+      "containers": 63,
+      "deltaport": 26,
+      "fsd": 82,
+      "gang_jobs": 14,
+      "rated": 108,
+      "ship_count": 6,
+      "ship_jobs": 68,
+      "ship_types": {
+        "AGRI": 1,
+        "AND THEIR FAMILIES": 1,
+        "CONTAINER": 4
+      },
+      "total": 190
     }
   ],
   "pin_moves": [

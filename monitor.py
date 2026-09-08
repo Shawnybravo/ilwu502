@@ -1299,6 +1299,7 @@ def send_fresh_update(h, t, b8, b, b_1, nw, local_now):
         "",
         "This update used only responses fetched during this run.",
     ])
+    
 
     telegram("\n".join(lines))
 
@@ -1469,6 +1470,11 @@ def main():
                     + "\n".join(unusual_lines)
                     + "\n"
                 )
+
+            ship_text = "\n".join(
+                ship_summary_lines(b)
+            )
+            
             telegram(
                 f"{headline}\n"
                 f"Total: {b['total']} jobs"
@@ -1484,7 +1490,8 @@ def main():
                 f"🎟 Rated jobs: {b['rated_total']} "
                 f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n\n"
                 f"Gang job breakdowns: {b['gang_total']}\n"
-                f"Ship jobs: {b['ship_jobs_total']}\n"
+                f"Ship jobs: {b['ship_jobs_total']}\n\n"
+                f"{ship_text}\n"
                 f"Board time: {b['modified'] or 'unknown'}\n"
                 f'<a href="{BOARD_430_PAGE}">View 4:30 board</a>'
             )
@@ -1500,6 +1507,12 @@ def main():
             "board_430_dp_total": b["dp_total"],
             "board_430_ship_count": b["ship_count"],
             "board_430_ship_types": b["ship_types"],
+            "board_430_awaiting_jobs_ship_count": (
+                b["awaiting_jobs_ship_count"]
+            ),
+            "board_430_awaiting_jobs_ship_types": (
+                b["awaiting_jobs_ship_types"]
+            ),
             "board_430_last_success": board_430_success_at,
         })
         history_changed = record_board_history(

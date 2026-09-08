@@ -462,12 +462,41 @@ def morning_briefing_text(h, t, board_430, board_8am, board_1am, forecast, histo
     ])
     return "\n".join(lines)
 def ship_summary_lines(board):
-    lines = [f"Ships in port: {board['ship_count']}"]
-    for ship_type, count in sorted(board["ship_types"].items()):
-        label = ship_type.title() if ship_type != "UNKNOWN" else "Unknown type"
-        lines.append(f"• {label}: {count}")
+    lines = [
+        f"🚢 Ships in port: {board['ship_count']}"
+    ]
+
+    for ship_type, count in sorted(
+        board["ship_types"].items()
+    ):
+        lines.append(
+            f"• {ship_type.title()}: {count}"
+        )
+
     if board["ship_count"] == 0:
         lines.append("• No ships listed")
+
+    waiting_count = board.get(
+        "awaiting_jobs_ship_count",
+        0,
+    )
+
+    if waiting_count:
+        lines.extend([
+            "",
+            f"⏳ Ships awaiting jobs: {waiting_count}",
+        ])
+
+        for ship_type, count in sorted(
+            board.get(
+                "awaiting_jobs_ship_types",
+                {},
+            ).items()
+        ):
+            lines.append(
+                f"• {ship_type.title()}: {count}"
+            )
+
     return lines
 def notable_category_lines(history, history_key, board, now_utc):
     cutoff_timestamp = now_utc.timestamp() - 30 * 24 * 60 * 60
@@ -1013,17 +1042,21 @@ def gang_job_sum(text):
     # Example: "1HT 1WD 55 DRIVERS 2 MECH".
     return numeric_sum(text)
 
-def classify_ship_type(commodities):
+def classify_ship_type(commodities, berth=""):
     text = re.sub(
         r"\s+",
         " ",
         str(commodities or "").strip().upper(),
     )
+    berth_text = str(berth or "").strip().upper()
 
     if "CONTAINER" in text:
         return "CONTAINER"
 
-    if "AUTO" in text:
+    if (
+        "AUTO" in text
+        or re.search(r"\bAAT\b", berth_text)
+    ):
         return "AUTO"
 
     if "GRAIN" in text:
@@ -1045,15 +1078,47 @@ def classify_ship_type(commodities):
 
 def calculate_board(gb, board_key):
     board = gb.get(board_key, {})
-    ships = board.get("ships_in_port", []) or []
+    raw_ship_rows = board.get("ships_in_port", []) or []
+
+    # The website sometimes uses a ship-shaped table for notices.
+    # Only rows with a commodity are treated as actual ships.
+    ships = [
+        ship
+        for ship in raw_ship_rows
+        if (
+            str(
+                ship.get("commodities", "") or ""
+            ).strip()
+            or re.search(
+                r"\bAAT\b",
+                str(ship.get("berth", "") or ""),
+                flags=re.I,
+            )
+        )
+    ]
 
     ship_types = {}
+    ship_types = {}
+    awaiting_jobs_ship_types = {}
 
     for ship in ships:
         ship_type = classify_ship_type(
-            ship.get("commodities", "")
+            ship.get("commodities", ""),
+            ship.get("berth", ""),
         )
-        ship_types[ship_type] = ship_types.get(ship_type, 0) + 1
+        ship_types[ship_type] = (
+            ship_types.get(ship_type, 0) + 1
+        )
+
+        actual_ship_jobs = (
+            gang_job_sum(ship.get("gangs", ""))
+            + numeric_sum(ship.get("jobs", ""))
+        )
+
+        if actual_ship_jobs == 0:
+            awaiting_jobs_ship_types[ship_type] = (
+                awaiting_jobs_ship_types.get(ship_type, 0) + 1
+            )
 
     gang_jobs_total = sum(
         gang_job_sum(ship.get("gangs", ""))
@@ -1070,11 +1135,17 @@ def calculate_board(gb, board_key):
     container_lashers_total = 0
 
     for ship in ships:
-        commodity = str(ship.get("commodities", "")).upper()
+        commodity = str(
+            ship.get("commodities", "")
+        ).upper()
+        ship_type = classify_ship_type(
+            commodity,
+            ship.get("berth", ""),
+        )
         gangs = ship.get("gangs", "")
         jobs = ship.get("jobs", "")
 
-        if "AUTO" in commodity:
+        if ship_type == "AUTO":
             auto_dr_total += count_job_code(gangs, "DR")
             auto_dr_total += count_job_code(jobs, "DR")
 
@@ -1098,6 +1169,10 @@ def calculate_board(gb, board_key):
         "ship_jobs_total": ship_jobs_total,
         "ship_count": len(ships),
         "ship_types": ship_types,
+        "awaiting_jobs_ship_count": sum(
+            awaiting_jobs_ship_types.values()
+        ),
+        "awaiting_jobs_ship_types": awaiting_jobs_ship_types,
         "auto_dr_total": auto_dr_total,
         "container_ht_total": container_ht_total,
         "container_lashers_total": container_lashers_total,

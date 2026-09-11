@@ -8643,6 +8643,64 @@
         },
         "total": 177
       }
+    },
+    {
+      "attributed_shift": "Graveyard",
+      "attribution_is_inferred": true,
+      "board": "H",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-09-10T17:10:19.501869-07:00",
+      "member_position": "H-16",
+      "movement": 25,
+      "new_pin": "79",
+      "old_pin": "54",
+      "previous_check_at": "2026-09-10T17:05:20.134297-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 10, 2026 @ 12:32 PM",
+        "container_ht": 3,
+        "container_lashers": 46,
+        "containers": 49,
+        "deltaport": 26,
+        "fsd": 3,
+        "gang_jobs": 7,
+        "rated": 29,
+        "ship_count": 3,
+        "ship_jobs": 49,
+        "ship_types": {
+          "CONTAINER": 3
+        },
+        "total": 85
+      }
+    },
+    {
+      "attributed_shift": "Graveyard",
+      "attribution_is_inferred": true,
+      "board": "T",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-09-10T17:10:19.501869-07:00",
+      "member_position": "H-16",
+      "movement": -2,
+      "new_pin": "54",
+      "old_pin": "56",
+      "previous_check_at": "2026-09-10T17:05:20.134297-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 10, 2026 @ 12:32 PM",
+        "container_ht": 3,
+        "container_lashers": 46,
+        "containers": 49,
+        "deltaport": 26,
+        "fsd": 3,
+        "gang_jobs": 7,
+        "rated": 29,
+        "ship_count": 3,
+        "ship_jobs": 49,
+        "ship_types": {
+          "CONTAINER": 3
+        },
+        "total": 85
+      }
     }
   ],
   "shift_outcomes": [

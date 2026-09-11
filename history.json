@@ -8953,6 +8953,66 @@
         },
         "total": 85
       }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "H",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-09-11T10:30:20.349062-07:00",
+      "member_position": "H-16",
+      "movement": -23,
+      "new_pin": "56",
+      "old_pin": "79",
+      "previous_check_at": "2026-09-11T10:25:15.417176-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 11, 2026 @ 9:27 AM",
+        "container_ht": 2,
+        "container_lashers": 33,
+        "containers": 35,
+        "deltaport": 40,
+        "fsd": 19,
+        "gang_jobs": 3,
+        "rated": 59,
+        "ship_count": 4,
+        "ship_jobs": 50,
+        "ship_types": {
+          "CONTAINER": 2,
+          "STEEL": 2
+        },
+        "total": 112
+      }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "T",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-09-11T10:30:20.349062-07:00",
+      "member_position": "H-16",
+      "movement": -5,
+      "new_pin": "49",
+      "old_pin": "54",
+      "previous_check_at": "2026-09-11T10:25:15.417176-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 11, 2026 @ 9:27 AM",
+        "container_ht": 2,
+        "container_lashers": 33,
+        "containers": 35,
+        "deltaport": 40,
+        "fsd": 19,
+        "gang_jobs": 3,
+        "rated": 59,
+        "ship_count": 4,
+        "ship_jobs": 50,
+        "ship_types": {
+          "CONTAINER": 2,
+          "STEEL": 2
+        },
+        "total": 112
+      }
     }
   ],
   "shift_outcomes": [

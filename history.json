@@ -6889,6 +6889,26 @@
         "STEEL": 1
       },
       "total": 39
+    },
+    {
+      "auto_dr": 29,
+      "board_time": "September 12, 2026 @ 9:19 AM",
+      "captured_at": "2026-09-12T16:20:17.702200+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 33,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 6,
+      "ship_types": {
+        "AUTO": 1,
+        "CONTAINER": 2,
+        "STEEL": 1
+      },
+      "total": 39
     }
   ],
   "board_8am": [

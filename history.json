@@ -10425,6 +10425,25 @@
         "CONTAINER": 2
       },
       "total": 115
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 14, 2026 @ 4:49 PM",
+      "captured_at": "2026-09-14T23:50:18.169860+00:00",
+      "container_ht": 2,
+      "container_lashers": 48,
+      "containers": 50,
+      "deltaport": 50,
+      "fsd": 13,
+      "gang_jobs": 0,
+      "rated": 63,
+      "ship_count": 3,
+      "ship_jobs": 54,
+      "ship_types": {
+        "CANOLA": 1,
+        "CONTAINER": 2
+      },
+      "total": 117
     }
   ],
   "pin_moves": [

@@ -8319,6 +8319,25 @@
         "CONTAINER": 2
       },
       "total": 281
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 15, 2026 @ 3:11 PM",
+      "captured_at": "2026-09-15T22:15:16.138202+00:00",
+      "container_ht": 3,
+      "container_lashers": 48,
+      "containers": 51,
+      "deltaport": 122,
+      "fsd": 15,
+      "gang_jobs": 83,
+      "rated": 137,
+      "ship_count": 3,
+      "ship_jobs": 61,
+      "ship_types": {
+        "2174HMC,1USED,26 R/H": 1,
+        "CONTAINER": 2
+      },
+      "total": 281
     }
   ],
   "board_8am": [
@@ -11141,6 +11160,26 @@
         "CONTAINER": 2
       },
       "total": 42
+    },
+    {
+      "auto_dr": 33,
+      "board_time": "September 15, 2026 @ 3:13 PM",
+      "captured_at": "2026-09-15T22:15:16.580686+00:00",
+      "container_ht": 2,
+      "container_lashers": 46,
+      "containers": 48,
+      "deltaport": 34,
+      "fsd": 3,
+      "gang_jobs": 41,
+      "rated": 37,
+      "ship_count": 5,
+      "ship_jobs": 53,
+      "ship_types": {
+        "AUTO": 2,
+        "BULK": 1,
+        "CONTAINER": 2
+      },
+      "total": 131
     }
   ],
   "pin_moves": [
@@ -13373,6 +13412,45 @@
       },
       "start_delay_minutes": 0.3,
       "started_observing_at": "2026-09-14T16:15:17.044856-07:00",
+      "t_end": "46",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "46"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-09-15",
+      "end_gap_minutes": 4.7,
+      "h_end": "50",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "50",
+      "key": "2026-09-15|8 AM",
+      "last_observed_at": "2026-09-15T15:10:18.787885-07:00",
+      "shift": "8 AM",
+      "shift_breakdown": {
+        "auto_dr": 33,
+        "board_time": "September 15, 2026 @ 3:13 PM",
+        "container_ht": 2,
+        "container_lashers": 46,
+        "containers": 48,
+        "deltaport": 34,
+        "fsd": 3,
+        "gang_jobs": 41,
+        "rated": 37,
+        "ship_count": 5,
+        "ship_jobs": 53,
+        "ship_types": {
+          "AUTO": 2,
+          "BULK": 1,
+          "CONTAINER": 2
+        },
+        "total": 131
+      },
+      "start_delay_minutes": 0.3,
+      "started_observing_at": "2026-09-15T06:45:19.454579-07:00",
       "t_end": "46",
       "t_moved": false,
       "t_movement": 0,

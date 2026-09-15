@@ -8103,6 +8103,25 @@
         "CONTAINER": 2
       },
       "total": 94
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 15, 2026 @ 11:49 AM",
+      "captured_at": "2026-09-15T18:50:18.759679+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 5,
+      "gang_jobs": 79,
+      "rated": 5,
+      "ship_count": 3,
+      "ship_jobs": 10,
+      "ship_types": {
+        "2174HMC,1USED,26 R/H": 1,
+        "CONTAINER": 2
+      },
+      "total": 94
     }
   ],
   "board_8am": [

@@ -5388,6 +5388,25 @@
         "CONTAINER": 2
       },
       "total": 70
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 16, 2026 @ 1:10 PM",
+      "captured_at": "2026-09-16T20:15:16.960786+00:00",
+      "container_ht": 3,
+      "container_lashers": 48,
+      "containers": 51,
+      "deltaport": 13,
+      "fsd": 1,
+      "gang_jobs": 4,
+      "rated": 14,
+      "ship_count": 3,
+      "ship_jobs": 52,
+      "ship_types": {
+        "AGRI GEAR CHECK": 1,
+        "CONTAINER": 2
+      },
+      "total": 70
     }
   ],
   "board_430": [

@@ -3947,6 +3947,53 @@
           "status": 2
         }
       ]
+    },
+    {
+      "captured_at": "2026-09-16T18:30:22.477737+00:00",
+      "forecast": [
+        {
+          "date": "Tue Sep 15",
+          "day": "Tue",
+          "quantity": 25,
+          "status": 2
+        },
+        {
+          "date": "Wed Sep 16",
+          "day": "Wed",
+          "quantity": 21,
+          "status": 2
+        },
+        {
+          "date": "Thu Sep 17",
+          "day": "Thu",
+          "quantity": 25,
+          "status": 2
+        },
+        {
+          "date": "Fri Sep 18",
+          "day": "Fri",
+          "quantity": 21,
+          "status": 2
+        },
+        {
+          "date": "Sat Sep 19",
+          "day": "Sat",
+          "quantity": 18,
+          "status": 2
+        },
+        {
+          "date": "Sun Sep 20",
+          "day": "Sun",
+          "quantity": 26,
+          "status": 2
+        },
+        {
+          "date": "Mon Sep 21",
+          "day": "Mon",
+          "quantity": 33,
+          "status": 3
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -8626,6 +8673,25 @@
         "CONTAINER": 2
       },
       "total": 0
+    },
+    {
+      "auto_dr": 52,
+      "board_time": "September 16, 2026 @ 11:28 AM",
+      "captured_at": "2026-09-16T18:30:21.989564+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 55,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 10,
+      "ship_types": {
+        "AUTO": 1,
+        "CONTAINER": 2
+      },
+      "total": 65
     }
   ],
   "board_8am": [

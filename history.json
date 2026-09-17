@@ -9231,6 +9231,26 @@
         "CONTAINER": 2
       },
       "total": 219
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 17, 2026 @ 1:55 PM",
+      "captured_at": "2026-09-17T21:00:24.975006+00:00",
+      "container_ht": 2,
+      "container_lashers": 42,
+      "containers": 44,
+      "deltaport": 82,
+      "fsd": 2,
+      "gang_jobs": 79,
+      "rated": 84,
+      "ship_count": 4,
+      "ship_jobs": 56,
+      "ship_types": {
+        "2171 CARS": 1,
+        "AGRI": 1,
+        "CONTAINER": 2
+      },
+      "total": 219
     }
   ],
   "board_8am": [
@@ -12231,6 +12251,25 @@
       "auto_dr": 0,
       "board_time": "September 17, 2026 @ 11:43 AM",
       "captured_at": "2026-09-17T18:45:19.349074+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2
+      },
+      "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 17, 2026 @ 1:58 PM",
+      "captured_at": "2026-09-17T21:00:25.515910+00:00",
       "container_ht": 0,
       "container_lashers": 0,
       "containers": 0,

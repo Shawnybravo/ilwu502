@@ -12341,6 +12341,24 @@
         "CONTAINER": 2
       },
       "total": 138
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 17, 2026 @ 3:37 PM",
+      "captured_at": "2026-09-17T22:40:17.943446+00:00",
+      "container_ht": 3,
+      "container_lashers": 36,
+      "containers": 39,
+      "deltaport": 49,
+      "fsd": 50,
+      "gang_jobs": 0,
+      "rated": 99,
+      "ship_count": 2,
+      "ship_jobs": 39,
+      "ship_types": {
+        "CONTAINER": 2
+      },
+      "total": 138
     }
   ],
   "pin_moves": [

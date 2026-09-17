@@ -8966,6 +8966,25 @@
         "CONTAINER": 2
       },
       "total": 86
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 17, 2026 @ 10:12 AM",
+      "captured_at": "2026-09-17T17:15:19.867978+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 75,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 11,
+      "ship_types": {
+        "2171 CARS": 1,
+        "CONTAINER": 2
+      },
+      "total": 86
     }
   ],
   "board_8am": [

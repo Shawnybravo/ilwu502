@@ -4511,6 +4511,53 @@
           "status": 2
         }
       ]
+    },
+    {
+      "captured_at": "2026-09-18T18:45:19.972711+00:00",
+      "forecast": [
+        {
+          "date": "Thu Sep 17",
+          "day": "Thu",
+          "quantity": 24,
+          "status": 2
+        },
+        {
+          "date": "Fri Sep 18",
+          "day": "Fri",
+          "quantity": 18,
+          "status": 2
+        },
+        {
+          "date": "Sat Sep 19",
+          "day": "Sat",
+          "quantity": 11,
+          "status": 1
+        },
+        {
+          "date": "Sun Sep 20",
+          "day": "Sun",
+          "quantity": 28,
+          "status": 2
+        },
+        {
+          "date": "Mon Sep 21",
+          "day": "Mon",
+          "quantity": 34,
+          "status": 3
+        },
+        {
+          "date": "Tue Sep 22",
+          "day": "Tue",
+          "quantity": 35,
+          "status": 3
+        },
+        {
+          "date": "Wed Sep 23",
+          "day": "Wed",
+          "quantity": 18,
+          "status": 2
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -6000,6 +6047,25 @@
         "CONTAINER": 2
       },
       "total": 1
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 18, 2026 @ 11:44 AM",
+      "captured_at": "2026-09-18T18:45:19.972385+00:00",
+      "container_ht": 1,
+      "container_lashers": 24,
+      "containers": 25,
+      "deltaport": 69,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 69,
+      "ship_count": 2,
+      "ship_jobs": 25,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 1
+      },
+      "total": 94
     }
   ],
   "board_430": [
@@ -9647,6 +9713,25 @@
         "CONTAINER": 2
       },
       "total": 18
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 18, 2026 @ 11:42 AM",
+      "captured_at": "2026-09-18T18:45:19.217497+00:00",
+      "container_ht": 2,
+      "container_lashers": 24,
+      "containers": 26,
+      "deltaport": 90,
+      "fsd": 1,
+      "gang_jobs": 0,
+      "rated": 91,
+      "ship_count": 2,
+      "ship_jobs": 26,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 1
+      },
+      "total": 117
     }
   ],
   "board_8am": [

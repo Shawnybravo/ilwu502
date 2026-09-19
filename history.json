@@ -10155,6 +10155,26 @@
         "CONT BOAT SHARED": 1
       },
       "total": 138
+    },
+    {
+      "auto_dr": 33,
+      "board_time": "September 19, 2026 @ 1:21 PM",
+      "captured_at": "2026-09-19T20:25:18.044304+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 35,
+      "fsd": 41,
+      "gang_jobs": 36,
+      "rated": 76,
+      "ship_count": 3,
+      "ship_jobs": 26,
+      "ship_types": {
+        "AUTO": 1,
+        "CONT BOAT NORUM": 1,
+        "CONT BOAT SHARED": 1
+      },
+      "total": 138
     }
   ],
   "board_8am": [

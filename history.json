@@ -6368,6 +6368,26 @@
         "CONTAINER": 1
       },
       "total": 252
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 20, 2026 @ 7:53 AM",
+      "captured_at": "2026-09-20T14:55:17.319627+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "CONT": 1,
+        "CONT BOAT": 1,
+        "CONTAINER": 1
+      },
+      "total": 0
     }
   ],
   "board_430": [
@@ -10348,6 +10368,25 @@
         "CONT BOAT SHARED": 1
       },
       "total": 138
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 20, 2026 @ 7:51 AM",
+      "captured_at": "2026-09-20T14:55:16.773131+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 2,
+      "ship_jobs": 0,
+      "ship_types": {
+        "CONT BOAT": 1,
+        "CONTAINER": 1
+      },
+      "total": 0
     }
   ],
   "board_8am": [
@@ -13884,6 +13923,25 @@
         "STEEL": 2
       },
       "total": 280
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 20, 2026 @ 7:55 AM",
+      "captured_at": "2026-09-20T14:55:17.318898+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 0,
+      "ship_types": {
+        "CONTAINER": 2,
+        "STEEL": 2
+      },
+      "total": 0
     }
   ],
   "pin_moves": [

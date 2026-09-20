@@ -14138,6 +14138,25 @@
         "STEEL": 2
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 20, 2026 @ 3:06 PM",
+      "captured_at": "2026-09-20T22:10:17.985891+00:00",
+      "container_ht": 3,
+      "container_lashers": 48,
+      "containers": 51,
+      "deltaport": 105,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 105,
+      "ship_count": 5,
+      "ship_jobs": 51,
+      "ship_types": {
+        "CONTAINER": 3,
+        "STEEL": 2
+      },
+      "total": 156
     }
   ],
   "pin_moves": [

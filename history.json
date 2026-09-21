@@ -10780,6 +10780,27 @@
         "PROJECT CARGO": 1
       },
       "total": 0
+    },
+    {
+      "auto_dr": 76,
+      "board_time": "September 21, 2026 @ 9:47 AM",
+      "captured_at": "2026-09-21T16:50:21.403657+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 96,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 12,
+      "ship_types": {
+        "AUTO": 1,
+        "CONT BOAT": 1,
+        "CONTAINER": 1,
+        "PROJECT CARGO": 1
+      },
+      "total": 108
     }
   ],
   "board_8am": [

@@ -14323,6 +14323,26 @@
         "CONTAINER": 4
       },
       "total": 237
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 20, 2026 @ 6:33 PM",
+      "captured_at": "2026-09-21T01:35:14.681800+00:00",
+      "container_ht": 4,
+      "container_lashers": 66,
+      "containers": 70,
+      "deltaport": 105,
+      "fsd": 47,
+      "gang_jobs": 4,
+      "rated": 152,
+      "ship_count": 6,
+      "ship_jobs": 81,
+      "ship_types": {
+        "(1 HT,1 WD, 2 SL, 4 HOLD AND 4 SPARES BACK) LAST 4 SPARES CUT": 1,
+        "AGRI": 1,
+        "CONTAINER": 4
+      },
+      "total": 237
     }
   ],
   "pin_moves": [

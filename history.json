@@ -14752,6 +14752,25 @@
         "CONTAINER": 4
       },
       "total": 103
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 21, 2026 @ 3:41 PM",
+      "captured_at": "2026-09-21T22:45:20.511471+00:00",
+      "container_ht": 3,
+      "container_lashers": 60,
+      "containers": 63,
+      "deltaport": 52,
+      "fsd": 28,
+      "gang_jobs": 2,
+      "rated": 80,
+      "ship_count": 5,
+      "ship_jobs": 71,
+      "ship_types": {
+        "(1 HT,1 WD,2 SL,4 HOLD BACK) SPARES CUT": 1,
+        "CONTAINER": 4
+      },
+      "total": 153
     }
   ],
   "pin_moves": [

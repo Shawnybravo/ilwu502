@@ -10895,6 +10895,28 @@
         "PROJECT CARGO": 1
       },
       "total": 108
+    },
+    {
+      "auto_dr": 76,
+      "board_time": "September 21, 2026 @ 12:40 PM",
+      "captured_at": "2026-09-21T19:45:17.754592+00:00",
+      "container_ht": 3,
+      "container_lashers": 54,
+      "containers": 57,
+      "deltaport": 68,
+      "fsd": 43,
+      "gang_jobs": 98,
+      "rated": 111,
+      "ship_count": 7,
+      "ship_jobs": 107,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONT BOAT: CUMISKEY": 1,
+        "CONTAINER": 3,
+        "PROJECT CARGO": 1
+      },
+      "total": 316
     }
   ],
   "board_8am": [

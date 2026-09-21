@@ -17811,6 +17811,47 @@
       "t_moved": false,
       "t_movement": 0,
       "t_start": "75"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-09-21",
+      "end_gap_minutes": 4.6,
+      "h_end": "50",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "50",
+      "key": "2026-09-21|4:30",
+      "last_observed_at": "2026-09-21T16:10:22.052253-07:00",
+      "shift": "4:30",
+      "shift_breakdown": {
+        "auto_dr": 76,
+        "board_time": "September 21, 2026 @ 12:40 PM",
+        "container_ht": 3,
+        "container_lashers": 54,
+        "containers": 57,
+        "deltaport": 68,
+        "fsd": 43,
+        "gang_jobs": 98,
+        "rated": 111,
+        "ship_count": 7,
+        "ship_jobs": 107,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CONT BOAT: CUMISKEY": 1,
+          "CONTAINER": 3,
+          "PROJECT CARGO": 1
+        },
+        "total": 316
+      },
+      "start_delay_minutes": 0.3,
+      "started_observing_at": "2026-09-21T15:15:18.601869-07:00",
+      "t_end": "75",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "75"
     }
   ],
   "worked_reports": [

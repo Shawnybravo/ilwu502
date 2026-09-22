@@ -15480,6 +15480,26 @@
         "CONTAINER": 2
       },
       "total": 88
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 22, 2026 @ 3:29 PM",
+      "captured_at": "2026-09-22T22:30:22.541559+00:00",
+      "container_ht": 2,
+      "container_lashers": 42,
+      "containers": 44,
+      "deltaport": 39,
+      "fsd": 18,
+      "gang_jobs": 5,
+      "rated": 57,
+      "ship_count": 4,
+      "ship_jobs": 48,
+      "ship_types": {
+        "AGRI": 1,
+        "BACK(2HT 2WD 3SL 8HOLD 1LTD)": 1,
+        "CONTAINER": 2
+      },
+      "total": 110
     }
   ],
   "pin_moves": [

@@ -15557,6 +15557,35 @@
         },
         "total": 159
       }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "T",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-09-22T08:40:21.221230-07:00",
+      "member_position": "H-16",
+      "movement": 52,
+      "new_pin": "119",
+      "old_pin": "67",
+      "previous_check_at": "2026-09-22T08:35:17.445898-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 22, 2026 @ 8:09 AM",
+        "container_ht": 0,
+        "container_lashers": 0,
+        "containers": 0,
+        "deltaport": 0,
+        "fsd": 0,
+        "gang_jobs": 0,
+        "rated": 0,
+        "ship_count": 4,
+        "ship_jobs": 0,
+        "ship_types": {
+          "CONTAINER": 4
+        },
+        "total": 0
+      }
     }
   ],
   "shift_outcomes": [

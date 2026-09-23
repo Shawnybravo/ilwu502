@@ -7372,6 +7372,24 @@
         "CONTAINER": 3
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 23, 2026 @ 11:42 AM",
+      "captured_at": "2026-09-23T18:45:21.324584+00:00",
+      "container_ht": 3,
+      "container_lashers": 54,
+      "containers": 57,
+      "deltaport": 9,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 9,
+      "ship_count": 3,
+      "ship_jobs": 57,
+      "ship_types": {
+        "CONTAINER": 3
+      },
+      "total": 66
     }
   ],
   "board_430": [
@@ -11747,6 +11765,27 @@
         "PROJECT CARGO": 1
       },
       "total": 9
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 23, 2026 @ 11:43 AM",
+      "captured_at": "2026-09-23T18:45:20.782740+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 4,
+      "fsd": 0,
+      "gang_jobs": 9,
+      "rated": 4,
+      "ship_count": 6,
+      "ship_jobs": 0,
+      "ship_types": {
+        "CONTAINER": 3,
+        "MEETING NIGHT!!": 1,
+        "NO WORK": 1,
+        "PROJECT CARGO": 1
+      },
+      "total": 13
     }
   ],
   "board_8am": [

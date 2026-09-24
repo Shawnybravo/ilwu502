@@ -16099,6 +16099,26 @@
         "STEEL": 1
       },
       "total": 85
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 24, 2026 @ 8:02 AM",
+      "captured_at": "2026-09-24T15:05:17.897514+00:00",
+      "container_ht": 3,
+      "container_lashers": 28,
+      "containers": 31,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 47,
+      "ship_types": {
+        "CONT": 1,
+        "CONTAINER": 2,
+        "STEEL": 1
+      },
+      "total": 47
     }
   ],
   "pin_moves": [
@@ -16609,6 +16629,37 @@
           "CONTAINER": 4
         },
         "total": 0
+      }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "H",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-09-24T08:05:17.474200-07:00",
+      "member_position": "H-16",
+      "movement": 71,
+      "new_pin": "79",
+      "old_pin": "8",
+      "previous_check_at": "2026-09-24T08:00:25.339694-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 24, 2026 @ 8:02 AM",
+        "container_ht": 3,
+        "container_lashers": 28,
+        "containers": 31,
+        "deltaport": 0,
+        "fsd": 0,
+        "gang_jobs": 0,
+        "rated": 0,
+        "ship_count": 4,
+        "ship_jobs": 47,
+        "ship_types": {
+          "CONT": 1,
+          "CONTAINER": 2,
+          "STEEL": 1
+        },
+        "total": 47
       }
     }
   ],

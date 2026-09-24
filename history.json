@@ -12225,6 +12225,26 @@
         "STEEL": 1
       },
       "total": 215
+    },
+    {
+      "auto_dr": 64,
+      "board_time": "September 24, 2026 @ 11:45 AM",
+      "captured_at": "2026-09-24T18:50:19.267166+00:00",
+      "container_ht": 4,
+      "container_lashers": 54,
+      "containers": 58,
+      "deltaport": 79,
+      "fsd": 0,
+      "gang_jobs": 67,
+      "rated": 79,
+      "ship_count": 5,
+      "ship_jobs": 69,
+      "ship_types": {
+        "AUTO": 1,
+        "CONTAINER": 3,
+        "STEEL": 1
+      },
+      "total": 215
     }
   ],
   "board_8am": [

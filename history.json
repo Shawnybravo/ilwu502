@@ -17473,6 +17473,27 @@
         "STEEL": 1
       },
       "total": 7
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 25, 2026 @ 2:30 PM",
+      "captured_at": "2026-09-25T21:35:51.475069+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 4,
+      "gang_jobs": 0,
+      "rated": 4,
+      "ship_count": 7,
+      "ship_jobs": 4,
+      "ship_types": {
+        "AGRI": 1,
+        "CONT": 1,
+        "CONTAINER": 4,
+        "STEEL": 1
+      },
+      "total": 8
     }
   ],
   "pin_moves": [

@@ -17810,6 +17810,27 @@
         "STEEL": 1
       },
       "total": 81
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 26, 2026 @ 8:25 AM",
+      "captured_at": "2026-09-26T15:30:19.904337+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "PROJECT CARGO": 1,
+        "STEEL": 1
+      },
+      "total": 0
     }
   ],
   "pin_moves": [
@@ -18475,6 +18496,70 @@
           "CONTAINER": 3
         },
         "total": 113
+      }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "H",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-09-26T08:30:18.920987-07:00",
+      "member_position": "H-16",
+      "movement": -12,
+      "new_pin": "50",
+      "old_pin": "62",
+      "previous_check_at": "2026-09-26T08:25:15.640487-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 26, 2026 @ 8:25 AM",
+        "container_ht": 0,
+        "container_lashers": 0,
+        "containers": 0,
+        "deltaport": 0,
+        "fsd": 0,
+        "gang_jobs": 0,
+        "rated": 0,
+        "ship_count": 5,
+        "ship_jobs": 0,
+        "ship_types": {
+          "AGRI": 1,
+          "CONTAINER": 2,
+          "PROJECT CARGO": 1,
+          "STEEL": 1
+        },
+        "total": 0
+      }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "T",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-09-26T08:30:18.920987-07:00",
+      "member_position": "H-16",
+      "movement": -29,
+      "new_pin": "94",
+      "old_pin": "123",
+      "previous_check_at": "2026-09-26T08:25:15.640487-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "September 26, 2026 @ 8:25 AM",
+        "container_ht": 0,
+        "container_lashers": 0,
+        "containers": 0,
+        "deltaport": 0,
+        "fsd": 0,
+        "gang_jobs": 0,
+        "rated": 0,
+        "ship_count": 5,
+        "ship_jobs": 0,
+        "ship_types": {
+          "AGRI": 1,
+          "CONTAINER": 2,
+          "PROJECT CARGO": 1,
+          "STEEL": 1
+        },
+        "total": 0
       }
     }
   ],

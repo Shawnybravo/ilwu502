@@ -8604,6 +8604,25 @@
         "CONTAINER": 2
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 27, 2026 @ 11:34 AM",
+      "captured_at": "2026-09-27T18:35:16.614198+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2
+      },
+      "total": 0
     }
   ],
   "board_430": [
@@ -18685,6 +18704,27 @@
       "auto_dr": 0,
       "board_time": "September 27, 2026 @ 8:34 AM",
       "captured_at": "2026-09-27T15:35:15.644567+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "PROJECT CARGO GEAR: JOHN": 1,
+        "STEEL": 1
+      },
+      "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 27, 2026 @ 11:34 AM",
+      "captured_at": "2026-09-27T18:35:16.613639+00:00",
       "container_ht": 0,
       "container_lashers": 0,
       "containers": 0,

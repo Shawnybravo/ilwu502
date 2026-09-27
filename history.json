@@ -13959,6 +13959,27 @@
         "STEEL": 1
       },
       "total": 60
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 27, 2026 @ 11:58 AM",
+      "captured_at": "2026-09-27T19:00:23.878637+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 53,
+      "fsd": 7,
+      "gang_jobs": 0,
+      "rated": 60,
+      "ship_count": 5,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "PROJECT CARGO": 1,
+        "STEEL": 1
+      },
+      "total": 60
     }
   ],
   "board_8am": [

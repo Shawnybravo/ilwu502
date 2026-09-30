@@ -20753,6 +20753,25 @@
         "CANS": 3
       },
       "total": 86
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "September 30, 2026 @ 5:59 AM",
+      "captured_at": "2026-09-30T13:00:25.132903+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 22,
+      "fsd": 8,
+      "gang_jobs": 2,
+      "rated": 30,
+      "ship_count": 4,
+      "ship_jobs": 54,
+      "ship_types": {
+        "AGRI": 1,
+        "CANS": 3
+      },
+      "total": 86
     }
   ],
   "pin_moves": [

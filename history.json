@@ -17106,6 +17106,27 @@
         "STEEL": 1
       },
       "total": 30
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 3, 2026 @ 8:03 AM",
+      "captured_at": "2026-10-03T15:05:16.587653+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 30,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONTAINER": 2,
+        "STEEL": 1
+      },
+      "total": 30
     }
   ],
   "board_8am": [

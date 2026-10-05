@@ -8600,6 +8600,53 @@
           "status": 2
         }
       ]
+    },
+    {
+      "captured_at": "2026-10-05T16:20:19.651280+00:00",
+      "forecast": [
+        {
+          "date": "Sun Oct 04",
+          "day": "Sun",
+          "quantity": 18,
+          "status": 2
+        },
+        {
+          "date": "Mon Oct 05",
+          "day": "Mon",
+          "quantity": 8,
+          "status": 1
+        },
+        {
+          "date": "Tue Oct 06",
+          "day": "Tue",
+          "quantity": 9,
+          "status": 1
+        },
+        {
+          "date": "Wed Oct 07",
+          "day": "Wed",
+          "quantity": 12,
+          "status": 1
+        },
+        {
+          "date": "Thu Oct 08",
+          "day": "Thu",
+          "quantity": 24,
+          "status": 2
+        },
+        {
+          "date": "Fri Oct 09",
+          "day": "Fri",
+          "quantity": 26,
+          "status": 2
+        },
+        {
+          "date": "Sat Oct 10",
+          "day": "Sat",
+          "quantity": 26,
+          "status": 2
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -11348,6 +11395,24 @@
         "AGRI": 1
       },
       "total": 16
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 5, 2026 @ 9:17 AM",
+      "captured_at": "2026-10-05T16:20:19.650829+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 1,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1
+      },
+      "total": 0
     }
   ],
   "board_430": [
@@ -18304,6 +18369,25 @@
         "STEEL": 1
       },
       "total": 178
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 5, 2026 @ 9:16 AM",
+      "captured_at": "2026-10-05T16:20:19.192221+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 2,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "STEEL": 1
+      },
+      "total": 0
     }
   ],
   "board_8am": [

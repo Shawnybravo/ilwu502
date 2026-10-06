@@ -25492,6 +25492,26 @@
         "STEEL": 1
       },
       "total": 68
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 6, 2026 @ 7:45 AM",
+      "captured_at": "2026-10-06T14:50:22.783718+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 2,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 18,
+      "ship_types": {
+        "AGRI": 1,
+        "CONT BOATMAN : NORUM": 1,
+        "STEEL": 1
+      },
+      "total": 20
     }
   ],
   "pin_moves": [

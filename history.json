@@ -12065,6 +12065,24 @@
         "CONTAINER": 2
       },
       "total": 36
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 7, 2026 @ 12:07 PM",
+      "captured_at": "2026-10-07T19:10:20.250931+00:00",
+      "container_ht": 2,
+      "container_lashers": 30,
+      "containers": 32,
+      "deltaport": 4,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 4,
+      "ship_count": 2,
+      "ship_jobs": 32,
+      "ship_types": {
+        "CONTAINER": 2
+      },
+      "total": 36
     }
   ],
   "board_430": [

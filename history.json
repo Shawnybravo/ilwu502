@@ -29260,6 +29260,27 @@
         "STEEL": 1
       },
       "total": 183
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 11, 2026 @ 5:50 AM",
+      "captured_at": "2026-10-11T12:50:20.010581+00:00",
+      "container_ht": 6,
+      "container_lashers": 63,
+      "containers": 69,
+      "deltaport": 37,
+      "fsd": 39,
+      "gang_jobs": 4,
+      "rated": 76,
+      "ship_count": 8,
+      "ship_jobs": 103,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 5,
+        "PROJECT CARGO - TANDEM LIFT": 1,
+        "STEEL": 1
+      },
+      "total": 183
     }
   ],
   "pin_moves": [

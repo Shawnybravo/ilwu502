@@ -22090,6 +22090,28 @@
         "STEEL": 1
       },
       "total": 343
+    },
+    {
+      "auto_dr": 72,
+      "board_time": "October 11, 2026 @ 5:11 PM",
+      "captured_at": "2026-10-12T00:15:21.606526+00:00",
+      "container_ht": 6,
+      "container_lashers": 66,
+      "containers": 72,
+      "deltaport": 85,
+      "fsd": 60,
+      "gang_jobs": 90,
+      "rated": 145,
+      "ship_count": 8,
+      "ship_jobs": 108,
+      "ship_types": {
+        "AUTO": 1,
+        "BULK": 1,
+        "CONTAINER": 4,
+        "PROJECT CARGO - TANDEM LIFT": 1,
+        "STEEL": 1
+      },
+      "total": 343
     }
   ],
   "board_8am": [

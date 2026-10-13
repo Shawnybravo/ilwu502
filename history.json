@@ -31286,6 +31286,24 @@
         "CONTAINER": 3
       },
       "total": 1
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 13, 2026 @ 2:58 PM",
+      "captured_at": "2026-10-13T22:00:22.195466+00:00",
+      "container_ht": 1,
+      "container_lashers": 24,
+      "containers": 25,
+      "deltaport": 21,
+      "fsd": 5,
+      "gang_jobs": 4,
+      "rated": 26,
+      "ship_count": 1,
+      "ship_jobs": 25,
+      "ship_types": {
+        "CONTAINER": 1
+      },
+      "total": 55
     }
   ],
   "pin_moves": [

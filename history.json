@@ -23414,6 +23414,25 @@
         "CONTAINER": 3
       },
       "total": 93
+    },
+    {
+      "auto_dr": 71,
+      "board_time": "October 14, 2026 @ 12:04 PM",
+      "captured_at": "2026-10-14T19:05:17.592313+00:00",
+      "container_ht": 3,
+      "container_lashers": 54,
+      "containers": 57,
+      "deltaport": 152,
+      "fsd": 9,
+      "gang_jobs": 77,
+      "rated": 161,
+      "ship_count": 4,
+      "ship_jobs": 67,
+      "ship_types": {
+        "AUTO": 1,
+        "CONTAINER": 3
+      },
+      "total": 305
     }
   ],
   "board_8am": [

@@ -32193,6 +32193,26 @@
         "STEEL": 1
       },
       "total": 94
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 15, 2026 @ 3:10 PM",
+      "captured_at": "2026-10-15T22:15:20.829130+00:00",
+      "container_ht": 4,
+      "container_lashers": 42,
+      "containers": 46,
+      "deltaport": 48,
+      "fsd": 2,
+      "gang_jobs": 0,
+      "rated": 50,
+      "ship_count": 4,
+      "ship_jobs": 46,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "STEEL": 1
+      },
+      "total": 96
     }
   ],
   "pin_moves": [
@@ -38484,6 +38504,45 @@
       "t_end": "46",
       "t_moved": false,
       "t_movement": 0,
+      "t_start": "46"
+    },
+    {
+      "any_movement": true,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-10-15",
+      "end_gap_minutes": 4.7,
+      "h_end": "29",
+      "h_moved": true,
+      "h_movement": 1,
+      "h_start": "28",
+      "key": "2026-10-15|8 AM",
+      "last_observed_at": "2026-10-15T15:10:20.051361-07:00",
+      "shift": "8 AM",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "October 15, 2026 @ 3:10 PM",
+        "container_ht": 4,
+        "container_lashers": 42,
+        "containers": 46,
+        "deltaport": 48,
+        "fsd": 2,
+        "gang_jobs": 0,
+        "rated": 50,
+        "ship_count": 4,
+        "ship_jobs": 46,
+        "ship_types": {
+          "AGRI": 1,
+          "CONTAINER": 2,
+          "STEEL": 1
+        },
+        "total": 96
+      },
+      "start_delay_minutes": 0.3,
+      "started_observing_at": "2026-10-15T06:45:20.522868-07:00",
+      "t_end": "125",
+      "t_moved": true,
+      "t_movement": 79,
       "t_start": "46"
     }
   ],

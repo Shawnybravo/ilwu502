@@ -33091,6 +33091,27 @@
         "STEEL": 1
       },
       "total": 202
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 17, 2026 @ 8:42 AM",
+      "captured_at": "2026-10-17T15:45:17.421109+00:00",
+      "container_ht": 6,
+      "container_lashers": 66,
+      "containers": 72,
+      "deltaport": 79,
+      "fsd": 29,
+      "gang_jobs": 0,
+      "rated": 108,
+      "ship_count": 7,
+      "ship_jobs": 94,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 4,
+        "LOOSE PIPE BOAT COOKE": 1,
+        "STEEL": 1
+      },
+      "total": 202
     }
   ],
   "pin_moves": [

@@ -25370,6 +25370,28 @@
         "STEEL": 1
       },
       "total": 342
+    },
+    {
+      "auto_dr": 78,
+      "board_time": "October 18, 2026 @ 1:00 PM",
+      "captured_at": "2026-10-18T20:05:20.051575+00:00",
+      "container_ht": 6,
+      "container_lashers": 66,
+      "containers": 72,
+      "deltaport": 94,
+      "fsd": 67,
+      "gang_jobs": 81,
+      "rated": 161,
+      "ship_count": 8,
+      "ship_jobs": 100,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONTAINER": 4,
+        "PIPE, BEAM": 1,
+        "STEEL": 1
+      },
+      "total": 342
     }
   ],
   "board_8am": [
@@ -34418,6 +34440,27 @@
       "auto_dr": 0,
       "board_time": "October 18, 2026 @ 9:26 AM",
       "captured_at": "2026-10-18T16:30:21.524286+00:00",
+      "container_ht": 6,
+      "container_lashers": 40,
+      "containers": 46,
+      "deltaport": 30,
+      "fsd": 61,
+      "gang_jobs": 0,
+      "rated": 91,
+      "ship_count": 7,
+      "ship_jobs": 102,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 4,
+        "LOOSE PIPE GEAR: JOHN": 1,
+        "STEEL": 1
+      },
+      "total": 193
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 18, 2026 @ 1:01 PM",
+      "captured_at": "2026-10-18T20:05:20.591905+00:00",
       "container_ht": 6,
       "container_lashers": 40,
       "containers": 46,

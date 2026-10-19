@@ -12125,6 +12125,53 @@
           "status": 2
         }
       ]
+    },
+    {
+      "captured_at": "2026-10-19T14:50:21.914433+00:00",
+      "forecast": [
+        {
+          "date": "Sun Oct 18",
+          "day": "Sun",
+          "quantity": 39,
+          "status": 3
+        },
+        {
+          "date": "Mon Oct 19",
+          "day": "Mon",
+          "quantity": 33,
+          "status": 3
+        },
+        {
+          "date": "Tue Oct 20",
+          "day": "Tue",
+          "quantity": 34,
+          "status": 3
+        },
+        {
+          "date": "Wed Oct 21",
+          "day": "Wed",
+          "quantity": 27,
+          "status": 2
+        },
+        {
+          "date": "Thu Oct 22",
+          "day": "Thu",
+          "quantity": 23,
+          "status": 2
+        },
+        {
+          "date": "Fri Oct 23",
+          "day": "Fri",
+          "quantity": 17,
+          "status": 2
+        },
+        {
+          "date": "Sat Oct 24",
+          "day": "Sat",
+          "quantity": 17,
+          "status": 2
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -35159,6 +35206,27 @@
         "STEEL": 1
       },
       "total": 156
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 19, 2026 @ 7:47 AM",
+      "captured_at": "2026-10-19T14:50:21.912427+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "LOOSE PIPE GEAR: JOHN": 1,
+        "STEEL": 1
+      },
+      "total": 0
     }
   ],
   "pin_moves": [

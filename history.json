@@ -12031,6 +12031,53 @@
           "status": 2
         }
       ]
+    },
+    {
+      "captured_at": "2026-10-19T13:20:20.356375+00:00",
+      "forecast": [
+        {
+          "date": "Sun Oct 18",
+          "day": "Sun",
+          "quantity": 39,
+          "status": 3
+        },
+        {
+          "date": "Mon Oct 19",
+          "day": "Mon",
+          "quantity": 29,
+          "status": 3
+        },
+        {
+          "date": "Tue Oct 20",
+          "day": "Tue",
+          "quantity": 24,
+          "status": 2
+        },
+        {
+          "date": "Wed Oct 21",
+          "day": "Wed",
+          "quantity": 19,
+          "status": 2
+        },
+        {
+          "date": "Thu Oct 22",
+          "day": "Thu",
+          "quantity": 20,
+          "status": 2
+        },
+        {
+          "date": "Fri Oct 23",
+          "day": "Fri",
+          "quantity": 17,
+          "status": 2
+        },
+        {
+          "date": "Sat Oct 24",
+          "day": "Sat",
+          "quantity": 17,
+          "status": 2
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -25712,6 +25759,27 @@
       "auto_dr": 0,
       "board_time": "October 19, 2026 @ 6:14 AM",
       "captured_at": "2026-10-19T13:15:17.819277+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 6,
+      "ship_jobs": 19,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 3,
+        "PIPE, BEAM": 1,
+        "STEEL": 1
+      },
+      "total": 19
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 19, 2026 @ 6:19 AM",
+      "captured_at": "2026-10-19T13:20:19.707279+00:00",
       "container_ht": 0,
       "container_lashers": 0,
       "containers": 0,

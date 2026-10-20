@@ -12830,6 +12830,53 @@
           "status": 3
         }
       ]
+    },
+    {
+      "captured_at": "2026-10-20T18:00:27.588297+00:00",
+      "forecast": [
+        {
+          "date": "Mon Oct 19",
+          "day": "Mon",
+          "quantity": 30,
+          "status": 3
+        },
+        {
+          "date": "Tue Oct 20",
+          "day": "Tue",
+          "quantity": 27,
+          "status": 2
+        },
+        {
+          "date": "Wed Oct 21",
+          "day": "Wed",
+          "quantity": 23,
+          "status": 2
+        },
+        {
+          "date": "Thu Oct 22",
+          "day": "Thu",
+          "quantity": 32,
+          "status": 3
+        },
+        {
+          "date": "Fri Oct 23",
+          "day": "Fri",
+          "quantity": 21,
+          "status": 2
+        },
+        {
+          "date": "Sat Oct 24",
+          "day": "Sat",
+          "quantity": 21,
+          "status": 2
+        },
+        {
+          "date": "Sun Oct 25",
+          "day": "Sun",
+          "quantity": 31,
+          "status": 3
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -26962,6 +27009,27 @@
         "STEEL": 1
       },
       "total": 39
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 20, 2026 @ 11:00 AM",
+      "captured_at": "2026-10-20T18:00:26.970376+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 1,
+      "gang_jobs": 0,
+      "rated": 1,
+      "ship_count": 5,
+      "ship_jobs": 38,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "PIPE, BEAM": 1,
+        "STEEL": 1
+      },
+      "total": 39
     }
   ],
   "board_8am": [
@@ -36598,6 +36666,28 @@
       "auto_dr": 71,
       "board_time": "October 20, 2026 @ 10:39 AM",
       "captured_at": "2026-10-20T17:40:20.575618+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 74,
+      "rated": 0,
+      "ship_count": 6,
+      "ship_jobs": 10,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONTAINER": 2,
+        "LOOSE PIPE GEAR: JOHN": 1,
+        "STEEL": 1
+      },
+      "total": 84
+    },
+    {
+      "auto_dr": 71,
+      "board_time": "October 20, 2026 @ 10:59 AM",
+      "captured_at": "2026-10-20T18:00:27.587157+00:00",
       "container_ht": 0,
       "container_lashers": 0,
       "containers": 0,

@@ -27786,6 +27786,22 @@
       "ship_jobs": 0,
       "ship_types": {},
       "total": 4
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 21, 2026 @ 12:56 PM",
+      "captured_at": "2026-10-21T20:00:26.859855+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 4,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 4,
+      "ship_count": 0,
+      "ship_jobs": 0,
+      "ship_types": {},
+      "total": 4
     }
   ],
   "board_8am": [

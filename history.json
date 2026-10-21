@@ -16992,6 +16992,25 @@
         "CONTAINER": 2
       },
       "total": 163
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 20, 2026 @ 6:44 PM",
+      "captured_at": "2026-10-21T01:45:19.308705+00:00",
+      "container_ht": 4,
+      "container_lashers": 54,
+      "containers": 58,
+      "deltaport": 96,
+      "fsd": 0,
+      "gang_jobs": 5,
+      "rated": 96,
+      "ship_count": 3,
+      "ship_jobs": 62,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2
+      },
+      "total": 163
     }
   ],
   "board_430": [
@@ -27397,6 +27416,26 @@
         "STEEL": 2
       },
       "total": 290
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 20, 2026 @ 6:43 PM",
+      "captured_at": "2026-10-21T01:45:18.385337+00:00",
+      "container_ht": 4,
+      "container_lashers": 48,
+      "containers": 52,
+      "deltaport": 158,
+      "fsd": 38,
+      "gang_jobs": 5,
+      "rated": 196,
+      "ship_count": 5,
+      "ship_jobs": 89,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "STEEL": 2
+      },
+      "total": 290
     }
   ],
   "board_8am": [
@@ -37231,6 +37270,28 @@
       "auto_dr": 71,
       "board_time": "October 20, 2026 @ 3:33 PM",
       "captured_at": "2026-10-20T22:35:19.331486+00:00",
+      "container_ht": 3,
+      "container_lashers": 44,
+      "containers": 47,
+      "deltaport": 68,
+      "fsd": 22,
+      "gang_jobs": 74,
+      "rated": 90,
+      "ship_count": 6,
+      "ship_jobs": 106,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONTAINER": 2,
+        "LOOSE PIPE GEAR: JOHN": 1,
+        "STEEL": 1
+      },
+      "total": 270
+    },
+    {
+      "auto_dr": 71,
+      "board_time": "October 20, 2026 @ 6:43 PM",
+      "captured_at": "2026-10-21T01:45:18.910186+00:00",
       "container_ht": 3,
       "container_lashers": 44,
       "containers": 47,

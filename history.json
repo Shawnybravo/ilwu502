@@ -38679,6 +38679,29 @@
         "STEEL": 2
       },
       "total": 83
+    },
+    {
+      "auto_dr": 66,
+      "board_time": "October 22, 2026 @ 3:02 PM",
+      "captured_at": "2026-10-22T22:05:18.543115+00:00",
+      "container_ht": 1,
+      "container_lashers": 12,
+      "containers": 13,
+      "deltaport": 66,
+      "fsd": 0,
+      "gang_jobs": 69,
+      "rated": 66,
+      "ship_count": 8,
+      "ship_jobs": 71,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONT": 2,
+        "CONTAINER": 1,
+        "LOOSE PIPE GEAR: JOHN": 1,
+        "STEEL": 2
+      },
+      "total": 206
     }
   ],
   "pin_moves": [

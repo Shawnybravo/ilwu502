@@ -28790,6 +28790,26 @@
         "STEEL": 2
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 23, 2026 @ 9:41 AM",
+      "captured_at": "2026-10-23T16:45:18.297773+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONT": 2,
+        "STEEL": 2
+      },
+      "total": 0
     }
   ],
   "board_8am": [
@@ -39087,6 +39107,29 @@
       "auto_dr": 66,
       "board_time": "October 23, 2026 @ 9:29 AM",
       "captured_at": "2026-10-23T16:35:19.581404+00:00",
+      "container_ht": 1,
+      "container_lashers": 12,
+      "containers": 13,
+      "deltaport": 66,
+      "fsd": 50,
+      "gang_jobs": 69,
+      "rated": 116,
+      "ship_count": 8,
+      "ship_jobs": 118,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONT": 2,
+        "CONT BOATMAN : CUMISKY": 1,
+        "CONTAINER": 1,
+        "STEEL": 2
+      },
+      "total": 303
+    },
+    {
+      "auto_dr": 66,
+      "board_time": "October 23, 2026 @ 9:42 AM",
+      "captured_at": "2026-10-23T16:45:18.720814+00:00",
       "container_ht": 1,
       "container_lashers": 12,
       "containers": 13,

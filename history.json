@@ -13770,6 +13770,53 @@
           "status": 3
         }
       ]
+    },
+    {
+      "captured_at": "2026-10-23T00:10:19.246519+00:00",
+      "forecast": [
+        {
+          "date": "Wed Oct 21",
+          "day": "Wed",
+          "quantity": 23,
+          "status": 2
+        },
+        {
+          "date": "Thu Oct 22",
+          "day": "Thu",
+          "quantity": 38,
+          "status": 3
+        },
+        {
+          "date": "Fri Oct 23",
+          "day": "Fri",
+          "quantity": 38,
+          "status": 3
+        },
+        {
+          "date": "Sat Oct 24",
+          "day": "Sat",
+          "quantity": 29,
+          "status": 3
+        },
+        {
+          "date": "Sun Oct 25",
+          "day": "Sun",
+          "quantity": 45,
+          "status": 3
+        },
+        {
+          "date": "Mon Oct 26",
+          "day": "Mon",
+          "quantity": 41,
+          "status": 3
+        },
+        {
+          "date": "Tue Oct 27",
+          "day": "Tue",
+          "quantity": 29,
+          "status": 3
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -38834,6 +38881,29 @@
         "AGRI": 1,
         "AUTO": 1,
         "CONT": 3,
+        "CONTAINER": 1,
+        "STEEL": 2
+      },
+      "total": 303
+    },
+    {
+      "auto_dr": 66,
+      "board_time": "October 22, 2026 @ 5:05 PM",
+      "captured_at": "2026-10-23T00:10:18.836443+00:00",
+      "container_ht": 1,
+      "container_lashers": 12,
+      "containers": 13,
+      "deltaport": 66,
+      "fsd": 50,
+      "gang_jobs": 69,
+      "rated": 116,
+      "ship_count": 8,
+      "ship_jobs": 118,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONT": 2,
+        "CONT BOATMAN : CUMISKY": 1,
         "CONTAINER": 1,
         "STEEL": 2
       },

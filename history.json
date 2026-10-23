@@ -40312,6 +40312,74 @@
         },
         "total": 118
       }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "H",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-10-23T08:40:20.909808-07:00",
+      "member_position": "H-16",
+      "movement": 66,
+      "new_pin": "95",
+      "old_pin": "29",
+      "previous_check_at": "2026-10-23T08:35:42.219989-07:00",
+      "shift_breakdown": {
+        "auto_dr": 66,
+        "board_time": "October 22, 2026 @ 5:05 PM",
+        "container_ht": 1,
+        "container_lashers": 12,
+        "containers": 13,
+        "deltaport": 66,
+        "fsd": 50,
+        "gang_jobs": 69,
+        "rated": 116,
+        "ship_count": 8,
+        "ship_jobs": 118,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CONT": 2,
+          "CONT BOATMAN : CUMISKY": 1,
+          "CONTAINER": 1,
+          "STEEL": 2
+        },
+        "total": 303
+      }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "T",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-10-23T08:40:20.909808-07:00",
+      "member_position": "H-16",
+      "movement": 40,
+      "new_pin": "124",
+      "old_pin": "84",
+      "previous_check_at": "2026-10-23T08:35:42.219989-07:00",
+      "shift_breakdown": {
+        "auto_dr": 66,
+        "board_time": "October 22, 2026 @ 5:05 PM",
+        "container_ht": 1,
+        "container_lashers": 12,
+        "containers": 13,
+        "deltaport": 66,
+        "fsd": 50,
+        "gang_jobs": 69,
+        "rated": 116,
+        "ship_count": 8,
+        "ship_jobs": 118,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CONT": 2,
+          "CONT BOATMAN : CUMISKY": 1,
+          "CONTAINER": 1,
+          "STEEL": 2
+        },
+        "total": 303
+      }
     }
   ],
   "shift_outcomes": [

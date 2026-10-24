@@ -18858,6 +18858,25 @@
         "CONTAINER": 3
       },
       "total": 135
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 24, 2026 @ 12:51 PM",
+      "captured_at": "2026-10-24T19:55:16.215972+00:00",
+      "container_ht": 3,
+      "container_lashers": 62,
+      "containers": 65,
+      "deltaport": 15,
+      "fsd": 50,
+      "gang_jobs": 0,
+      "rated": 65,
+      "ship_count": 4,
+      "ship_jobs": 70,
+      "ship_types": {
+        "AGRI *TS WASRNED FOR GEAR CHECK *": 1,
+        "CONTAINER": 3
+      },
+      "total": 135
     }
   ],
   "board_430": [

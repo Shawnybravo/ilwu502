@@ -29518,6 +29518,28 @@
         "STEEL": 1
       },
       "total": 0
+    },
+    {
+      "auto_dr": 50,
+      "board_time": "October 24, 2026 @ 9:01 AM",
+      "captured_at": "2026-10-24T16:05:18.897574+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 53,
+      "rated": 0,
+      "ship_count": 6,
+      "ship_jobs": 7,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONT": 2,
+        "CONTAINER": 1,
+        "STEEL": 1
+      },
+      "total": 60
     }
   ],
   "board_8am": [

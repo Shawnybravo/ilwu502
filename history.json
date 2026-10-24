@@ -42348,6 +42348,36 @@
         },
         "total": 151
       }
+    },
+    {
+      "attributed_shift": "Graveyard",
+      "attribution_is_inferred": true,
+      "board": "H",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-10-24T16:55:19.382043-07:00",
+      "member_position": "H-16",
+      "movement": -70,
+      "new_pin": "20",
+      "old_pin": "90",
+      "previous_check_at": "2026-10-24T16:50:17.579040-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "October 24, 2026 @ 12:58 PM",
+        "container_ht": 3,
+        "container_lashers": 62,
+        "containers": 65,
+        "deltaport": 15,
+        "fsd": 50,
+        "gang_jobs": 0,
+        "rated": 65,
+        "ship_count": 4,
+        "ship_jobs": 69,
+        "ship_types": {
+          "AGRI": 1,
+          "CONTAINER": 3
+        },
+        "total": 134
+      }
     }
   ],
   "shift_outcomes": [

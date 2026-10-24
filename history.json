@@ -14428,6 +14428,53 @@
           "status": 1
         }
       ]
+    },
+    {
+      "captured_at": "2026-10-24T18:30:21.738997+00:00",
+      "forecast": [
+        {
+          "date": "Fri Oct 23",
+          "day": "Fri",
+          "quantity": 39,
+          "status": 3
+        },
+        {
+          "date": "Sat Oct 24",
+          "day": "Sat",
+          "quantity": 31,
+          "status": 3
+        },
+        {
+          "date": "Sun Oct 25",
+          "day": "Sun",
+          "quantity": 30,
+          "status": 3
+        },
+        {
+          "date": "Mon Oct 26",
+          "day": "Mon",
+          "quantity": 33,
+          "status": 3
+        },
+        {
+          "date": "Tue Oct 27",
+          "day": "Tue",
+          "quantity": 25,
+          "status": 2
+        },
+        {
+          "date": "Wed Oct 28",
+          "day": "Wed",
+          "quantity": 21,
+          "status": 2
+        },
+        {
+          "date": "Thu Oct 29",
+          "day": "Thu",
+          "quantity": 14,
+          "status": 2
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -40285,6 +40332,27 @@
       "auto_dr": 0,
       "board_time": "October 24, 2026 @ 9:51 AM",
       "captured_at": "2026-10-24T16:55:16.440408+00:00",
+      "container_ht": 2,
+      "container_lashers": 30,
+      "containers": 32,
+      "deltaport": 66,
+      "fsd": 17,
+      "gang_jobs": 0,
+      "rated": 83,
+      "ship_count": 4,
+      "ship_jobs": 68,
+      "ship_types": {
+        "AGRI": 1,
+        "CONT": 1,
+        "CONT BOATMAN : IVERSON": 1,
+        "CONTAINER": 1
+      },
+      "total": 151
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 24, 2026 @ 11:28 AM",
+      "captured_at": "2026-10-24T18:30:21.736942+00:00",
       "container_ht": 2,
       "container_lashers": 30,
       "containers": 32,

@@ -41299,6 +41299,26 @@
         "CONTAINER": 3
       },
       "total": 3
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 25, 2026 @ 11:48 AM",
+      "captured_at": "2026-10-25T18:50:18.294675+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 6,
+      "gang_jobs": 0,
+      "rated": 6,
+      "ship_count": 5,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONT BOATMAN : IVERSON": 1,
+        "CONTAINER": 3
+      },
+      "total": 6
     }
   ],
   "pin_moves": [

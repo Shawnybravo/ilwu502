@@ -49682,6 +49682,45 @@
       "t_moved": false,
       "t_movement": 0,
       "t_start": "100"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-10-25",
+      "end_gap_minutes": 4.7,
+      "h_end": "20",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "20",
+      "key": "2026-10-25|4:30",
+      "last_observed_at": "2026-10-25T16:10:17.656302-07:00",
+      "shift": "4:30",
+      "shift_breakdown": {
+        "auto_dr": 80,
+        "board_time": "October 25, 2026 @ 12:59 PM",
+        "container_ht": 5,
+        "container_lashers": 66,
+        "containers": 71,
+        "deltaport": 124,
+        "fsd": 35,
+        "gang_jobs": 83,
+        "rated": 159,
+        "ship_count": 6,
+        "ship_jobs": 87,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CONTAINER": 4
+        },
+        "total": 329
+      },
+      "start_delay_minutes": 0.3,
+      "started_observing_at": "2026-10-25T15:15:18.542292-07:00",
+      "t_end": "100",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "100"
     }
   ],
   "worked_reports": [

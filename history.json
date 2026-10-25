@@ -41531,6 +41531,26 @@
         "CONTAINER": 3
       },
       "total": 171
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 25, 2026 @ 3:14 PM",
+      "captured_at": "2026-10-25T22:15:18.547562+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 165,
+      "fsd": 55,
+      "gang_jobs": 0,
+      "rated": 220,
+      "ship_count": 5,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONT BOATMAN : IVERSON": 1,
+        "CONTAINER": 3
+      },
+      "total": 220
     }
   ],
   "pin_moves": [
@@ -49528,6 +49548,45 @@
       },
       "start_delay_minutes": 0.3,
       "started_observing_at": "2026-10-24T16:15:20.077810-07:00",
+      "t_end": "100",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "100"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-10-25",
+      "end_gap_minutes": 4.7,
+      "h_end": "20",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "20",
+      "key": "2026-10-25|8 AM",
+      "last_observed_at": "2026-10-25T15:10:18.328982-07:00",
+      "shift": "8 AM",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "October 25, 2026 @ 3:14 PM",
+        "container_ht": 0,
+        "container_lashers": 0,
+        "containers": 0,
+        "deltaport": 165,
+        "fsd": 55,
+        "gang_jobs": 0,
+        "rated": 220,
+        "ship_count": 5,
+        "ship_jobs": 0,
+        "ship_types": {
+          "AGRI": 1,
+          "CONT BOATMAN : IVERSON": 1,
+          "CONTAINER": 3
+        },
+        "total": 220
+      },
+      "start_delay_minutes": 0.3,
+      "started_observing_at": "2026-10-25T06:45:18.297865-07:00",
       "t_end": "100",
       "t_moved": false,
       "t_movement": 0,

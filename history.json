@@ -50547,6 +50547,48 @@
       "t_moved": true,
       "t_movement": -8,
       "t_start": "100"
+    },
+    {
+      "any_movement": true,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-10-26",
+      "end_gap_minutes": 4.7,
+      "h_end": "97",
+      "h_moved": true,
+      "h_movement": 77,
+      "h_start": "20",
+      "key": "2026-10-26|8 AM",
+      "last_observed_at": "2026-10-26T15:10:20.580527-07:00",
+      "shift": "8 AM",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "October 26, 2026 @ 2:52 PM",
+        "container_ht": 3,
+        "container_lashers": 48,
+        "containers": 51,
+        "deltaport": 51,
+        "fsd": 2,
+        "gang_jobs": 54,
+        "rated": 53,
+        "ship_count": 7,
+        "ship_jobs": 59,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CONT BOATMAN : IVERSON": 1,
+          "CONTAINER": 2,
+          "PROJECT CARGO": 1,
+          "STEEL": 1
+        },
+        "total": 166
+      },
+      "start_delay_minutes": 20.4,
+      "started_observing_at": "2026-10-26T07:05:21.345719-07:00",
+      "t_end": "75",
+      "t_moved": true,
+      "t_movement": -17,
+      "t_start": "92"
     }
   ],
   "worked_reports": [

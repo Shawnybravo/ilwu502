@@ -15368,6 +15368,53 @@
           "status": 2
         }
       ]
+    },
+    {
+      "captured_at": "2026-10-27T19:40:19.939057+00:00",
+      "forecast": [
+        {
+          "date": "Mon Oct 26",
+          "day": "Mon",
+          "quantity": 33,
+          "status": 3
+        },
+        {
+          "date": "Tue Oct 27",
+          "day": "Tue",
+          "quantity": 28,
+          "status": 2
+        },
+        {
+          "date": "Wed Oct 28",
+          "day": "Wed",
+          "quantity": 25,
+          "status": 2
+        },
+        {
+          "date": "Thu Oct 29",
+          "day": "Thu",
+          "quantity": 21,
+          "status": 2
+        },
+        {
+          "date": "Fri Oct 30",
+          "day": "Fri",
+          "quantity": 23,
+          "status": 2
+        },
+        {
+          "date": "Sat Oct 31",
+          "day": "Sat",
+          "quantity": 34,
+          "status": 3
+        },
+        {
+          "date": "Sun Nov 01",
+          "day": "Sun",
+          "quantity": 29,
+          "status": 3
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -19956,6 +20003,25 @@
       "auto_dr": 0,
       "board_time": "October 27, 2026 @ 11:41 AM",
       "captured_at": "2026-10-27T18:45:18.516645+00:00",
+      "container_ht": 2,
+      "container_lashers": 48,
+      "containers": 50,
+      "deltaport": 60,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 60,
+      "ship_count": 3,
+      "ship_jobs": 54,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2
+      },
+      "total": 114
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 27, 2026 @ 12:37 PM",
+      "captured_at": "2026-10-27T19:40:19.938403+00:00",
       "container_ht": 2,
       "container_lashers": 48,
       "containers": 50,
@@ -31715,6 +31781,26 @@
         "CONTAINER": 4
       },
       "total": 238
+    },
+    {
+      "auto_dr": 41,
+      "board_time": "October 27, 2026 @ 12:38 PM",
+      "captured_at": "2026-10-27T19:40:19.510821+00:00",
+      "container_ht": 6,
+      "container_lashers": 60,
+      "containers": 66,
+      "deltaport": 113,
+      "fsd": 18,
+      "gang_jobs": 44,
+      "rated": 131,
+      "ship_count": 5,
+      "ship_jobs": 78,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONTAINER": 3
+      },
+      "total": 253
     }
   ],
   "board_8am": [

@@ -42619,6 +42619,25 @@
         "PROJECT CARGO": 1
       },
       "total": 136
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 27, 2026 @ 7:41 AM",
+      "captured_at": "2026-10-27T14:45:18.618321+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2
+      },
+      "total": 0
     }
   ],
   "pin_moves": [

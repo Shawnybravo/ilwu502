@@ -31868,6 +31868,26 @@
         "CONTAINER": 3
       },
       "total": 267
+    },
+    {
+      "auto_dr": 41,
+      "board_time": "October 27, 2026 @ 1:23 PM",
+      "captured_at": "2026-10-27T20:25:18.470566+00:00",
+      "container_ht": 6,
+      "container_lashers": 60,
+      "containers": 66,
+      "deltaport": 113,
+      "fsd": 32,
+      "gang_jobs": 44,
+      "rated": 145,
+      "ship_count": 5,
+      "ship_jobs": 78,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONTAINER": 3
+      },
+      "total": 267
     }
   ],
   "board_8am": [
@@ -43182,6 +43202,25 @@
         "PROJECT CARGO": 1
       },
       "total": 197
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 27, 2026 @ 1:25 PM",
+      "captured_at": "2026-10-27T20:25:18.982299+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 2,
+      "gang_jobs": 0,
+      "rated": 2,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2
+      },
+      "total": 2
     }
   ],
   "pin_moves": [

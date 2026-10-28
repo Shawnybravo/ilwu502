@@ -44249,6 +44249,25 @@
         "CONTAINER": 2
       },
       "total": 86
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 28, 2026 @ 4:51 PM",
+      "captured_at": "2026-10-28T23:55:17.761407+00:00",
+      "container_ht": 2,
+      "container_lashers": 36,
+      "containers": 38,
+      "deltaport": 29,
+      "fsd": 13,
+      "gang_jobs": 0,
+      "rated": 42,
+      "ship_count": 3,
+      "ship_jobs": 44,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2
+      },
+      "total": 86
     }
   ],
   "pin_moves": [

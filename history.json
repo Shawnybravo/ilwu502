@@ -20741,6 +20741,25 @@
         "AGRI": 1
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 29, 2026 @ 12:11 PM",
+      "captured_at": "2026-10-29T19:15:21.612880+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 13,
+      "gang_jobs": 0,
+      "rated": 13,
+      "ship_count": 2,
+      "ship_jobs": 15,
+      "ship_types": {
+        "53' BOATMAN CUMISKEY": 1,
+        "AGRI": 1
+      },
+      "total": 28
     }
   ],
   "board_430": [

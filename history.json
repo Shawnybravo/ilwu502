@@ -16167,6 +16167,53 @@
           "status": 1
         }
       ]
+    },
+    {
+      "captured_at": "2026-10-30T16:00:24.751905+00:00",
+      "forecast": [
+        {
+          "date": "Thu Oct 29",
+          "day": "Thu",
+          "quantity": 13,
+          "status": 2
+        },
+        {
+          "date": "Fri Oct 30",
+          "day": "Fri",
+          "quantity": 26,
+          "status": 2
+        },
+        {
+          "date": "Sat Oct 31",
+          "day": "Sat",
+          "quantity": 37,
+          "status": 3
+        },
+        {
+          "date": "Sun Nov 01",
+          "day": "Sun",
+          "quantity": 33,
+          "status": 3
+        },
+        {
+          "date": "Mon Nov 02",
+          "day": "Mon",
+          "quantity": 21,
+          "status": 2
+        },
+        {
+          "date": "Tue Nov 03",
+          "day": "Tue",
+          "quantity": 8,
+          "status": 1
+        },
+        {
+          "date": "Wed Nov 04",
+          "day": "Wed",
+          "quantity": 10,
+          "status": 1
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -44877,6 +44924,26 @@
         "STEEL": 1
       },
       "total": 219
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "October 30, 2026 @ 8:55 AM",
+      "captured_at": "2026-10-30T16:00:24.749123+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "STEEL": 1
+      },
+      "total": 0
     }
   ],
   "pin_moves": [

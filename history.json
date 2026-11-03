@@ -22713,6 +22713,25 @@
         "CONTAINER": 2
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 3, 2026 @ 12:01 PM",
+      "captured_at": "2026-11-03T19:05:41.681368+00:00",
+      "container_ht": 1,
+      "container_lashers": 24,
+      "containers": 25,
+      "deltaport": 1,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 1,
+      "ship_count": 2,
+      "ship_jobs": 25,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 1
+      },
+      "total": 26
     }
   ],
   "board_430": [

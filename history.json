@@ -49175,6 +49175,27 @@
         "STEEL": 2
       },
       "total": 69
+    },
+    {
+      "auto_dr": 10,
+      "board_time": "November 4, 2026 @ 6:11 AM",
+      "captured_at": "2026-11-04T13:15:22.473724+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 19,
+      "fsd": 15,
+      "gang_jobs": 14,
+      "rated": 34,
+      "ship_count": 5,
+      "ship_jobs": 21,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "COPPER": 1,
+        "STEEL": 2
+      },
+      "total": 69
     }
   ],
   "pin_moves": [

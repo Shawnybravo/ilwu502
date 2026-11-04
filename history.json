@@ -23009,6 +23009,26 @@
         "STEEL": 1
       },
       "total": 47
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 4, 2026 @ 4:15 AM",
+      "captured_at": "2026-11-04T11:20:21.946012+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 22,
+      "ship_types": {
+        "AGRI": 1,
+        "COPPER": 1,
+        "STEEL": 1
+      },
+      "total": 22
     }
   ],
   "board_430": [

@@ -38355,6 +38355,27 @@
         "COPPER": 1
       },
       "total": 121
+    },
+    {
+      "auto_dr": 99,
+      "board_time": "November 6, 2026 @ 12:10 PM",
+      "captured_at": "2026-11-06T19:10:23.469806+00:00",
+      "container_ht": 2,
+      "container_lashers": 0,
+      "containers": 2,
+      "deltaport": 88,
+      "fsd": 0,
+      "gang_jobs": 105,
+      "rated": 88,
+      "ship_count": 6,
+      "ship_jobs": 48,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 2,
+        "CONTAINER": 2,
+        "COPPER": 1
+      },
+      "total": 241
     }
   ],
   "board_8am": [

@@ -23964,6 +23964,25 @@
         "STEEL": 1
       },
       "total": 228
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 6, 2026 @ 7:37 AM",
+      "captured_at": "2026-11-06T14:45:23.983900+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "CONTAINER": 2,
+        "STEEL": 1
+      },
+      "total": 0
     }
   ],
   "board_430": [
@@ -38062,6 +38081,26 @@
         "STEEL": 1
       },
       "total": 191
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 6, 2026 @ 7:36 AM",
+      "captured_at": "2026-11-06T14:45:23.406249+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 4,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "COPPER": 1
+      },
+      "total": 0
     }
   ],
   "board_8am": [
@@ -51296,6 +51335,25 @@
         "HHI PICKUP": 1
       },
       "total": 192
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 6, 2026 @ 7:35 AM",
+      "captured_at": "2026-11-06T14:45:23.982336+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2
+      },
+      "total": 0
     }
   ],
   "pin_moves": [

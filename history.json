@@ -38643,6 +38643,26 @@
         "CONTAINER": 3
       },
       "total": 61
+    },
+    {
+      "auto_dr": 50,
+      "board_time": "November 7, 2026 @ 11:21 AM",
+      "captured_at": "2026-11-07T18:25:19.035531+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 53,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 8,
+      "ship_types": {
+        "AUTO": 1,
+        "CONT": 1,
+        "CONTAINER": 3
+      },
+      "total": 61
     }
   ],
   "board_8am": [

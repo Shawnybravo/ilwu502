@@ -53019,6 +53019,26 @@
         "CONTAINER": 4
       },
       "total": 165
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 8, 2026 @ 12:18 PM",
+      "captured_at": "2026-11-08T19:20:20.016015+00:00",
+      "container_ht": 6,
+      "container_lashers": 72,
+      "containers": 78,
+      "deltaport": 27,
+      "fsd": 6,
+      "gang_jobs": 2,
+      "rated": 33,
+      "ship_count": 6,
+      "ship_jobs": 80,
+      "ship_types": {
+        "AGRI": 1,
+        "CANOLA": 1,
+        "CONTAINER": 4
+      },
+      "total": 115
     }
   ],
   "pin_moves": [

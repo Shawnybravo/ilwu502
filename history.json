@@ -53245,6 +53245,25 @@
         "CONTAINER": 3
       },
       "total": 116
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 8, 2026 @ 3:14 PM",
+      "captured_at": "2026-11-08T22:15:20.558500+00:00",
+      "container_ht": 3,
+      "container_lashers": 46,
+      "containers": 49,
+      "deltaport": 47,
+      "fsd": 42,
+      "gang_jobs": 0,
+      "rated": 89,
+      "ship_count": 4,
+      "ship_jobs": 51,
+      "ship_types": {
+        "CANOLA": 1,
+        "CONTAINER": 3
+      },
+      "total": 140
     }
   ],
   "pin_moves": [
@@ -63315,6 +63334,44 @@
       },
       "start_delay_minutes": 0.3,
       "started_observing_at": "2026-11-07T16:15:19.608931-07:00",
+      "t_end": "111",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "111"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-11-08",
+      "end_gap_minutes": 4.6,
+      "h_end": "28",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "28",
+      "key": "2026-11-08|8 AM",
+      "last_observed_at": "2026-11-08T15:10:22.925294-07:00",
+      "shift": "8 AM",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "November 8, 2026 @ 3:14 PM",
+        "container_ht": 3,
+        "container_lashers": 46,
+        "containers": 49,
+        "deltaport": 47,
+        "fsd": 42,
+        "gang_jobs": 0,
+        "rated": 89,
+        "ship_count": 4,
+        "ship_jobs": 51,
+        "ship_types": {
+          "CANOLA": 1,
+          "CONTAINER": 3
+        },
+        "total": 140
+      },
+      "start_delay_minutes": 0.3,
+      "started_observing_at": "2026-11-08T06:45:19.921057-07:00",
       "t_end": "111",
       "t_moved": false,
       "t_movement": 0,

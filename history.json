@@ -24690,6 +24690,25 @@
         "CONTAINER": 4
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 8, 2026 @ 11:43 AM",
+      "captured_at": "2026-11-08T18:45:23.144632+00:00",
+      "container_ht": 3,
+      "container_lashers": 56,
+      "containers": 59,
+      "deltaport": 100,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 100,
+      "ship_count": 5,
+      "ship_jobs": 59,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 4
+      },
+      "total": 159
     }
   ],
   "board_430": [

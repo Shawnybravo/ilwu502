@@ -40314,6 +40314,27 @@
         "CONTAINER": 2
       },
       "total": 5
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 10, 2026 @ 7:12 AM",
+      "captured_at": "2026-11-10T14:15:25.129967+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 5,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CANOLA": 1,
+        "CONTAINER": 2
+      },
+      "total": 5
     }
   ],
   "board_8am": [
@@ -54300,6 +54321,26 @@
         "CONTAINER": 3
       },
       "total": 137
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 10, 2026 @ 7:14 AM",
+      "captured_at": "2026-11-10T14:15:25.668055+00:00",
+      "container_ht": 3,
+      "container_lashers": 54,
+      "containers": 57,
+      "deltaport": 57,
+      "fsd": 18,
+      "gang_jobs": 0,
+      "rated": 75,
+      "ship_count": 5,
+      "ship_jobs": 62,
+      "ship_types": {
+        "AGRI": 1,
+        "CANOLA": 1,
+        "CONTAINER": 3
+      },
+      "total": 137
     }
   ],
   "pin_moves": [
@@ -56336,6 +56377,37 @@
           "CONTAINER": 3
         },
         "total": 99
+      }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "H",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-11-10T07:15:24.522837-07:00",
+      "member_position": "H-16",
+      "movement": 64,
+      "new_pin": "92",
+      "old_pin": "28",
+      "previous_check_at": "2026-11-10T07:10:22.063565-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "November 10, 2026 @ 7:14 AM",
+        "container_ht": 3,
+        "container_lashers": 54,
+        "containers": 57,
+        "deltaport": 57,
+        "fsd": 18,
+        "gang_jobs": 0,
+        "rated": 75,
+        "ship_count": 5,
+        "ship_jobs": 62,
+        "ship_types": {
+          "AGRI": 1,
+          "CANOLA": 1,
+          "CONTAINER": 3
+        },
+        "total": 137
       }
     }
   ],

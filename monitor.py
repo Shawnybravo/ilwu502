@@ -4,6 +4,7 @@ import re
 import sys
 import time
 from datetime import datetime, timezone
+from functools import lru_cache
 from zoneinfo import ZoneInfo
 import urllib.parse
 import urllib.request
@@ -25,6 +26,8 @@ STATE_FILE = Path("state.json")
 
 BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
+SUBSCRIBERS_URL = os.environ.get("TELEGRAM_SUBSCRIBERS_URL", "").strip()
+SUBSCRIBERS_TOKEN = os.environ.get("TELEGRAM_SUBSCRIBERS_TOKEN", "").strip()
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; ILWU502BoardMonitor/1.0)",
@@ -92,23 +95,76 @@ def count_job_code(text, code):
     return sum(int(value) for value in re.findall(pattern, text))
 
 
+@lru_cache(maxsize=1)
+def telegram_recipients():
+    """Read the private Worker subscriber list once per monitor run.
+
+    Keep the original owner's chat ID as a fallback so an unavailable Worker
+    cannot silently stop the owner's alerts. Never store chat IDs in this
+    public GitHub repository.
+    """
+    recipients = [CHAT_ID]
+    if not SUBSCRIBERS_URL and not SUBSCRIBERS_TOKEN:
+        return tuple(recipients)
+    if not SUBSCRIBERS_URL or not SUBSCRIBERS_TOKEN:
+        print("WARNING: Subscriber endpoint is only partially configured; owner-only alerts")
+        return tuple(recipients)
+    if urllib.parse.urlsplit(SUBSCRIBERS_URL).scheme != "https":
+        print("WARNING: Subscriber endpoint must use HTTPS; owner-only alerts")
+        return tuple(recipients)
+
+    try:
+        req = urllib.request.Request(
+            SUBSCRIBERS_URL,
+            headers={
+                "Authorization": f"Bearer {SUBSCRIBERS_TOKEN}",
+                "Accept": "application/json",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=15) as r:
+            payload = json.loads(r.read().decode("utf-8"))
+        ids = payload["chat_ids"]
+        if not isinstance(ids, list) or len(ids) > 100:
+            raise ValueError("Subscriber list must contain no more than 100 IDs")
+        for chat_id in ids:
+            value = str(chat_id)
+            if not re.fullmatch(r"-?\d{1,20}", value):
+                raise ValueError("Invalid subscriber chat ID")
+            if value not in recipients:
+                recipients.append(value)
+    except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as e:
+        print(f"WARNING: Could not load subscribers ({type(e).__name__}); owner-only alerts")
+        return (CHAT_ID,)
+
+    return tuple(recipients)
+
+
 def telegram(text):
-    data = urllib.parse.urlencode({
-        "chat_id": CHAT_ID,
-        "text": text,
-        "parse_mode": "HTML",
-        "disable_web_page_preview": "true",
-    }).encode()
-    
-    req = urllib.request.Request(
-        f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
-        data=data,
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-    )
-    with urllib.request.urlopen(req, timeout=30) as r:
-        body = json.loads(r.read().decode())
-        if not body.get("ok"):
-            raise RuntimeError(f"Telegram error: {body}")
+    failures = []
+    for chat_id in telegram_recipients():
+        data = urllib.parse.urlencode({
+            "chat_id": chat_id,
+            "text": text,
+            "parse_mode": "HTML",
+            "disable_web_page_preview": "true",
+        }).encode()
+
+        req = urllib.request.Request(
+            f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
+            data=data,
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                body = json.loads(r.read().decode())
+                if not body.get("ok"):
+                    raise RuntimeError("Telegram returned an unsuccessful response")
+        except Exception as e:
+            failures.append(chat_id)
+            print(f"WARNING: Telegram delivery failed ({type(e).__name__})")
+
+    if len(failures) == len(telegram_recipients()):
+        raise RuntimeError("Telegram delivery failed for every recipient")
             
 
 def load_state():

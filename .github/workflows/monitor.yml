@@ -43,6 +43,8 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_SUBSCRIBERS_URL: ${{ secrets.TELEGRAM_SUBSCRIBERS_URL }}
+          TELEGRAM_SUBSCRIBERS_TOKEN: ${{ secrets.TELEGRAM_SUBSCRIBERS_TOKEN }}
           FORCE_UPDATE: ${{ github.event_name == 'repository_dispatch' || inputs.force_update == 'true' }}
         run: python monitor.py
 

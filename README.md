@@ -41,4 +41,22 @@ Approve/Deny actions, `/users`, and `/remove`, and gate interactive commands
 to approved users. This repository does **not** contain the deployed Worker
 source, so those features require a separate Worker update and KV binding.
 
+### One-time Telegram webhook verification
+
+The member approval Worker verifies the `X-Telegram-Bot-Api-Secret-Token`
+header. Before deploying the upgraded Worker:
+
+1. Set the same random `TELEGRAM_WEBHOOK_SECRET` as an encrypted secret in
+   Cloudflare and as a GitHub Actions repository secret.
+2. In GitHub Actions, manually run **Configure Telegram Webhook Secret**.
+   This re-registers Telegram's *existing* HTTPS webhook URL with the new
+   secret header; it refuses to invent or change the URL and preserves the
+   current allowed updates.
+3. Only after that workflow succeeds, deploy the upgraded Worker. Do not
+   deploy a Worker with subscriber storage enabled but webhook verification
+   unconfigured, because it intentionally rejects commands in that state.
+
+Keep both webhook verification and subscriber read tokens private. They are
+different secrets and should not be reused for each other.
+
 The first run creates the baseline state without sending a false H-board-change alert.

@@ -56301,6 +56301,28 @@
         "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
       },
       "total": 126
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 12, 2026 @ 4:12 PM",
+      "captured_at": "2026-11-12T23:15:23.113365+00:00",
+      "container_ht": 3,
+      "container_lashers": 33,
+      "containers": 36,
+      "deltaport": 53,
+      "fsd": 17,
+      "gang_jobs": 0,
+      "rated": 70,
+      "ship_count": 6,
+      "ship_jobs": 56,
+      "ship_types": {
+        "AGRI": 1,
+        "CANOLA": 1,
+        "CONTAINER": 2,
+        "STEEL": 1,
+        "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
+      },
+      "total": 126
     }
   ],
   "pin_moves": [
@@ -66997,6 +67019,46 @@
       },
       "start_delay_minutes": 0.3,
       "started_observing_at": "2026-11-12T06:45:20.409071-07:00",
+      "t_end": "80",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "80"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-11-12",
+      "end_gap_minutes": 4.6,
+      "h_end": "92",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "92",
+      "key": "2026-11-12|4:30",
+      "last_observed_at": "2026-11-12T16:10:23.067869-07:00",
+      "shift": "4:30",
+      "shift_breakdown": {
+        "auto_dr": 33,
+        "board_time": "November 12, 2026 @ 1:11 PM",
+        "container_ht": 2,
+        "container_lashers": 42,
+        "containers": 44,
+        "deltaport": 68,
+        "fsd": 42,
+        "gang_jobs": 36,
+        "rated": 110,
+        "ship_count": 5,
+        "ship_jobs": 72,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CONTAINER": 2,
+          "STEEL": 1
+        },
+        "total": 218
+      },
+      "start_delay_minutes": 0.4,
+      "started_observing_at": "2026-11-12T15:15:23.067272-07:00",
       "t_end": "80",
       "t_moved": false,
       "t_movement": 0,

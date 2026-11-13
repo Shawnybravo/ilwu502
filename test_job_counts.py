@@ -10,7 +10,7 @@ from unittest.mock import patch
 # monitor.py validates the presence of these environment variables at import.
 os.environ.setdefault("TELEGRAM_BOT_TOKEN", "test-token")
 os.environ.setdefault("TELEGRAM_CHAT_ID", "123456")
-from monitor import numeric_sum, gang_job_sum, calculate_board, extract_gbdata
+from monitor import numeric_sum, gang_job_sum, calculate_board, extract_gbdata, readable_board_lines
 
 
 class JobCountTests(unittest.TestCase):
@@ -64,6 +64,28 @@ class JobCountTests(unittest.TestCase):
                     {**fields, "commodities": "STEEL", "jobs": "2HT"},
                 ]}}, "board")
                 self.assertEqual(result["ship_job_details"][0]["name"], expected)
+
+    def test_compact_mobile_board_summary(self):
+        board = {
+            "total": 274, "auto_dr_total": 46,
+            "container_total": 45, "rated_total": 124,
+            "gang_total": 69, "ship_jobs_total": 81,
+            "ship_count": 2,
+            "modified": "November 13, 2026 @ 1:27 PM",
+            "ship_job_details": [
+                {"name": "NOCC ADRIADIC", "total": 69, "gang_jobs": 61,
+                 "listed_jobs": 8},
+                {"name": "RCC AFRICA", "total": 12, "gang_jobs": 8,
+                 "listed_jobs": 4},
+            ],
+        }
+        message = "\\n".join(readable_board_lines(board, "📋 4:30"))
+        self.assertIn("274 jobs", message)
+        self.assertIn("59 other ship jobs", message)
+        self.assertIn("NOCC ADRIADIC", message)
+        self.assertIn("RCC AFRICA", message)
+        self.assertNotIn("G 61 + J 8", message)
+        self.assertNotIn("Per-ship audit", message)
 
     def test_worker_quantities_are_counted(self):
         self.assertEqual(

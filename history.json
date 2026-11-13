@@ -68107,6 +68107,47 @@
       "t_moved": true,
       "t_movement": -31,
       "t_start": "80"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-11-13",
+      "end_gap_minutes": 4.6,
+      "h_end": "79",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "79",
+      "key": "2026-11-13|4:30",
+      "last_observed_at": "2026-11-13T16:10:21.021418-07:00",
+      "shift": "4:30",
+      "shift_breakdown": {
+        "auto_dr": 46,
+        "board_time": "November 13, 2026 @ 1:27 PM",
+        "container_ht": 3,
+        "container_lashers": 42,
+        "containers": 45,
+        "deltaport": 64,
+        "fsd": 60,
+        "gang_jobs": 69,
+        "rated": 124,
+        "ship_count": 7,
+        "ship_jobs": 81,
+        "ship_types": {
+          "AGRI ** TS WARN FOR GEAR CHECK **": 1,
+          "AUTO": 2,
+          "CANOLA": 1,
+          "CONTAINER": 2,
+          "STEEL": 1
+        },
+        "total": 274
+      },
+      "start_delay_minutes": 0.4,
+      "started_observing_at": "2026-11-13T15:15:21.089954-07:00",
+      "t_end": "49",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "49"
     }
   ],
   "worked_reports": [

@@ -1065,12 +1065,14 @@ def weekly_report_text(history, local_now):
 def numeric_sum(text):
     text = str(text or "")
 
-    # Count only one-to-three-digit quantities followed by a job label.
-    # This counts "55 DRIVERS", "1HT" and "14 LASHERS",
-    # but ignores phone numbers and four-digit dispatch times.
+    # Count job quantities, not the minutes in dispatch times (e.g. 5:30
+    # START), parts of dates/ranges, or descriptive crew counts. This
+    # still handles compact job labels such as "2HT" and "41DRIVERS".
     quantities = re.findall(
-        r"(?<![\d-])(\d{1,3})(?!\d)\s*(?=[A-Za-z])",
+        r"(?<![\d:./-])(\d{1,3})(?![\d:./-])\s*"
+        r"(?!(?:GANGS?|START|AM|PM)\b)(?=[A-Za-z])",
         text,
+        flags=re.I,
     )
     return sum(int(quantity) for quantity in quantities)
 
@@ -1085,17 +1087,17 @@ def qty_sum(rows):
 def gang_job_sum(text):
     text = str(text or "").strip()
 
-    # A plain gang count describes crews, not additional jobs.
-    # Ignore trailing descriptions such as "4 GANGS (3STEP)" too.
-    if re.match(
-        r"^\s*#?\s*\d+\s+GANGS?\b",
+    # The GANGS field can contain either worker allocations or a crew
+    # count such as "4 GANGS (3STEP)". A crew count is not four workers.
+    # Remove that annotation while retaining any actual worker entries
+    # in the same field.
+    text = re.sub(
+        r"(?<![\d:])#?\s*\d+\s*GANGS?\b",
+        " ",
         text,
         flags=re.I,
-    ):
-        return 0
+    )
 
-    # Count quantities attached to actual job labels.
-    # Example: "1HT 1WD 55 DRIVERS 2 MECH".
     return numeric_sum(text)
 
 def classify_ship_type(commodities, berth=""):
@@ -1179,14 +1181,27 @@ def calculate_board(gb, board_key):
                 awaiting_jobs_ship_types.get(ship_type, 0) + 1
             )
 
-    gang_jobs_total = sum(
-        gang_job_sum(ship.get("gangs", ""))
-        for ship in ships
-    )
+    # Preserve per-ship counts to make the reported total auditable.
+    ship_job_details = []
+    for ship in ships:
+        gang_jobs = gang_job_sum(ship.get("gangs", ""))
+        listed_jobs = numeric_sum(ship.get("jobs", ""))
+        ship_job_details.append({
+            "name": str(
+                ship.get("ship_name")
+                or ship.get("name")
+                or "Unnamed ship"
+            ).strip(),
+            "gang_jobs": gang_jobs,
+            "listed_jobs": listed_jobs,
+            "total": gang_jobs + listed_jobs,
+        })
 
+    gang_jobs_total = sum(
+        ship["gang_jobs"] for ship in ship_job_details
+    )
     ship_jobs_total = sum(
-        numeric_sum(ship.get("jobs", ""))
-        for ship in ships
+        ship["listed_jobs"] for ship in ship_job_details
     )
 
     auto_dr_total = 0
@@ -1226,6 +1241,7 @@ def calculate_board(gb, board_key):
         "total": total,
         "gang_total": gang_jobs_total,
         "ship_jobs_total": ship_jobs_total,
+        "ship_job_details": ship_job_details,
         "ship_count": len(ships),
         "ship_types": ship_types,
         "awaiting_jobs_ship_count": sum(
@@ -1530,7 +1546,12 @@ def main():
             ship_text = "\n".join(
                 ship_summary_lines(b)
             )
-            
+            ship_job_audit = "\n".join(
+                f"• {ship['name']}: {ship['total']} "
+                f"(G {ship['gang_jobs']} + J {ship['listed_jobs']})"
+                for ship in b["ship_job_details"]
+            )
+
             telegram(
                 f"{headline}\n"
                 f"Total: {b['total']} jobs"
@@ -1544,9 +1565,13 @@ def main():
                 f"({b['container_ht_total']} HT + "
                 f"{b['container_lashers_total']} lashers)\n"
                 f"🎟 Rated jobs: {b['rated_total']} "
-                f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n\n"
-                f"Gang job breakdowns: {b['gang_total']}\n"
-                f"Ship jobs: {b['ship_jobs_total']}\n\n"
+                f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n"
+                f"🚢 Other ship jobs: "
+                f"{b['total'] - b['rated_total'] - b['auto_dr_total'] - b['container_total']}\n\n"
+                f"GANGS field jobs: {b['gang_total']}\n"
+                f"JOBS field jobs: {b['ship_jobs_total']}\n"
+                f"Per-ship audit (G = GANGS, J = JOBS):\n"
+                f"{ship_job_audit}\n\n"
                 f"{ship_text}\n"
                 f"Board time: {b['modified'] or 'unknown'}\n"
                 f'<a href="{BOARD_430_PAGE}">View 4:30 board</a>'

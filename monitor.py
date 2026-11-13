@@ -1188,7 +1188,9 @@ def calculate_board(gb, board_key):
         listed_jobs = numeric_sum(ship.get("jobs", ""))
         ship_job_details.append({
             "name": str(
-                ship.get("ship_name")
+                # ILWU's gb-ship-name template renders gbData.ships_name.
+                ship.get("ships_name")
+                or ship.get("ship_name")
                 or ship.get("name")
                 or "Unnamed ship"
             ).strip(),

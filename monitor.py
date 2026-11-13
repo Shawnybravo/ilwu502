@@ -1347,6 +1347,12 @@ def send_fresh_update(h, t, b8, b, b_1, nw, local_now):
         ])
 
         lines.extend(ship_summary_lines(board))
+        lines.append("Per-ship audit (G = GANGS, J = JOBS):")
+        for ship in board["ship_job_details"]:
+            lines.append(
+                f"• {ship['name']}: {ship['total']} "
+                f"(G {ship['gang_jobs']} + J {ship['listed_jobs']})"
+            )
 
     lines.extend(["", "📈 BCMEA NW FORECAST"])
 

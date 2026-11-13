@@ -5,14 +5,14 @@
     "h_last": "92",
     "h_start": "92",
     "key": "2026-11-13|Graveyard",
-    "last_observed_at": "2026-11-13T06:05:20.131523-07:00",
+    "last_observed_at": "2026-11-13T06:10:20.953865-07:00",
     "shift": "Graveyard",
     "start_delay_minutes": 0.4,
     "started_observing_at": "2026-11-12T16:15:23.031990-07:00",
     "t_last": "80",
     "t_start": "80"
   },
-  "bcmea_last_success": "2026-11-13T13:05:20.133627+00:00",
+  "bcmea_last_success": "2026-11-13T13:10:20.956647+00:00",
   "bcmea_nw_forecast": [
     {
       "date": "Thu Nov 12",
@@ -29,25 +29,25 @@
     {
       "date": "Sat Nov 14",
       "day": "Sat",
-      "quantity": 37,
+      "quantity": 31,
       "status": 3
     },
     {
       "date": "Sun Nov 15",
       "day": "Sun",
-      "quantity": 40,
+      "quantity": 41,
       "status": 3
     },
     {
       "date": "Mon Nov 16",
       "day": "Mon",
-      "quantity": 32,
+      "quantity": 35,
       "status": 3
     },
     {
       "date": "Tue Nov 17",
       "day": "Tue",
-      "quantity": 20,
+      "quantity": 22,
       "status": 2
     },
     {
@@ -63,7 +63,7 @@
   "board_1am_container_total": 0,
   "board_1am_dp_total": 24,
   "board_1am_fsd_total": 14,
-  "board_1am_last_success": "2026-11-13T13:05:20.133044+00:00",
+  "board_1am_last_success": "2026-11-13T13:10:20.955865+00:00",
   "board_1am_modified": "November 13, 2026 @ 5:50 AM",
   "board_1am_rated_total": 38,
   "board_1am_ship_count": 2,
@@ -82,7 +82,7 @@
   "board_430_container_total": 0,
   "board_430_dp_total": 68,
   "board_430_fsd_total": 42,
-  "board_430_last_success": "2026-11-13T13:05:20.131567+00:00",
+  "board_430_last_success": "2026-11-13T13:10:20.953920+00:00",
   "board_430_modified": "November 13, 2026 @ 5:48 AM",
   "board_430_rated_total": 110,
   "board_430_ship_count": 3,
@@ -97,8 +97,8 @@
   "board_8am_container_total": 36,
   "board_8am_dp_total": 53,
   "board_8am_fsd_total": 20,
-  "board_8am_last_success": "2026-11-13T13:05:20.131589+00:00",
-  "board_8am_modified": "November 13, 2026 @ 6:04 AM",
+  "board_8am_last_success": "2026-11-13T13:10:20.953985+00:00",
+  "board_8am_modified": "November 13, 2026 @ 6:08 AM",
   "board_8am_rated_total": 73,
   "board_8am_ship_count": 6,
   "board_8am_ship_types": {
@@ -110,14 +110,14 @@
   },
   "board_8am_total": 129,
   "h_board": "92",
-  "h_last_success": "2026-11-13T13:05:20.131523+00:00",
+  "h_last_success": "2026-11-13T13:10:20.953865+00:00",
   "h_modified": "November 12, 2026 @ 4:37 PM",
   "last_daily_status": "2026-11-12",
   "last_morning_briefing": "2026-11-12",
   "last_weekly_report": "2026-W45",
-  "pins_last_success": "2026-11-13T13:05:20.131523+00:00",
+  "pins_last_success": "2026-11-13T13:10:20.953865+00:00",
   "t_board": "80",
-  "t_last_success": "2026-11-13T13:05:20.131523+00:00",
+  "t_last_success": "2026-11-13T13:10:20.953865+00:00",
   "t_modified": "November 12, 2026 @ 4:37 PM",
   "telegram_update_id": 869464972
 }

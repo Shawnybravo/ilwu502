@@ -1,3 +1,4 @@
+import html
 import json
 import os
 import re
@@ -1306,6 +1307,49 @@ def normalize_nw_forecast(rows):
 
     return forecast
 
+def short_board_time(value):
+    try:
+        return datetime.strptime(
+            value, "%B %d, %Y @ %I:%M %p"
+        ).strftime("%b %-d, %-I:%M %p")
+    except (TypeError, ValueError):
+        return str(value or "unknown")
+
+
+def readable_board_lines(board, label):
+    """Compact, phone-friendly summary. Vessel totals include auto/container jobs."""
+    other_ship_jobs = (
+        board["total"]
+        - board["auto_dr_total"]
+        - board["container_total"]
+        - board["rated_total"]
+    )
+    ship_job_total = board["gang_total"] + board["ship_jobs_total"]
+    lines = [
+        f"<b>{html.escape(label)} — {board['total']} jobs</b>",
+        (
+            f"🚗 {board['auto_dr_total']} drivers · "
+            f"📦 {board['container_total']} containers"
+        ),
+        (
+            f"🎟 {board['rated_total']} rated · "
+            f"⚓ {other_ship_jobs} other ship jobs"
+        ),
+        f"🕒 {html.escape(short_board_time(board['modified']))}",
+        "",
+        f"<b>🚢 Ships ({board['ship_count']}) · {ship_job_total} jobs</b>",
+    ]
+    if board["ship_job_details"]:
+        for ship in board["ship_job_details"]:
+            lines.append(
+                f"• {html.escape(ship['name'])} — <b>{ship['total']}</b>"
+            )
+    else:
+        lines.append("• No ship jobs listed")
+
+    return lines
+
+
 def send_fresh_update(h, t, b8, b, b_1, nw, local_now):
     checked_time = local_now.strftime("%b %-d at %-I:%M %p")
     lines = [
@@ -1330,29 +1374,13 @@ def send_fresh_update(h, t, b8, b, b_1, nw, local_now):
     ]
 
     for label, board in boards:
-        lines.extend(["", label])
+        lines.append("")
 
         if board is None:
-            lines.append("⚠️ Source unavailable")
+            lines.extend([label, "⚠️ Source unavailable"])
             continue
 
-        lines.extend([
-            f"Total: {board['total']} jobs",
-            (
-                f"🚗 Drivers: {board['auto_dr_total']} · "
-                f"📦 Containers: {board['container_total']} · "
-                f"🎟 Rated: {board['rated_total']}"
-            ),
-            f"Board time: {board['modified'] or 'unknown'}",
-        ])
-
-        lines.extend(ship_summary_lines(board))
-        lines.append("Per-ship audit (G = GANGS, J = JOBS):")
-        for ship in board["ship_job_details"]:
-            lines.append(
-                f"• {ship['name']}: {ship['total']} "
-                f"(G {ship['gang_jobs']} + J {ship['listed_jobs']})"
-            )
+        lines.extend(readable_board_lines(board, label))
 
     lines.extend(["", "📈 BCMEA NW FORECAST"])
 
@@ -1551,37 +1579,17 @@ def main():
                     + "\n"
                 )
 
-            ship_text = "\n".join(
-                ship_summary_lines(b)
+            board_text = "\n".join(
+                readable_board_lines(b, "📋 4:30 BOARD")
             )
-            ship_job_audit = "\n".join(
-                f"• {ship['name']}: {ship['total']} "
-                f"(G {ship['gang_jobs']} + J {ship['listed_jobs']})"
-                for ship in b["ship_job_details"]
-            )
-
             telegram(
                 f"{headline}\n"
-                f"Total: {b['total']} jobs"
+                f"{board_text}\n"
                 f"{format_delta(b['total'], old_430_total)}\n\n"
-                "CHANGES\n"
+                "<b>CHANGES</b>\n"
                 f"{change_text}\n\n"
                 f"{notable_text}"
                 f"{unusual_text}"
-                f"🚗 Auto drivers (DR): {b['auto_dr_total']}\n"
-                f"📦 Containers: {b['container_total']} "
-                f"({b['container_ht_total']} HT + "
-                f"{b['container_lashers_total']} lashers)\n"
-                f"🎟 Rated jobs: {b['rated_total']} "
-                f"(FSD {b['fsd_total']} + Deltaport {b['dp_total']})\n"
-                f"🚢 Other ship jobs: "
-                f"{b['total'] - b['rated_total'] - b['auto_dr_total'] - b['container_total']}\n\n"
-                f"GANGS field jobs: {b['gang_total']}\n"
-                f"JOBS field jobs: {b['ship_jobs_total']}\n"
-                f"Per-ship audit (G = GANGS, J = JOBS):\n"
-                f"{ship_job_audit}\n\n"
-                f"{ship_text}\n"
-                f"Board time: {b['modified'] or 'unknown'}\n"
                 f'<a href="{BOARD_430_PAGE}">View 4:30 board</a>'
             )
         state.update({

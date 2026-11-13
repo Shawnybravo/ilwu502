@@ -1070,7 +1070,7 @@ def numeric_sum(text):
     # still handles compact job labels such as "2HT" and "41DRIVERS".
     quantities = re.findall(
         r"(?<![\d:./-])(\d{1,3})(?![\d:./-])\s*"
-        r"(?!(?:GANGS?|START|AM|PM)\b)(?=[A-Za-z])",
+        r"(?!(?:GANGS?|STEPS?|START|AM|PM)\b)(?=[A-Za-z])",
         text,
         flags=re.I,
     )

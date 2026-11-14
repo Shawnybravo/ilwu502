@@ -42430,6 +42430,25 @@
         "STEEL": 1
       },
       "total": 274
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 14, 2026 @ 5:52 AM",
+      "captured_at": "2026-11-14T12:55:26.002303+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "CONTAINER": 2,
+        "STEEL": 1
+      },
+      "total": 0
     }
   ],
   "board_8am": [

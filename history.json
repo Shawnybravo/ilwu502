@@ -43255,6 +43255,29 @@
         "STEEL": 1
       },
       "total": 369
+    },
+    {
+      "auto_dr": 97,
+      "board_time": "November 15, 2026 @ 9:27 AM",
+      "captured_at": "2026-11-15T16:30:29.878811+00:00",
+      "container_ht": 3,
+      "container_lashers": 66,
+      "containers": 69,
+      "deltaport": 132,
+      "fsd": 43,
+      "gang_jobs": 103,
+      "rated": 175,
+      "ship_count": 9,
+      "ship_jobs": 91,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 2,
+        "CANOLA * ALL 1530 START *": 1,
+        "CONTAINER": 3,
+        "NIGHT BA TONIGHT IS ED PAWSON": 1,
+        "STEEL": 1
+      },
+      "total": 369
     }
   ],
   "board_8am": [

@@ -28648,6 +28648,24 @@
         "CONTAINER": 1
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 18, 2026 @ 8:01 AM",
+      "captured_at": "2026-11-18T15:05:22.527892+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 1,
+      "ship_jobs": 0,
+      "ship_types": {
+        "CONTAINER": 1
+      },
+      "total": 0
     }
   ],
   "board_430": [
@@ -45392,6 +45410,24 @@
       "auto_dr": 0,
       "board_time": "November 18, 2026 @ 6:03 AM",
       "captured_at": "2026-11-18T13:10:33.896252+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 1,
+      "ship_jobs": 0,
+      "ship_types": {
+        "STEEL": 1
+      },
+      "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 18, 2026 @ 8:00 AM",
+      "captured_at": "2026-11-18T15:05:21.305445+00:00",
       "container_ht": 0,
       "container_lashers": 0,
       "containers": 0,

@@ -5,14 +5,14 @@
     "h_last": "56",
     "h_start": "56",
     "key": "2026-11-19|8 AM",
-    "last_observed_at": "2026-11-19T10:50:22.337878-07:00",
+    "last_observed_at": "2026-11-19T10:55:19.788714-07:00",
     "shift": "8 AM",
     "start_delay_minutes": 0.4,
     "started_observing_at": "2026-11-19T06:45:22.121130-07:00",
     "t_last": "56",
     "t_start": "56"
   },
-  "bcmea_last_success": "2026-11-19T17:50:22.340659+00:00",
+  "bcmea_last_success": "2026-11-19T17:55:20.546009+00:00",
   "bcmea_nw_forecast": [
     {
       "date": "Wed Nov 18",
@@ -29,13 +29,13 @@
     {
       "date": "Fri Nov 20",
       "day": "Fri",
-      "quantity": 28,
+      "quantity": 27,
       "status": 2
     },
     {
       "date": "Sat Nov 21",
       "day": "Sat",
-      "quantity": 28,
+      "quantity": 27,
       "status": 2
     },
     {
@@ -53,7 +53,7 @@
     {
       "date": "Tue Nov 24",
       "day": "Tue",
-      "quantity": 19,
+      "quantity": 23,
       "status": 2
     }
   ],
@@ -63,7 +63,7 @@
   "board_1am_container_total": 0,
   "board_1am_dp_total": 0,
   "board_1am_fsd_total": 0,
-  "board_1am_last_success": "2026-11-19T17:50:22.339853+00:00",
+  "board_1am_last_success": "2026-11-19T17:55:20.545451+00:00",
   "board_1am_modified": "November 19, 2026 @ 4:14 AM",
   "board_1am_rated_total": 0,
   "board_1am_ship_count": 2,
@@ -71,10 +71,9 @@
     "CONTAINER": 2
   },
   "board_1am_total": 0,
-  "board_430_auto_dr_total": 0,
-  "board_430_awaiting_jobs_ship_count": 4,
+  "board_430_auto_dr_total": 47,
+  "board_430_awaiting_jobs_ship_count": 3,
   "board_430_awaiting_jobs_ship_types": {
-    "AUTO": 1,
     "CONTAINER": 2,
     "STEEL": 1
   },
@@ -83,8 +82,8 @@
   "board_430_container_total": 0,
   "board_430_dp_total": 0,
   "board_430_fsd_total": 0,
-  "board_430_last_success": "2026-11-19T17:50:22.337931+00:00",
-  "board_430_modified": "November 19, 2026 @ 8:10 AM",
+  "board_430_last_success": "2026-11-19T17:55:19.788755+00:00",
+  "board_430_modified": "November 19, 2026 @ 10:53 AM",
   "board_430_rated_total": 0,
   "board_430_ship_count": 4,
   "board_430_ship_types": {
@@ -92,14 +91,14 @@
     "CONTAINER": 2,
     "STEEL": 1
   },
-  "board_430_total": 0,
+  "board_430_total": 73,
   "board_8am_auto_dr_total": 0,
   "board_8am_container_ht_total": 0,
   "board_8am_container_lashers_total": 0,
   "board_8am_container_total": 0,
   "board_8am_dp_total": 0,
   "board_8am_fsd_total": 4,
-  "board_8am_last_success": "2026-11-19T17:50:22.337956+00:00",
+  "board_8am_last_success": "2026-11-19T17:55:20.544120+00:00",
   "board_8am_modified": "November 19, 2026 @ 10:31 AM",
   "board_8am_rated_total": 4,
   "board_8am_ship_count": 5,
@@ -110,14 +109,14 @@
   },
   "board_8am_total": 4,
   "h_board": "56",
-  "h_last_success": "2026-11-19T17:50:22.337878+00:00",
+  "h_last_success": "2026-11-19T17:55:19.788714+00:00",
   "h_modified": "November 19, 2026 @ 7:40 AM",
   "last_daily_status": "2026-11-18",
   "last_morning_briefing": "2026-11-19",
   "last_weekly_report": "2026-W46",
-  "pins_last_success": "2026-11-19T17:50:22.337878+00:00",
+  "pins_last_success": "2026-11-19T17:55:19.788714+00:00",
   "t_board": "56",
-  "t_last_success": "2026-11-19T17:50:22.337878+00:00",
+  "t_last_success": "2026-11-19T17:55:19.788714+00:00",
   "t_modified": "November 19, 2026 @ 7:40 AM",
   "telegram_update_id": 869464972
 }

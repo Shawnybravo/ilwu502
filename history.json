@@ -64220,6 +64220,27 @@
         "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
       },
       "total": 74
+    },
+    {
+      "auto_dr": 57,
+      "board_time": "November 21, 2026 @ 2:44 PM",
+      "captured_at": "2026-11-21T21:45:21.728170+00:00",
+      "container_ht": 1,
+      "container_lashers": 24,
+      "containers": 25,
+      "deltaport": 0,
+      "fsd": 6,
+      "gang_jobs": 60,
+      "rated": 6,
+      "ship_count": 4,
+      "ship_jobs": 33,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CONTAINER": 1,
+        "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
+      },
+      "total": 99
     }
   ],
   "pin_moves": [

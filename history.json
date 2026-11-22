@@ -23217,6 +23217,53 @@
           "status": 2
         }
       ]
+    },
+    {
+      "captured_at": "2026-11-22T17:00:30.082669+00:00",
+      "forecast": [
+        {
+          "date": "Sat Nov 21",
+          "day": "Sat",
+          "quantity": 17,
+          "status": 2
+        },
+        {
+          "date": "Sun Nov 22",
+          "day": "Sun",
+          "quantity": 18,
+          "status": 2
+        },
+        {
+          "date": "Mon Nov 23",
+          "day": "Mon",
+          "quantity": 25,
+          "status": 2
+        },
+        {
+          "date": "Tue Nov 24",
+          "day": "Tue",
+          "quantity": 38,
+          "status": 3
+        },
+        {
+          "date": "Wed Nov 25",
+          "day": "Wed",
+          "quantity": 26,
+          "status": 2
+        },
+        {
+          "date": "Thu Nov 26",
+          "day": "Thu",
+          "quantity": 21,
+          "status": 2
+        },
+        {
+          "date": "Fri Nov 27",
+          "day": "Fri",
+          "quantity": 16,
+          "status": 2
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -64469,6 +64516,26 @@
         "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 22, 2026 @ 9:56 AM",
+      "captured_at": "2026-11-22T17:00:30.080895+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 2,
+      "gang_jobs": 0,
+      "rated": 2,
+      "ship_count": 4,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
+      },
+      "total": 2
     }
   ],
   "pin_moves": [

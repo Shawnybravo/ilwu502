@@ -30394,6 +30394,26 @@
         "CONTAINER": 1
       },
       "total": 70
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 23, 2026 @ 6:45 AM",
+      "captured_at": "2026-11-23T13:45:23.789506+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 11,
+      "fsd": 35,
+      "gang_jobs": 0,
+      "rated": 46,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "6:30AM -6:30PM": 1,
+        "AGRI": 1,
+        "CONTAINER": 1
+      },
+      "total": 46
     }
   ],
   "board_430": [
@@ -48214,6 +48234,26 @@
         "CONTAINER": 3
       },
       "total": 176
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 23, 2026 @ 6:43 AM",
+      "captured_at": "2026-11-23T13:45:23.070361+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 87,
+      "fsd": 49,
+      "gang_jobs": 0,
+      "rated": 136,
+      "ship_count": 5,
+      "ship_jobs": 0,
+      "ship_types": {
+        "6:30AM - 6:30PM": 1,
+        "AGRI": 1,
+        "CONTAINER": 3
+      },
+      "total": 136
     }
   ],
   "board_8am": [
@@ -77350,6 +77390,45 @@
       },
       "start_delay_minutes": 0.4,
       "started_observing_at": "2026-11-22T15:15:25.789575-07:00",
+      "t_end": "48",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "48"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": true,
+      "date": "2026-11-23",
+      "end_gap_minutes": 4.7,
+      "h_end": "56",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "56",
+      "key": "2026-11-23|Graveyard",
+      "last_observed_at": "2026-11-23T06:40:20.683156-07:00",
+      "shift": "Graveyard",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "November 23, 2026 @ 6:45 AM",
+        "container_ht": 0,
+        "container_lashers": 0,
+        "containers": 0,
+        "deltaport": 11,
+        "fsd": 35,
+        "gang_jobs": 0,
+        "rated": 46,
+        "ship_count": 3,
+        "ship_jobs": 0,
+        "ship_types": {
+          "6:30AM -6:30PM": 1,
+          "AGRI": 1,
+          "CONTAINER": 1
+        },
+        "total": 46
+      },
+      "start_delay_minutes": 0.5,
+      "started_observing_at": "2026-11-22T16:15:27.782427-07:00",
       "t_end": "48",
       "t_moved": false,
       "t_movement": 0,

@@ -30434,6 +30434,26 @@
         "CONTAINER": 1
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 23, 2026 @ 7:20 AM",
+      "captured_at": "2026-11-23T14:20:31.915301+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 3,
+      "ship_jobs": 0,
+      "ship_types": {
+        "6:30AM -6:30PM": 1,
+        "AGRI": 1,
+        "CONTAINER": 1
+      },
+      "total": 0
     }
   ],
   "board_430": [
@@ -48294,6 +48314,26 @@
         "CONTAINER": 3
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 23, 2026 @ 7:19 AM",
+      "captured_at": "2026-11-23T14:20:31.068153+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 5,
+      "ship_jobs": 0,
+      "ship_types": {
+        "6:30AM - 6:30PM": 1,
+        "AGRI": 1,
+        "CONTAINER": 3
+      },
+      "total": 0
     }
   ],
   "board_8am": [
@@ -65200,6 +65240,27 @@
       "auto_dr": 0,
       "board_time": "November 23, 2026 @ 6:39 AM",
       "captured_at": "2026-11-23T13:40:20.683220+00:00",
+      "container_ht": 2,
+      "container_lashers": 0,
+      "containers": 2,
+      "deltaport": 71,
+      "fsd": 56,
+      "gang_jobs": 0,
+      "rated": 127,
+      "ship_count": 5,
+      "ship_jobs": 50,
+      "ship_types": {
+        "6:30 - 6:30PM": 1,
+        "AGRI": 1,
+        "CONTAINER": 2,
+        "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
+      },
+      "total": 177
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 23, 2026 @ 7:19 AM",
+      "captured_at": "2026-11-23T14:20:31.914104+00:00",
       "container_ht": 2,
       "container_lashers": 0,
       "containers": 2,

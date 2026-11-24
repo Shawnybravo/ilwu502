@@ -68377,6 +68377,39 @@
         },
         "total": 177
       }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "H",
+      "crossed_shift_boundary": false,
+      "detected_at": "2026-11-24T07:40:25.310794-07:00",
+      "member_position": "H-16",
+      "movement": -28,
+      "new_pin": "28",
+      "old_pin": "56",
+      "previous_check_at": "2026-11-24T07:35:19.228978-07:00",
+      "shift_breakdown": {
+        "auto_dr": 64,
+        "board_time": "November 23, 2026 @ 4:45 PM",
+        "container_ht": 3,
+        "container_lashers": 27,
+        "containers": 30,
+        "deltaport": 57,
+        "fsd": 13,
+        "gang_jobs": 67,
+        "rated": 70,
+        "ship_count": 7,
+        "ship_jobs": 73,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CONT": 2,
+          "CONTAINER": 2,
+          "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
+        },
+        "total": 210
+      }
     }
   ],
   "shift_outcomes": [

@@ -24110,6 +24110,53 @@
           "status": 2
         }
       ]
+    },
+    {
+      "captured_at": "2026-11-26T20:01:33.831990+00:00",
+      "forecast": [
+        {
+          "date": "Wed Nov 25",
+          "day": "Wed",
+          "quantity": 31,
+          "status": 3
+        },
+        {
+          "date": "Thu Nov 26",
+          "day": "Thu",
+          "quantity": 19,
+          "status": 2
+        },
+        {
+          "date": "Fri Nov 27",
+          "day": "Fri",
+          "quantity": 30,
+          "status": 3
+        },
+        {
+          "date": "Sat Nov 28",
+          "day": "Sat",
+          "quantity": 28,
+          "status": 2
+        },
+        {
+          "date": "Sun Nov 29",
+          "day": "Sun",
+          "quantity": 32,
+          "status": 3
+        },
+        {
+          "date": "Mon Nov 30",
+          "day": "Mon",
+          "quantity": 30,
+          "status": 3
+        },
+        {
+          "date": "Tue Dec 01",
+          "day": "Tue",
+          "quantity": 28,
+          "status": 2
+        }
+      ]
     }
   ],
   "board_1am": [
@@ -31106,6 +31153,26 @@
         "CONTAINER": 4
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 26, 2026 @ 12:18 PM",
+      "captured_at": "2026-11-26T20:01:33.351418+00:00",
+      "container_ht": 3,
+      "container_lashers": 54,
+      "containers": 57,
+      "deltaport": 233,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 233,
+      "ship_count": 4,
+      "ship_jobs": 62,
+      "ship_types": {
+        "AGRI": 1,
+        "CANOLA": 1,
+        "CONTAINER": 2
+      },
+      "total": 295
     }
   ],
   "board_430": [
@@ -49426,6 +49493,27 @@
         "CONTAINER": 4
       },
       "total": 0
+    },
+    {
+      "auto_dr": 58,
+      "board_time": "November 26, 2026 @ 12:42 PM",
+      "captured_at": "2026-11-26T20:01:32.825197+00:00",
+      "container_ht": 3,
+      "container_lashers": 56,
+      "containers": 59,
+      "deltaport": 85,
+      "fsd": 7,
+      "gang_jobs": 61,
+      "rated": 92,
+      "ship_count": 6,
+      "ship_jobs": 77,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CANOLA OIL": 1,
+        "CONTAINER": 3
+      },
+      "total": 230
     }
   ],
   "board_8am": [
@@ -66859,6 +66947,29 @@
         "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
       },
       "total": 0
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 26, 2026 @ 10:51 AM",
+      "captured_at": "2026-11-26T20:01:33.349861+00:00",
+      "container_ht": 0,
+      "container_lashers": 0,
+      "containers": 0,
+      "deltaport": 0,
+      "fsd": 0,
+      "gang_jobs": 0,
+      "rated": 0,
+      "ship_count": 7,
+      "ship_jobs": 0,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CANOLA": 1,
+        "CONT": 2,
+        "CONTAINER": 1,
+        "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
+      },
+      "total": 0
     }
   ],
   "pin_moves": [
@@ -69271,6 +69382,40 @@
           "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
         },
         "total": 210
+      }
+    },
+    {
+      "attributed_shift": "8 AM",
+      "attribution_is_inferred": true,
+      "board": "H",
+      "crossed_shift_boundary": true,
+      "detected_at": "2026-11-26T13:01:32.223867-07:00",
+      "member_position": "H-16",
+      "movement": 10,
+      "new_pin": "38",
+      "old_pin": "28",
+      "previous_check_at": "2026-11-25T09:25:22.456126-07:00",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "November 26, 2026 @ 10:51 AM",
+        "container_ht": 0,
+        "container_lashers": 0,
+        "containers": 0,
+        "deltaport": 0,
+        "fsd": 0,
+        "gang_jobs": 0,
+        "rated": 0,
+        "ship_count": 7,
+        "ship_jobs": 0,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CANOLA": 1,
+          "CONT": 2,
+          "CONTAINER": 1,
+          "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
+        },
+        "total": 0
       }
     }
   ],
@@ -79380,6 +79525,48 @@
       },
       "start_delay_minutes": 0.4,
       "started_observing_at": "2026-11-24T16:15:22.279883-07:00",
+      "t_end": "48",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "48"
+    },
+    {
+      "any_movement": false,
+      "boundary_change_detected": false,
+      "coverage_confident": false,
+      "date": "2026-11-25",
+      "end_gap_minutes": 349.6,
+      "h_end": "28",
+      "h_moved": false,
+      "h_movement": 0,
+      "h_start": "28",
+      "key": "2026-11-25|8 AM",
+      "last_observed_at": "2026-11-25T09:25:22.456126-07:00",
+      "shift": "8 AM",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "November 26, 2026 @ 10:51 AM",
+        "container_ht": 0,
+        "container_lashers": 0,
+        "containers": 0,
+        "deltaport": 0,
+        "fsd": 0,
+        "gang_jobs": 0,
+        "rated": 0,
+        "ship_count": 7,
+        "ship_jobs": 0,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CANOLA": 1,
+          "CONT": 2,
+          "CONTAINER": 1,
+          "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
+        },
+        "total": 0
+      },
+      "start_delay_minutes": 0.4,
+      "started_observing_at": "2026-11-25T06:45:21.997985-07:00",
       "t_end": "48",
       "t_moved": false,
       "t_movement": 0,

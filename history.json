@@ -79732,6 +79732,48 @@
       "t_moved": false,
       "t_movement": 0,
       "t_start": "48"
+    },
+    {
+      "any_movement": true,
+      "boundary_change_detected": true,
+      "coverage_confident": false,
+      "date": "2026-11-26",
+      "end_gap_minutes": 4.7,
+      "h_end": "38",
+      "h_moved": true,
+      "h_movement": 10,
+      "h_start": "28",
+      "key": "2026-11-26|8 AM",
+      "last_observed_at": "2026-11-26T15:10:19.703587-07:00",
+      "shift": "8 AM",
+      "shift_breakdown": {
+        "auto_dr": 0,
+        "board_time": "November 26, 2026 @ 3:07 PM",
+        "container_ht": 1,
+        "container_lashers": 18,
+        "containers": 19,
+        "deltaport": 52,
+        "fsd": 0,
+        "gang_jobs": 0,
+        "rated": 52,
+        "ship_count": 7,
+        "ship_jobs": 57,
+        "ship_types": {
+          "AGRI": 1,
+          "AUTO": 1,
+          "CANOLA": 1,
+          "CONT": 2,
+          "CONTAINER": 1,
+          "WHICH MEANS, YOU WILL BE CALLED BACK UNITL": 1
+        },
+        "total": 109
+      },
+      "start_delay_minutes": 376.5,
+      "started_observing_at": "2026-11-26T13:01:32.223867-07:00",
+      "t_end": "48",
+      "t_moved": false,
+      "t_movement": 0,
+      "t_start": "48"
     }
   ],
   "worked_reports": [

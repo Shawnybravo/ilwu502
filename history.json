@@ -49514,6 +49514,27 @@
         "CONTAINER": 3
       },
       "total": 230
+    },
+    {
+      "auto_dr": 58,
+      "board_time": "November 26, 2026 @ 2:22 PM",
+      "captured_at": "2026-11-26T21:25:19.479152+00:00",
+      "container_ht": 3,
+      "container_lashers": 56,
+      "containers": 59,
+      "deltaport": 85,
+      "fsd": 7,
+      "gang_jobs": 61,
+      "rated": 92,
+      "ship_count": 6,
+      "ship_jobs": 77,
+      "ship_types": {
+        "AGRI": 1,
+        "AUTO": 1,
+        "CANOLA OIL": 1,
+        "CONTAINER": 3
+      },
+      "total": 230
     }
   ],
   "board_8am": [

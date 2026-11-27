@@ -50138,6 +50138,26 @@
         "CONTAINER": 3
       },
       "total": 201
+    },
+    {
+      "auto_dr": 0,
+      "board_time": "November 27, 2026 @ 1:25 PM",
+      "captured_at": "2026-11-27T20:25:21.931723+00:00",
+      "container_ht": 3,
+      "container_lashers": 54,
+      "containers": 57,
+      "deltaport": 83,
+      "fsd": 37,
+      "gang_jobs": 0,
+      "rated": 120,
+      "ship_count": 5,
+      "ship_jobs": 76,
+      "ship_types": {
+        "AGRI": 1,
+        "CONT BOATMAN : CUMISKEY": 1,
+        "CONTAINER": 3
+      },
+      "total": 196
     }
   ],
   "board_8am": [
